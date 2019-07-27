@@ -12,7 +12,11 @@ app = Flask(__name__)
 
 # get Remote DB credentials from settings file
 credentials = {}
-with open("../settings.txt") as f:
+
+# get path of this file
+filePath = os.path.dirname(os.path.realpath(__file__))
+credentialPath = os.path.join(filePath,"../settings.txt")
+with open(credentialPath) as f:
     for line in f:
         key, val = line.partition(":")[::2]
         credentials[key.strip()] = val.strip()
