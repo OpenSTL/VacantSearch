@@ -1,0 +1,12 @@
+[Unit]
+Description= Vacant Search 
+After=network.target
+
+[Service]
+WorkingDirectory=/srv/openstl/VacantSearch/server
+ExecStart=/usr/sbin/uwsgi --ini uwsgi.ini
+User=root
+#Group=root
+#Type=forking
+[Install]
+WantedBy=multi-user.target
