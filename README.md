@@ -32,7 +32,10 @@
  username:[yourUsername]
  password:[yourPassword]
  ```
-
+ 4. (For Developers) Run the following command to ignore changes in `settings.txt`, so that you don't accidentally commit your user credentials 😛
+ ```
+ git update-index --assume-unchanged settings.txt
+ ```
 ### Example
 1. Open terminal, navigate to `server` sub-directory.
 ```
@@ -59,3 +62,4 @@ python vacancy.py
 
 ### Deployment
 🚧 Work in Progress 🚧
+1. Move `vacancy.service` file into systemd directory.
