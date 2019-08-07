@@ -93,8 +93,12 @@ class Vacancy(db.Model):
     def __repr__(self):
         """returns a printable representation of the object"""
         return f"Vacancy('{self.parcel_id}','{self.nbrhd_name}','{self.nbrhd_code}','{self.lot_type}', \
-                        '{self.bath_full}','{self.bath_half}','{self.com_grd_flr}'\
-                        '{self.size_sqFt}','{self.acres}','{self.price_bldg}','{self.price_lot}','{self.price_sidelot}')"
+                        '{self.street_addr}','{self.zip}','{self.bath_full}','{self.bath_half}',\
+                        '{self.bath_total}','{self.com_grd_flr}','{self.num_stories}','{self.ward_num}',\
+                        '{self.attic}','{self.basement_type}','{self.wall_material}','{self.construction}',\
+                        '{self.bldg_type}','{self.garage}','{self.central_heat}','{self.basement_finished}',\
+                        '{self.size_sqFt}','{self.acres}','{self.price_bldg}','{self.price_lot}','{self.price_sidelot}',\
+                        '{self.price_residential}')"
 
 class VacancySchema(ma.ModelSchema):
     """
@@ -154,10 +158,11 @@ def query():
     Reads JSON and returns matching records from database
     Input JSON Example:
     {
-    	"Neighborhoods" : ["Near North Riverfront","Kosciusko"],
+    	"Neighborhoods" : [34,13],
     	"LotType" : 2,
     	"IncludePossible" : true,
-    	"NumberOfBaths" : 1.5,
+    	"NumBathsMin" : 0,
+    	"NumBathsMax" : 1000,
     	"SqFtMin" : 0,
     	"SqFtMax" : 10000,
     	"PriceMin" : 0,

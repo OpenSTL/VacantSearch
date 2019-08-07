@@ -45,19 +45,23 @@ cd server/
 ```
 python vacancy.py
 ```
-3. Open Postman, create a POST request with the following example JSON:
+3. Open Postman, create a POST request to `http://127.0.0.1:5000/filter` with the following example JSON:
 ```
 {
-	"Neighborhoods" : ["Near North Riverfront","Kosciusko"],
+	"Neighborhoods" : [34,13],
 	"LotType" : 2,
 	"IncludePossible" : true,
-	"NumberOfBaths" : 1.5,
+	"NumBathsMin" : 0,
+	"NumBathsMax" : 3,
 	"SqFtMin" : 0,
 	"SqFtMax" : 10000,
 	"PriceMin" : 0,
 	"PriceMax" : 10000
 }
 ```
+The Postman page should look like the following:
+![Alt text](/documentation/post-example.png?raw=true "Postman Example")
+
 4. You should get a response JSON with vacancy records that matches the criteria specified in the input JSON.
 
 ### Deployment
