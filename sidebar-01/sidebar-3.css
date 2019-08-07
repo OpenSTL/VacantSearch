@@ -135,3 +135,24 @@ html {
     font-size: 1.1rem;
     text-align: center;
 }
+
+/* Mobile View */
+@media(max-width: 600px) {
+    .sidebar {
+        --sidebar-width: 100%;
+        height: auto;
+        padding-top: 0;
+        padding-bottom: 15px;
+    }
+    .sidebar-toggle-btn {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+    }
+    .menu-icon {
+        color: black;
+    }
+    .sidebar-extra-text{
+        display: none;
+    }
+}
