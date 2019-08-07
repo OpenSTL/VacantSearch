@@ -60,7 +60,7 @@ python vacancy.py
 }
 ```
 The Postman page should look like the following:
-![Alt text](/documentation/post-example.png?raw=true "Postman Example")
+![Postman Example](./documentation/post-example.png)
 
 4. You should get a response JSON with vacancy records that matches the criteria specified in the input JSON.
 
