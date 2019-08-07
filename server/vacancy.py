@@ -36,21 +36,65 @@ class Vacancy(db.Model):
     Model for Vacancy records
     """
     __tablename__ = 'vacant'
-    id = db.Column('FID',db.Integer, primary_key=True)
-    nhd_name = db.Column('NHD_NAME',db.Unicode)
+    # Handle for parcel (unique ID for joining with other datasets) - text
+    parcel_id = db.Column('Handle',db.Unicode, primary_key=True)
+    # neighborhood number (codes)
+    nbrhd_code = db.Column('Nbrhd',db.Integer)
+    # neighborhood name (text)
+    nbrhd_name = db.Column('NHD_NAME',db.Unicode)
+    # full address
+    street_addr = db.Column('SITEADDR',db.Integer)
+    # zip code
+    zip = db.Column('ZIP',db.Integer)
+    # text description of vacancy category (Vacant Lot, Possible Vacant Lot, Vacant Building, or Possible Vacant Building)
     lot_type = db.Column('VacCatText',db.Unicode)
-    full_bath = db.Column('ResFullBat',db.Integer)
-    half_bath = db.Column('ResHlfBath',db.Integer)
+    # number of full baths
+    bath_full = db.Column('ResFullBat',db.Integer)
+    # number of half baths
+    bath_half = db.Column('ResHlfBath',db.Integer)
+    # 1 * FullBath + 0.5 * HalfBath
+    bath_total = db.Column('Bath_Total',db.Float)
+    # square footage of ground floor
     com_grd_flr = db.Column('ComGrdFlr',db.Integer)
+    # number of stories in residential building (translated from code to text)
+    num_stories = db.Column('ResStories',db.Unicode)
+    # ward number (2010 ward boundaries)
+    ward_num = db.Column('Ward10',db.Integer)
+    # attic present (0=no; 1=yes)
+    attic = db.Column('ResAttic',db.Integer)
+    # type of basement, if applicable (full, partial...) / 0 = no basement (translated from code to text)
+    basement_type = db.Column('ResBsmt',db.Unicode)
+    # exterior wall type of residential building (brick, frame, stone) (translated from code to text)
+    wall_material = db.Column('ResExtWall',db.Unicode)
+    # type of construction (brick/wood, steel, etc) (translated from code to text)
+    construction = db.Column('ComConst',db.Unicode)
+    # type of residential building (single family, two family, etc) (translated from code to text)
+    bldg_type = db.Column('ResOccType',db.Unicode)
+    # garage on site (0=no; 1=yes)
+    garage = db.Column('ResGarage',db.Integer)
+    # central heating (0=no; 1=yes)
+    central_heat = db.Column('ResCH',db.Integer)
+    # basement finish status (translated from code to text)
+    basement_finished = db.Column('ResBmFin',db.Unicode)
+    # square footage of the parcel
     size_sqFt = db.Column('SqFt',db.Float)
+    # parcel acreage
     acres = db.Column('Acres',db.Float)
-    price = db.Column('VB',db.Unicode)
+    # LRA purchase price for a vacant building
+    price_bldg = db.Column('VB_decimal',db.Float)
+    # LRA purchase price for a vacant lot with plans for new construction
+    price_lot = db.Column('NC_decimal',db.Float)
+    # LRA purchase price for a side lot (purchaser lives next door and frontage is 25 ft or less)
+    price_sidelot = db.Column('SL_decimal',db.Float)
+    # Last known and documented residential sale price
+    price_residential = db.Column('ResSalePri',db.Integer)
+
 
     def __repr__(self):
         """returns a printable representation of the object"""
-        return f"Vacancy('{self.id}','{self.nhd_name}','{self.lot_type}', \
-                        '{self.full_bath}','{self.half_bath}','{self.com_grd_flr}'\
-                        '{self.size_sqFt}','{self.acres}','{self.price}')"
+        return f"Vacancy('{self.parcel_id}','{self.nbrhd_name}','{self.nbrhd_code}','{self.lot_type}', \
+                        '{self.bath_full}','{self.bath_half}','{self.com_grd_flr}'\
+                        '{self.size_sqFt}','{self.acres}','{self.price_bldg}','{self.price_lot}','{self.price_sidelot}')"
 
 class VacancySchema(ma.ModelSchema):
     """
@@ -123,7 +167,7 @@ def query():
     """
     req_data = request.get_json()
     # initialize
-    NumberOfBaths,LotType,SqFtMin,SqFtMax,PriceMin,PriceMax = None,None,None,None,None,None
+    NumBathsMin,NumBathsMax,LotType,SqFtMin,SqFtMax,PriceMin,PriceMax = None,None,None,None,None,None,None
     Neighborhoods = []
     IncludePossible = False
     # parse json attributes
@@ -133,8 +177,10 @@ def query():
         LotType = req_data['LotType']
     if "IncludePossible" in req_data:
         IncludePossible = req_data['IncludePossible']
-    if "NumberOfBaths" in req_data:
-        NumberOfBaths = req_data['NumberOfBaths']
+    if "NumBathsMin" in req_data:
+        NumBathsMin = req_data['NumBathsMin']
+    if "NumBathsMax" in req_data:
+        NumBathsMax = req_data['NumBathsMax']
     if "SqFtMin" in req_data:
         SqFtMin = req_data['SqFtMin']
     if "SqFtMax" in req_data:
@@ -148,15 +194,26 @@ def query():
     lot_type_list = ConvertLotType(LotType,IncludePossible)
 
     # debug
-    print("Query Filters:\n\tNeighborhoods: {}\n\tLotType: {}\n\tNumberOfBaths: {}\
+    print("Query Filters:\n\tNeighborhoods: {}\n\tLotType: {}\n\tNumBaths: {}-{}\
             \n\tSqFt: {} - {}\n\tPirce: {} - {}"\
-    .format(Neighborhoods,lot_type_list,NumberOfBaths,SqFtMin,SqFtMax,PriceMin,PriceMax))
+    .format(Neighborhoods,lot_type_list,NumBathsMin,NumBathsMax,SqFtMin,SqFtMax,PriceMin,PriceMax))
 
     # Query DB
-    qryresult = Vacancy.query.filter(Vacancy.nhd_name.in_(Neighborhoods),\
+    qryresult = Vacancy.query.filter(Vacancy.nbrhd_code.in_(Neighborhoods),\
                                     Vacancy.lot_type.in_(lot_type_list),\
+                                    Vacancy.bath_total >= NumBathsMin,\
+                                    Vacancy.bath_total <= NumBathsMax,\
                                     Vacancy.size_sqFt >= SqFtMin,\
-                                    Vacancy.size_sqFt <= SqFtMax).all()
+                                    Vacancy.size_sqFt <= SqFtMax,\
+                                    # Vacancy.price_bldg >= PriceMin,\
+                                    # Vacancy.price_bldg <= PriceMax,\
+                                    # Vacancy.price_lot >= PriceMin,\
+                                    # Vacancy.price_lot <= PriceMax,\
+                                    # Vacancy.price_sidelot >= PriceMin,\
+                                    # Vacancy.price_sidelot <= PriceMax,\
+                                    # Vacancy.price_residential >= PriceMin,\
+                                    # Vacancy.price_residential <= PriceMax,\
+                                    ).all()
 
     # Uncomment below to print query results to console
     # for x in qryresult:
