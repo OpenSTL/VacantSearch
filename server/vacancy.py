@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from flask_cors import CORS
 import os, sys
 
 ## TODO: figure out how to convert # of bathrooms to # of full and half bathrooms
@@ -8,6 +9,8 @@ import os, sys
 ## TODO: price is Unicode string in DB, should convert to float
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/filter": {"origins": "*"}})
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 # get Remote DB credentials from settings file
 credentials = {}
