@@ -1,0 +1,137 @@
+/* Variables */
+.sidebar {
+    --sidebar-width: 300px;
+    --sidebar-toggle-offset: 20px;
+    --sidebar-bg-color: #4f5b62;
+    --sidebar-font-color: #fefaf4;
+    --sidebar-item-color: rgba(230,230,230,.9);
+}
+
+/* Globals */
+html {
+    box-sizing: border-box;
+}
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+.sidebar a {
+    text-decoration: none;
+    color: inherit;
+}
+.sidebar a:hover {
+    text-decoration: underline;
+}
+.sidebar h1 {
+    text-align: center;
+    font-size: 2rem;
+    padding: 5px;
+    margin-top: 10px;   
+    margin-bottom: 10px;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    right: calc(var(--sidebar-width) * -1);
+    width: var(--sidebar-width);
+    height: 100vh;
+    padding-top: 0.7rem;
+    background-color: var(--sidebar-bg-color);
+    color: var(--sidebar-font-color);
+    font-family: Arial, Helvetica, sans-serif;
+    transition: all .2s linear;
+    font-size: 1.2rem;
+}
+.sidebar-active {
+    right: 0;
+}
+
+/* Sidebar Form Style */
+.sidebar-form {
+    /*padding: .3rem;
+    margin: .3rem;*/
+    font-size: 1.3rem;
+    width: 80%;
+    margin: 0 auto;
+}
+.form-item {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    /*border-bottom: 1px solid silver;*/
+}
+
+/* Form Input Styles for Sidebar */
+.sidebar-form fieldset {
+    border: none;
+}
+.sidebar-form label {
+    display: block;
+}
+.sidebar-form input,
+.sidebar-form select {
+    width: 100%;
+    margin: 0 auto;
+    margin-top: .3rem;
+    font-size: 1rem;
+}
+.sidebar-form input[type=number] {
+    border: 1px solid blue;
+    padding: .2rem;
+}
+.sidebar-form input[type=submit],
+.sidebar-form input[type=reset] {
+    border: none;
+    background-color: var(--sidebar-font-color);
+    padding: 4px 12px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 1.15rem;
+    margin-top: .9rem;
+}
+.sidebar-form input:hover {
+    opacity: .9;
+}
+
+/* Sidebar Toggle Button */
+.sidebar-toggle-btn {
+    position: absolute;
+    right: calc(var(--sidebar-width) + var(--sidebar-toggle-offset));
+    top: 20px;
+    cursor: pointer;
+    transition: all .1s ease;
+}
+.sidebar-toggle-btn:hover {
+    transform: scale(1.07, 1.07);
+    /*box-shadow: 1px 1px 5px silver;*/
+    transition: all .15s ease;
+
+}
+.menu-icon {
+    display: block;
+    width: 40px;
+    text-align: center;
+    font-size: 40px;
+    color: var(--sidebar-bg-color);
+}
+
+/* Submit/Reset Buttons */
+.button-box {
+    width: 50%;
+    margin: 0 auto;
+}
+.form-count {
+    float: right;
+    letter-spacing: 1px;
+}
+
+/* Extra text, positioning stuff */
+.sidebar-extra-text {
+    position: absolute;
+    bottom: 10px;
+    width: 80%;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    text-align: center;
+}
