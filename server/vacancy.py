@@ -3,13 +3,15 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_cors import CORS
 import os, sys
+import logging
 
-## TODO: figure out how to convert # of bathrooms to # of full and half bathrooms
-## TODO: not sure what ComGrdFlr is
-## TODO: price is Unicode string in DB, should convert to float
+# TODO: restrict CORS allowed origins
+
+# enable logging for cors
+logging.getLogger('flask_cors').level = logging.DEBUG
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/filter": {"origins": "*"}})
+cors = CORS(app, resources={r"/filter": {"origins": "*"},r"/get_one": {"origins": "*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 # get Remote DB credentials from settings file
@@ -37,7 +39,7 @@ class Vacancy(db.Model):
     """
     __tablename__ = 'vacant'
     # Handle for parcel (unique ID for joining with other datasets) - text
-    parcel_id = db.Column('Handle',db.Unicode, primary_key=True)
+    _parcel_id = db.Column('Handle',db.Unicode, primary_key=True)
     # neighborhood number (codes)
     nbrhd_code = db.Column('Nbrhd',db.Integer)
     # neighborhood name (text)
@@ -92,7 +94,7 @@ class Vacancy(db.Model):
 
     def __repr__(self):
         """returns a printable representation of the object"""
-        return f"Vacancy('{self.parcel_id}','{self.nbrhd_name}','{self.nbrhd_code}','{self.lot_type}', \
+        return f"Vacancy('{self._parcel_id}','{self.nbrhd_name}','{self.nbrhd_code}','{self.lot_type}', \
                         '{self.street_addr}','{self.zip}','{self.bath_full}','{self.bath_half}',\
                         '{self.bath_total}','{self.com_grd_flr}','{self.num_stories}','{self.ward_num}',\
                         '{self.attic}','{self.basement_type}','{self.wall_material}','{self.construction}',\
@@ -133,15 +135,14 @@ def ConvertLotType(aLotType,aIncludePossible):
 
     return query_strings
 
-
-@app.route('/get_first', methods=["GET"])
+@app.route('/get_one', methods=["GET"])
 def data_first():
     """
-    Returns first record in database (for debugging)
+    Returns one record with parcel id '10466040140' in database (for debugging)
     """
-    one_vacancy = Vacancy.query.first()
+    one_vacancy = Vacancy.query.filter_by(_parcel_id="10466040140")
     output = vacancies_schema.dump(one_vacancy).data
-    return jsonify({'user' : output})
+    return jsonify({'result' : output})
 
 @app.route('/get_all', methods=["GET"])
 def data_dump():
@@ -150,7 +151,7 @@ def data_dump():
     """
     vacancies = Vacancy.query.all()
     output = vacancies_schema.dump(vacancies).data
-    return jsonify({'user' : output})
+    return jsonify({'results' : output})
 
 @app.route('/filter', methods=["POST"])
 def query():
@@ -169,6 +170,7 @@ def query():
     	"PriceMax" : 10000
     }
     note:  LotType is a integer where 0 = both, 1 = lots, 2 = buildings
+    note:  IncludePossible = true will return data labeled as "possible" lots or buildings
     """
     req_data = request.get_json()
     # initialize
@@ -226,7 +228,7 @@ def query():
 
     # output query result JSON
     output = vacancies_schema.dump(qryresult).data
-    return jsonify({'user' : output})
+    return jsonify({'results' : output})
 
 
 # entry point
