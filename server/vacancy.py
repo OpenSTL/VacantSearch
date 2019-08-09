@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_cors import CORS
+from sqlalchemy.sql.expression import and_
 import os, sys
 import logging
 
@@ -177,6 +178,7 @@ def query():
     NumBathsMin,NumBathsMax,LotType,SqFtMin,SqFtMax,PriceMin,PriceMax = None,None,None,None,None,None,None
     Neighborhoods = []
     IncludePossible = False
+    filter_group = []
     # parse json attributes
     if "Neighborhoods" in req_data:
         Neighborhoods = req_data['Neighborhoods']
@@ -205,22 +207,21 @@ def query():
             \n\tSqFt: {} - {}\n\tPirce: {} - {}"\
     .format(Neighborhoods,lot_type_list,NumBathsMin,NumBathsMax,SqFtMin,SqFtMax,PriceMin,PriceMax))
 
+    # if values specified, add to filter group
+    if Neighborhoods:
+        filter_group.append(Vacancy.nbrhd_code.in_(Neighborhoods))
+    filter_group.append(Vacancy.lot_type.in_(lot_type_list))
+    if NumBathsMin:
+        filter_group.append(Vacancy.bath_total >= NumBathsMin)
+    if NumBathsMax:
+        filter_group.append(Vacancy.bath_total <= NumBathsMax)
+    if SqFtMin:
+        filter_group.append(Vacancy.size_sqFt >= SqFtMin)
+    if SqFtMax:
+        filter_group.append(Vacancy.size_sqFt <= SqFtMax)
+
     # Query DB
-    qryresult = Vacancy.query.filter(Vacancy.nbrhd_code.in_(Neighborhoods),\
-                                    Vacancy.lot_type.in_(lot_type_list),\
-                                    Vacancy.bath_total >= NumBathsMin,\
-                                    Vacancy.bath_total <= NumBathsMax,\
-                                    Vacancy.size_sqFt >= SqFtMin,\
-                                    Vacancy.size_sqFt <= SqFtMax,\
-                                    # Vacancy.price_bldg >= PriceMin,\
-                                    # Vacancy.price_bldg <= PriceMax,\
-                                    # Vacancy.price_lot >= PriceMin,\
-                                    # Vacancy.price_lot <= PriceMax,\
-                                    # Vacancy.price_sidelot >= PriceMin,\
-                                    # Vacancy.price_sidelot <= PriceMax,\
-                                    # Vacancy.price_residential >= PriceMin,\
-                                    # Vacancy.price_residential <= PriceMax,\
-                                    ).all()
+    qryresult = Vacancy.query.filter(and_(*filter_group)).all()
 
     # Uncomment below to print query results to console
     # for x in qryresult:
