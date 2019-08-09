@@ -66,8 +66,9 @@ The Postman page should look like the following:
 ![POST Response Example](./documentation/response-example.png)
 
 5. You can now try modifying the POST request payload. Here is a detailed explanation of each JSON key means:
+
 | Key (filter criteria)           | Expected Datatype   | Description |
-| ------------- |-------------| -----|
+| ------------- | ------------- | ----- |
 | Neighborhoods  | List of integers         |  Neighborhoods to include in search<br> Refer to [Neighborhood Codes](https://github.com/OpenDataSTL/housing/blob/master/static/st-louis-neighborhoods.json) |
 | LotType        | Integer values<br> 0,1 or 2 | `0` = both vacant lots & building<br> `1` = only vacant lots<br> `2` = only vacant buildings |
 | IncludePossible| Boolean                  | Whether to include "possible" entries <br>  `True` will return data labeled as "possible" lots or buildings|
