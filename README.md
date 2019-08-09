@@ -45,7 +45,7 @@ cd server/
 ```
 python vacancy.py
 ```
-3. Open Postman, create a POST request to `http://127.0.0.1:5000/filter` with the following example JSON:
+3. Open Postman [(get Postman if you haven't already)](https://www.getpostman.com/downloads/), create a POST request to `http://127.0.0.1:5000/filter` with the following example JSON payload:
 ```
 {
 	"Neighborhoods" : [34,13],
@@ -60,10 +60,59 @@ python vacancy.py
 }
 ```
 The Postman page should look like the following:
-![Postman Example](./documentation/post-example.png)
+![POST Example](./documentation/post-example.png)
 
-4. You should get a response JSON with vacancy records that matches the criteria specified in the input JSON.
+4. You should get a response JSON with vacancy records that matches the criteria specified in the POST request. The response should somewhat resemble this:
+![POST Response Example](./documentation/response-example.png)
+
+5. You can now try modifying the POST request payload. Here is a detailed explanation of each JSON key means:
+| Key (filter criteria)           | Expected Datatype   | Description |
+| ------------- |-------------| -----|
+| Neighborhoods  | List of integers         |  Neighborhoods to include in search<br> Refer to [Neighborhood Codes](https://github.com/OpenDataSTL/housing/blob/master/static/st-louis-neighborhoods.json) |
+| LotType        | Integer values<br> 0,1 or 2 | `0` = both vacant lots & building<br> `1` = only vacant lots<br> `2` = only vacant buildings |
+| IncludePossible| Boolean                  | Whether to include "possible" entries <br>  `True` will return data labeled as "possible" lots or buildings|
+| NumBathsMin    | Integer                  | Minimum number of bathrooms|
+| NumBathsMax    | Integer                  | Maximum number of bathrooms|
+| SqFtMin        | Float                    | Minimum square footage|
+| SqFtMax        | Float                    | Maximum square footage |
+| PriceMin       | Float                    | Minimum price              |
+| PriceMax       | Float                    | Maximum price          |
+
 
 ### Deployment
 🚧 Work in Progress 🚧
+
+Once you got the application to run locally, it is ready to be deployed on a real back-end server!
+
 1. Move `vacancy.service` file into systemd directory.
+
+
+### Front-End Integration 🔧
+This project includes a stripped-down front-end that makes Ajax calls to the filter API described above.  
+
+##### Use Local Back-end Server
+
+1. Make sure that the flask application is still running. If not, in the `server/` directory, run the following command:
+following command:
+```
+python vacancy.py
+```
+2. Navigate to the `Test/` directory in this repository.
+3. (Optional) Open `sampleFrontEnd.html` in text editor. Find and modify the POST request JSON payload if you'd wish to filter on certain fields.
+4. Double-click on `sampleFrontEnd.html`. You should see the following webpage:
+![HTML Example](./documentation/html-example.png)
+The JSON response is printed on the page. Alternatively, you can also use your favorite web console to examine the response.
+
+##### Use Deployment Back-end Server
+1. If you don't know the OpenSTL server filter API url, contact repo-owner to obtain it.
+2. Navigate to the `Test/` directory in this repository.
+3. Open `sampleFrontEnd.html` in text editor. Navigate to the script section and modify the url to the OpenSTL server API url.
+```
+// !! Replace "127.0.0.1:5000" below with depolyment server hostname
+var url = "http://some-api-url/filter";
+```
+4. (Optional) In `sampleFrontEnd.html`, modify the POST request JSON payload if you'd wish to filter on certain fields.
+
+5. Double-click on `sampleFrontEnd.html`. You should see the following webpage:
+![HTML Example](./documentation/html-example.png)
+The JSON response is printed on the page. Alternatively, you can also use your favorite web console to examine the response.
