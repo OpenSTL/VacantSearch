@@ -211,7 +211,6 @@ def query():
     if Neighborhoods:
         filter_group.append(Vacancy.nbrhd_code.in_(Neighborhoods))
     if lot_type_list:
-        print("hello world")   
         filter_group.append(Vacancy.lot_type.in_(lot_type_list))
     if NumBathsMin:
         filter_group.append(Vacancy.bath_total >= NumBathsMin)
