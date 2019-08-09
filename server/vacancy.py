@@ -210,7 +210,9 @@ def query():
     # if values specified, add to filter group
     if Neighborhoods:
         filter_group.append(Vacancy.nbrhd_code.in_(Neighborhoods))
-    filter_group.append(Vacancy.lot_type.in_(lot_type_list))
+    if lot_type_list:
+        print("hello world")   
+        filter_group.append(Vacancy.lot_type.in_(lot_type_list))
     if NumBathsMin:
         filter_group.append(Vacancy.bath_total >= NumBathsMin)
     if NumBathsMax:
@@ -219,6 +221,14 @@ def query():
         filter_group.append(Vacancy.size_sqFt >= SqFtMin)
     if SqFtMax:
         filter_group.append(Vacancy.size_sqFt <= SqFtMax)
+
+   # Vacancy.price_bldg >= PriceMin,\
+   # Vacancy.price_bldg <= PriceMax,\
+   # Vacancy.price_lot >= PriceMin,\
+   # Vacancy.price_sidelot >= PriceMin,\
+   # Vacancy.price_sidelot <= PriceMax,\
+   # Vacancy.price_residential >= PriceMin,\
+   # Vacancy.price_residential <= PriceMax
 
     # Query DB
     qryresult = Vacancy.query.filter(and_(*filter_group)).all()
