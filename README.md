@@ -7,6 +7,7 @@
    - **Virtualenv** - Python environment manager
  - **Postman** - Tool to send API requests and read responses. [(Get Postman)](https://www.getpostman.com/downloads/)
  - **Login credentials to OpenSTL Database** - Please contact repo owner for credentials
+ - **GitBash** - [(Get this only if you have Windows operating system)](https://git-scm.com/downloads)
 
 ### Installing
  ##### Create virtual environment
@@ -15,9 +16,17 @@
  virtualenv -p python3 [envname]
  ```
  Once environment is created, run:
+ 
+ For Mac or Linux,
  ```
  source [envname]/bin/activate
  ```
+ 
+ For Windows,
+ ```
+ source [envname]/Scripts/activate
+ ```
+ 
  2. In repo directory, run the following command:
  ```
  pip install -r requirements.txt
@@ -26,7 +35,7 @@
 
  ##### Connect to OpenSTL Database
  1. Get access credentials from repo owner -- you will need a username and a password.
- 2. Open `settings.txt` with text editor of choice.
+ 2. Open `settings.txt` in the top-level directory of the repository with text editor of choice.
  3. Replace ``[yourUsername]`` and ``[yourPassword]`` with your credentials, then save.
  ```
  username:[yourUsername]
