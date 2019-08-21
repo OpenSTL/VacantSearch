@@ -2,7 +2,7 @@
 ## Backend
 ### Prerequisites
  - **Python** :snake:
-   - **Python3** - Python language interpreter
+   - **Python3.7** - Python language interpreter
    - **Pip** - Python package manager
    - **Virtualenv** - Python environment manager
  - **Postman** - Tool to send API requests and read responses. [(Get Postman)](https://www.getpostman.com/downloads/)
