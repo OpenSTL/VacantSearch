@@ -40,41 +40,6 @@ a:hover {
 }
 /*#endregion GLOBALS*/
 
-/*#region RESULTS LISTVIEW */
-.results-container {
-  margin-left: -.6em;
-  margin-right: -.6em;
-  max-height: 75vh;
-  box-shadow: 0 0 2rem rgba(0,0,0,.075);
-  border: var(--item-border);
-  overflow-y: scroll;
-}
-.results-item {
-  display: flex;
-  justify-content: space-between;
-  align-content: baseline;
-  min-height: 3.5rem;
-  padding: .6rem 1rem; /* 1.6rem */
-  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
-  border-left: 1px solid var(--sidebar-highlight);
-  cursor: pointer;
-}
-.result-item-icon {
-  font-size: 5em;
-}
-.result-item-details {
-  flex: 1;
-  padding-left: .6rem;
-}
-.result-item-stats {
-  display: flex;
-  flex-direction: column;
-  text-align: right;
-}
-
-
-/*#endregion RESULTS LISTVIEW */
-
 .tab-content-search {
   /* correct margins and padding later */
 }
@@ -87,7 +52,7 @@ a:hover {
   bottom: 0;
   width: var(--sidebar-width);
   background-color: var(--sidebar-bg-color); /*transparent is kind of cool*/
-  border-right: 1px solid rgba(0, 0, 0, 0.3);
+  border-right: 1px solid red;
   box-shadow: 0 0 2rem rgba(0, 0, 0, 0.3); /* blue shadow (42, 43, 116, 0.438) */
   transition: left .3s ease-in-out;
 }
@@ -272,6 +237,39 @@ select {
   width: 100%;
 }
   /*#endregion FORM SECTION */
+  
+  /*#region RESULTS LISTVIEW */
+.results-container {
+  margin-left: -.6em;
+  margin-right: -.6em;
+  max-height: 75vh;
+  box-shadow: 0 0 2rem rgba(0,0,0,.075);
+  border: var(--item-border);
+  overflow-y: scroll;
+}
+.results-item {
+  display: flex;
+  justify-content: space-between;
+  align-content: baseline;
+  min-height: 3.5rem;
+  padding: .6rem 1rem; /* 1.6rem */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  border-left: 1px solid var(--sidebar-highlight);
+  cursor: pointer;
+}
+.result-item-icon {
+  font-size: 5em;
+}
+.result-item-details {
+  flex: 1;
+  padding-left: .6rem;
+}
+.result-item-stats {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+/*#endregion RESULTS LISTVIEW */
 
   /*#region EXTRAS */
   /* SEARCH BAR (optional) */

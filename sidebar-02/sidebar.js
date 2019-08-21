@@ -14,7 +14,6 @@ toggleSidebarBtn.addEventListener('click', () => {
 });
 
 tabRow.addEventListener('click', (e) => {
-  console.log(e.target);
   if (e.target.classList.contains('tab-search')) {
     setTabActive('search');
   } else if (e.target.classList.contains('tab-results')) {

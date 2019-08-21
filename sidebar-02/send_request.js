@@ -2,9 +2,9 @@
 const sidebarForm = document.getElementById('sidebar-form');
 //const btnReset = document.querySelector('.btn-reset');
 // extra stuff
-const priceCount = document.querySelector('.price-count');
-const acresCount = document.querySelector('.acres-count');
-const bathsCount = document.querySelector('.baths-count');
+//const priceCount = document.querySelector('.price-count');
+//const acresCount = document.querySelector('.acres-count');
+//const bathsCount = document.querySelector('.baths-count');
 
 // API_URL
 const API_URL = 'http://api.openstl.org:8080/filter';

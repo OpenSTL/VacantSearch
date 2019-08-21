@@ -40,13 +40,13 @@
         <br>
         <!-- Tabs -->
         <div class="tab-row">
-          <div class="tab tab-search">
+          <div class="tab tab-search tab-active">
             <span class="tab-search">
               <i class="fa fa-search"></i>
               Search
             </span> <!--added class to fix toggle-->
           </div>
-          <div class="tab tab-results tab-active">
+          <div class="tab tab-results">
             <span class="tab-results">
               <i class="fa fa-list"></i>
               Results
@@ -56,16 +56,16 @@
         <!-- Tabbed Sections -->
         <section class="sidebar-section sidebar-tab-content">
           <!-- Tab 1: Search Form -->
-          <div class="tab-content tab-content-search">
+          <div class="tab-content tab-content-search tab-active">
             <form action="post" id="sidebar-form">
               <fieldset class="form-fieldset">
                 <label for="form-price" class="form-section">
                   Price
                   <div>
-                    <input type="number" name="form-acres" id="form-acres"
+                    <input type="number" name="form-price" id="form-price"
                       min="0" value="80000"
                       max="10000000" step="10000">
-                    <input type="number" name="form-acres" id="form-acres1"
+                    <input type="number" name="form-price1" id="form-price1"
                       min="0" value="250000"
                       max="10000000" step="10000">
                   </div>
@@ -82,11 +82,11 @@
                   Sq Ft
                   <div>
                     <input type="number" name="form-acres" id="form-acres"
-                      min="0.1" value="0.5"
-                      max="20" step="0.1">
+                      min="200" value="1200"
+                      max="20000" step="100">
                     <input type="number" name="form-acres" id="form-acres1"
-                      min="0.1" value="0.5"
-                      max="20" step="0.1">
+                      min="200" value="2300"
+                      max="20000" step="100">
                   </div>
                 </label>
                 <p class="form-section">
@@ -201,7 +201,7 @@
             </form>
           </div>
           <!-- Tab 2: Results ListView -->
-          <div class="tab-content tab-content-results tab-active">
+          <div class="tab-content tab-content-results">
             <div class="results-container">
               <div class="results-item">
                 <i class="fa fa-home result-item-icon"></i>
