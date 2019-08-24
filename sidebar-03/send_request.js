@@ -25,7 +25,7 @@ sidebarForm.addEventListener('submit', (event) => {
   // !! sample POST request JSON payload
   const data = JSON.stringify({
     //"Neighborhoods": [34, 13],
-    "Neighborhoods": neighborhood,  // 1 nbhood
+    "Neighborhoods": neighborhood,  // 1 nbhood value (for now)
     "LotType": 3,  // 1 vacant lot, 2 vacant building, 3 both
     "IncludePossible": true,
     "NumBathsMin": minBaths,

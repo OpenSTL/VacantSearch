@@ -175,6 +175,9 @@ a:hover {
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
   border-left: 2px solid var(--sidebar-highlight);
 }
+.form-section-neighborhood {
+  flex-direction: column;
+}
 .form-section.no-border {
   /* for double slider */
   border-bottom: none;
@@ -251,8 +254,6 @@ select {
   
   /*#region RESULTS LISTVIEW */
 .results-container {
-  margin-left: -.6em;
-  margin-right: -.6em;
   max-height: 75vh;
   box-shadow: 0 0 2rem rgba(0,0,0,.075);
   border: var(--item-border);
