@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset='utf-8' />
-    <title>Display a map</title>
+    <title>Vacancy Search | Map</title>
     <meta name='viewport'
       content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <!-- MapBox Imports -->
@@ -18,9 +18,6 @@
     <link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel='stylesheet' href='main.css'>
-    <style>
-      #map { position:absolute; top:0; bottom:0; width:100%; }
-    </style>
   </head>
   <body>
 
@@ -38,40 +35,41 @@
           <p>Search for vacant houses in St. Louis</p>
         </header>
         <br>
-        <!-- Tab Headers -->
-        <div class="tab-row">
-          <div class="tab tab-search tab-active">
-            <span class="tab-search">
-              <i class="fa fa-search"></i>
-              Search
-            </span> <!--added class to fix toggle-->
+        <section class="sidebar-section">
+          <!-- Tab Headers -->
+          <div class="tab-row">
+            <div class="tab tab-search tab-active">
+              <span class="tab-search">
+                <i class="fa fa-search"></i>
+                Search
+              </span> <!--added class to fix toggle-->
+            </div>
+            <div class="tab tab-results">
+              <span class="tab-results">
+                <i class="fa fa-list"></i>
+                Results
+              </span> <!--added class to fix toggle-->
+            </div>
           </div>
-          <div class="tab tab-results">
-            <span class="tab-results">
-              <i class="fa fa-list"></i>
-              Results
-            </span> <!--added class to fix toggle-->
-          </div>
-        </div>
-        <!-- Tabbed Sections -->
-        <section class="sidebar-section sidebar-tab-content">
-          <!-- Tab 1: Search Form -->
-          <div class="tab-content tab-content-search tab-active">
-            <form action="post" id="sidebar-form">
-              <fieldset class="form-fieldset">
-                <label for="form-price-min" class="form-section">
-                  Price
-                  <div class="input-container">
-                    <div><span class="subtext">min </span><input type="number"
-                        name="form-price-min" id="form-price-min"
-                        min="0" value="80000"
-                        max="10000000" step="10000"></div>
-                    <div><span class="subtext">max </span><input type="number"
-                        name="form-price-max" id="form-price-max"
-                        min="0" value="250000"
-                        max="10000000" step="10000"></div>
-                  </div>
-                  <!--<div class="double-slider">
+          <!-- Tabbed Sections -->
+          <div class="sidebar-tab-content">
+            <!-- Tab 1: Search Form -->
+            <div class="tab-content tab-content-search tab-active">
+              <form action="post" id="sidebar-form">
+                <fieldset class="form-fieldset">
+                  <label for="form-price-min" class="form-section">
+                    Price
+                    <div class="input-container">
+                      <div><span class="subtext">min </span><input type="number"
+                          name="form-price-min" id="form-price-min"
+                          min="0" value="80000"
+                          max="10000000" step="10000"></div>
+                      <div><span class="subtext">max </span><input type="number"
+                          name="form-price-max" id="form-price-max"
+                          min="0" value="250000"
+                          max="10000000" step="10000"></div>
+                    </div>
+                    <!--<div class="double-slider">
                     <input type="range" name="form-price" id="form-price"
                       min="40" value="125"
                       max="999" step="5">
@@ -79,77 +77,79 @@
                       min="40" value="425"
                       max="999" step="5">
                   </div>-->
-                </label>
-                <label for="form-acres-min" class="form-section">
-                  Sq Ft
-                  <div class="input-container">
-                    <div><span class="subtext">min </span><input type="number"
-                        name="form-acres-min"
-                        id="form-acres-min"
-                        min="200" value="1200"
-                        max="20000" step="100"></div>
-                    <div><span class="subtext">max </span><input type="number"
-                        name="form-acres-max"
-                        id="form-acres-max"
-                        min="200" value="2300"
-                        max="20000" step="100"></div>
-                  </div>
-                </label>
-                <p class="form-section form-section-neighborhood">
-                  <label for="form-neighborhood">Neighborhood</label>
-                  <select id="form-neighborhood" name="form-neighborhood">
-                    <!-- Autofill this from json data, 72 nbhoods -->
-                  </select>
-                </p>
-                <label for="form-baths-min" class="form-section">
-                  Baths
-                  <div>
-                    <select name="form-baths-min" id="form-baths-min"
-                      class="form-baths"
-                      min="0" max="6" step="0.5">
-                      <!-- autofill? -->
-                      <option>.5</option>
-                      <option selected="selected">1</option>
-                      <option>1.5</option>
-                      <option>2</option>
-                      <option>2.5</option>
-                      <option>3</option>
-                      <option>3.5</option>
-                      <option>4</option>
-                      <option>4.5</option>
-                      <option>5</option>
-                      <option>5.5</option>
-                      <option>6</option>
+                  </label>
+                  <label for="form-acres-min" class="form-section">
+                    Sq Ft
+                    <div class="input-container">
+                      <div><span class="subtext">min </span><input type="number"
+                          name="form-acres-min"
+                          id="form-acres-min"
+                          min="200" value="1200"
+                          max="20000" step="100"></div>
+                      <div><span class="subtext">max </span><input type="number"
+                          name="form-acres-max"
+                          id="form-acres-max"
+                          min="200" value="2300"
+                          max="20000" step="100"></div>
+                    </div>
+                  </label>
+                  <label for="form-neighborhood" class="form-section
+                    form-section-neighborhood">
+                    Neighborhood
+                    <select id="form-neighborhood" name="form-neighborhood">
+                      <!-- Autofill this from json data, 72 nbhoods -->
                     </select>
-                    -
-                    <select name="form-baths-max" id="form-baths-max"
-                      class="form-baths"
-                      min="0" max="6" step="0.5">
-                      <!-- autofill? -->
-                      <option>.5</option>
-                      <option>1</option>
-                      <option>1.5</option>
-                      <option>2</option>
-                      <option selected="selected">2.5</option>
-                      <option>3</option>
-                      <option>3.5</option>
-                      <option>4</option>
-                      <option>4.5</option>
-                      <option>5</option>
-                      <option>5.5</option>
-                      <option>6</option>
-                    </select>
-                  </div>
-                </label>
-              </fieldset>
-              <input type="submit" value="Search" class="form-submit-btn">
-            </form>
-          </div>
-          <!-- Tab 2: Results ListView -->
-          <div class="tab-content tab-content-results">
-            <div class="results-container" id="results-container">
-              <!-- Default message -->
-              <p>No matching results. Please try another search</p>
+                  </label>
+                  <label for="form-baths-min" class="form-section">
+                    Baths
+                    <div>
+                      <select name="form-baths-min" id="form-baths-min"
+                        class="form-baths"
+                        min="0" max="6" step="0.5">
+                        <!-- autofill? -->
+                        <option>.5</option>
+                        <option selected="selected">1</option>
+                        <option>1.5</option>
+                        <option>2</option>
+                        <option>2.5</option>
+                        <option>3</option>
+                        <option>3.5</option>
+                        <option>4</option>
+                        <option>4.5</option>
+                        <option>5</option>
+                        <option>5.5</option>
+                        <option>6</option>
+                      </select>
+                      -
+                      <select name="form-baths-max" id="form-baths-max"
+                        class="form-baths"
+                        min="0" max="6" step="0.5">
+                        <!-- autofill? -->
+                        <option>.5</option>
+                        <option>1</option>
+                        <option>1.5</option>
+                        <option>2</option>
+                        <option selected="selected">2.5</option>
+                        <option>3</option>
+                        <option>3.5</option>
+                        <option>4</option>
+                        <option>4.5</option>
+                        <option>5</option>
+                        <option>5.5</option>
+                        <option>6</option>
+                      </select>
+                    </div>
+                  </label>
+                </fieldset>
+                <input type="submit" value="Search" class="form-submit-btn">
+              </form>
+            </div>
+            <!-- Tab 2: Results ListView -->
+            <div class="tab-content tab-content-results">
+              <div class="results-container" id="results-container">
+                <!-- Default message -->
+                <p>No matching results. Please try another search</p>
+              </div>
             </div>
           </div>
         </section>

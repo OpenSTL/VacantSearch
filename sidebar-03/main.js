@@ -343,10 +343,7 @@ const fillNeighborhoods = () => {
 }
 
 window.onload = fillNeighborhoods();
-
 //const btnReset = document.querySelector('.btn-reset');
-
-// ATTACH EVENTS
 
 const handleSubmitSearchForm = (event) => {
   event.preventDefault();
@@ -470,7 +467,7 @@ const createResultsTile = (resultsItemJSON) => {
   return resultsItem;
 }
 
-// ATTACH EVENTS LISTENERS TO DOM
+// ATTACH EVENTS LISTENERS TO DOM:
 
 // toggle entire sidebar
 toggleSidebarBtn.addEventListener('click', () => {
