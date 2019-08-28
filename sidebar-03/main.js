@@ -6,7 +6,7 @@ const tabRow = document.querySelector('.tab-row');
 const toggleSidebarBtn = document.querySelector('.toggle-btn');
 const toggleIcon = document.getElementById('toggle-icon');
 
-const API_URL = 'http://api.openstl.org:8080/filter';
+const API_URL = 'https://api.openstl.org:8080/filter';
 
 // FUNCTIONS
 // for switching tabs in sidebar
