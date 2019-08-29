@@ -65,6 +65,28 @@ map.on('load', function () {
 
 });
 
+map.on('click', function(e) {
+
+  console.log(e);
+
+  var features = map.queryRenderedFeatures(e.point, {
+      layers: ['parcel-highlights']
+  });
+
+  console.log(features);
+
+  if (!features.length) {
+      return;
+  }
+
+  features.forEach(function(f){
+      if(f.hasOwnProperty('properties') && f.properties.hasOwnProperty('HANDLE')){
+          console.log(f.properties.HANDLE);
+      }
+  });
+
+});
+
 function highLightParcels(layer, handles)
     {
         if(!Array.isArray(handles)){

@@ -6,7 +6,7 @@ const tabRow = document.querySelector('.tab-row');
 const toggleSidebarBtn = document.querySelector('.toggle-btn');
 const toggleIcon = document.getElementById('toggle-icon');
 
-const API_URL = 'https://api.openstl.org:8080/filter';
+const API_URL = 'http://api.openstl.org:8080/filter';
 
 // FUNCTIONS
 // for switching tabs in sidebar
@@ -346,6 +346,7 @@ window.onload = fillNeighborhoods();
 //const btnReset = document.querySelector('.btn-reset');
 
 const handleSubmitSearchForm = (event) => {
+
   event.preventDefault();
   // Get Data from Form
   const formData = new FormData(sidebarForm);
@@ -388,8 +389,16 @@ const handleSubmitSearchForm = (event) => {
       console.log('finished generating results');
       // set results tab active
       setTabActive('results');
+      //add tiles to map
+      const searchHandles = [];
+      jsonResponse.results.forEach(e => {
+        searchHandles.push(e._parcel_id);
+      });
+      console.log(searchHandles);
+      highLightParcels('parcel-highlights', searchHandles);
     }
   }
+
 };
 
 const populateResults = (json) => {
