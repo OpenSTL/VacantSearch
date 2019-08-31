@@ -346,7 +346,6 @@ window.onload = fillNeighborhoods();
 //const btnReset = document.querySelector('.btn-reset');
 
 const handleSubmitSearchForm = (event) => {
-
   event.preventDefault();
   // Get Data from Form
   const formData = new FormData(sidebarForm);
@@ -383,23 +382,39 @@ const handleSubmitSearchForm = (event) => {
       // log JSON in web console
       console.log(jsonResponse);
       // also display JSON response as html
-      const resultsJSON = JSON.stringify(jsonResponse);
-      console.log(resultsJSON);
+      //const resultsJSON = JSON.stringify(jsonResponse);
       populateResults(jsonResponse);
       console.log('finished generating results');
       // set results tab active
       setTabActive('results');
-      //add tiles to map
-      const searchHandles = [];
-      jsonResponse.results.forEach(e => {
-        searchHandles.push(e._parcel_id);
-      });
-      console.log(searchHandles);
-      highLightParcels('parcel-highlights', searchHandles);
     }
   }
-
 };
+
+const addResultsListener = () => {
+  const resultsDOM = document.getElementById('results-container');
+  resultsDOM.addEventListener('click', (e) => {
+    console.log(e.target);
+  })
+}
+const addResultsAccordian = () => {
+  const resultsItems = document.getElementsByClassName('results-item');
+  console.log(resultsItems);
+  for (let i = 0; i < resultsItems.length; i++) {
+    resultsItems[i].onclick = () => {
+      resultsItems[i].classList.toggle('result-open');
+      //const content = this.nextElementSibling;
+      /*if (resultsItems[i].style.maxHeight !== '7.9rem') {
+        resultsItems[i].style.maxHeight = '7.9rem';
+        resultsItems[i].style.overflow = 'hidden';
+      } else {
+        resultsItems[i].style.maxHeight = 'initial';
+        resultsItems[i].style.overflow = 'initial';
+      }*/
+    }
+  }
+}
+
 
 const populateResults = (json) => {
   // get reference to results container
@@ -409,23 +424,27 @@ const populateResults = (json) => {
   const resultsJSON = json.results;
   if (resultsJSON.length < 1) {
     const noResultsText = document.createElement('p');
-    noResultsText.textContent = ('No matching results, please try another search');
+    noResultsText.textContent = 'No matching results, please try another search';
     resultsDOM.appendChild(noResultsText);
     return;
-  }
-  for (let item in resultsJSON) {
+  } //else {
+  for (item in resultsJSON) {
     console.log(resultsJSON[item]);
     let resultsItem = createResultsTile(resultsJSON[item]);
     resultsDOM.appendChild(resultsItem);
   }
+  //addResultsListener();
+  addResultsAccordian();
 }
 
 const createResultsTile = (resultsItemJSON) => {
-  // needs: Price, Baths, SqFt, Name, ...?
+  // center description items
   const id = resultsItemJSON._parcel_id;
   const nbhoodName = resultsItemJSON.nbrhd_name;
   const nbhoodCode = resultsItemJSON.nbrhd_code;
-  const acres = resultsItemJSON.acres
+  const acres = resultsItemJSON.acres;
+  const buildingType = resultsItemJSON.bldg_type;
+  // top right info items
   const price = resultsItemJSON.price_residential;
   const sqFt = Math.floor(resultsItemJSON.size_sqFt);
   const baths = resultsItemJSON.bath_total;
@@ -433,15 +452,41 @@ const createResultsTile = (resultsItemJSON) => {
   // create resultsItem HTML component
   const resultsItem = document.createElement('div');
   resultsItem.classList = 'results-item';
+  // results icon(s) container
+  const resultsItemIconContainer = document.createElement('div');
+  resultsItemIconContainer.classList = 'results-item-icon-container';
   // icon (house or bldg) <-- add logic later
   const resultsItemIcon = document.createElement('i');
-  resultsItemIcon.classList = 'fa fa-home results-item-icon';
-  resultsItem.appendChild(resultsItemIcon);
+  resultsItemIcon.classList = 'fa results-item-icon';
+  resultsItemIconContainer.appendChild(resultsItemIcon); // append before appending question icon
+  // add 2nd icon question mark and append it if first word in lot_type is 'Possible'
+  if (resultsItemJSON.lot_type.split(' ')[0] === "Possible") {
+    // remove 'Possible' from lot_type so that switch statement will work
+    const realLotType = resultsItemJSON.lot_type.split(' ').slice(1).join(' ');
+    resultsItemJSON.lot_type = realLotType;
+    const resultsItemIcon2 = document.createElement('i');
+    resultsItemIcon2.classList = 'fa fa-question results-item-icon';
+    resultsItemIconContainer.appendChild(resultsItemIcon2);
+  }
+  // if building, add building, if lot, add lot
+  switch (resultsItemJSON.lot_type) {
+    case 'Vacant Building':
+      resultsItemIcon.classList.add('fa-building');
+      break;
+    case 'Vacant Lot':
+      resultsItemIcon.classList.add('fa-seedling');
+      break;
+    default:
+      resultsItemIcon.classList.add('fa-question');
+  }
+  resultsItem.appendChild(resultsItemIconContainer);
   // results details
   const resultsDetails = document.createElement('div');
   resultsDetails.classList = 'results-item-details';
   const resultsDetailsHeading = document.createElement('h3');
-  resultsDetailsHeading.textContent = nbhoodName; //change later
+  const resultsDetailsHeadingSpan = document.createElement('span');
+  resultsDetailsHeadingSpan.textContent = nbhoodName; //change later
+  resultsDetailsHeading.appendChild(resultsDetailsHeadingSpan);
   // details list (can replace with something else)
   const resultsDetailsList = document.createElement('ul');
   const resultsDetailsId = document.createElement('li');
@@ -450,9 +495,12 @@ const createResultsTile = (resultsItemJSON) => {
   resultsDetailsNbhood.textContent = `nbCode: ${nbhoodCode}`;
   const resultsDetailsAcres = document.createElement('li');
   resultsDetailsAcres.textContent = `acres: ${acres}`;
+  const resultsDetailsBldgType = document.createElement('li');
+  resultsDetailsBldgType.textContent = `building: ${buildingType}`;
   resultsDetailsList.appendChild(resultsDetailsId);
   resultsDetailsList.appendChild(resultsDetailsNbhood);
   resultsDetailsList.appendChild(resultsDetailsAcres);
+  resultsDetailsList.appendChild(resultsDetailsBldgType);
   // add heading and list to details and add details to item
   resultsDetails.appendChild(resultsDetailsHeading);
   resultsDetails.appendChild(resultsDetailsList);
@@ -482,8 +530,8 @@ const createResultsTile = (resultsItemJSON) => {
 toggleSidebarBtn.addEventListener('click', () => {
   sidebarDOM.classList.toggle('active');
   toggleSidebarBtn.classList.toggle('active');
-  toggleIcon.classList.toggle('fa-angle-left');
-  toggleIcon.classList.toggle('fa-angle-right');
+  toggleIcon.classList.toggle('fa-chevron-left');
+  toggleIcon.classList.toggle('fa-chevron-right');
 });
 // toggle sidebar tabs
 tabRow.addEventListener('click', (e) => {
