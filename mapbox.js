@@ -1,12 +1,12 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoibXJhbzIiLCJhIjoiY2ppZmFoazE5MGZiMjNwcXBtb3gyenk4cyJ9.nmFZofR-kOqj8yYfaJc2XQ';
-var map = new mapboxgl.Map({
+const map = new mapboxgl.Map({
   container: 'map', // container id
   style: 'mapbox://styles/mrao2/cjzuiuexr09mn1crs8tz35s3k', // stylesheet location
   center: [-90.199402, 38.627003], // starting position [lng, lat]
   zoom: 12 // starting zoom
 });
 
-var geocoder = new MapboxGeocoder({
+const geocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
 
   // limit results to Australia
@@ -16,8 +16,8 @@ var geocoder = new MapboxGeocoder({
   bbox: [-90.55234, 38.383975, -90.13074, 39.046325],
 
 });
-
-map.addControl(geocoder);
+// add geocoder to DOM
+document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
 map.on('load', function () {
 
@@ -56,49 +56,26 @@ map.on('load', function () {
       "circle-color": "#007cbf"
     }
   });
-  
 
-  
+
+
   geocoder.on('result', function (ev) {
     map.getSource('single-point').setData(ev.result.geometry);
   });
 
 });
 
-map.on('click', function(e) {
-
-  console.log(e);
-
-  var features = map.queryRenderedFeatures(e.point, {
-      layers: ['parcel-highlights']
-  });
-
-  console.log(features);
-
-  if (!features.length) {
-      return;
+function highLightParcels(layer, handles) {
+  if (!Array.isArray(handles)) {
+    handles = [];
   }
 
-  features.forEach(function(f){
-      if(f.hasOwnProperty('properties') && f.properties.hasOwnProperty('HANDLE')){
-          console.log(f.properties.HANDLE);
-      }
-  });
+  if (!handles.length) {
+    map.setFilter(layer, ['all', ['match', ['get', 'HANDLE'], ['x'], true, true]]);
+    map.setLayoutProperty('parcel-highlights', 'visibility', 'none');
+  } else {
+    map.setFilter(layer, ['all', ['match', ['get', 'HANDLE'], handles, true, false]]);
 
-});
-
-function highLightParcels(layer, handles)
-    {
-        if(!Array.isArray(handles)){
-            handles = [];
-        }
-
-        if(!handles.length){
-            map.setFilter(layer, ['all', ['match', ['get', 'HANDLE'], ['x'], true, true]]);
-            map.setLayoutProperty('parcel-highlights', 'visibility', 'none');
-        } else {
-            map.setFilter(layer, ['all', ['match', ['get', 'HANDLE'], handles, true, false]]);
-
-            map.setLayoutProperty('parcel-highlights', 'visibility', 'visible');
-        }
-    }
+    map.setLayoutProperty('parcel-highlights', 'visibility', 'visible');
+  }
+}
