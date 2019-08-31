@@ -14,9 +14,11 @@
     <link rel='stylesheet'
       href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css'
       type='text/css' />
-    <!-- UI Style Imports -->
-    <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- UI Style * Font Imports -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato%7COpen+Sans&display=swap"
+      rel="stylesheet">
+    <script src="https://kit.fontawesome.com/937f708276.js"></script>
     <link rel='stylesheet' href='main.css'>
   </head>
   <body>
@@ -27,12 +29,13 @@
     <div class="sidebar-container" class="sidebar">
       <div class="sidebar active" id="sidebar">
         <div class="toggle-btn">
-          <i class="fa fa-angle-left" id="toggle-icon"></i>
+          <i class="fa fa-chevron-left" id="toggle-icon"></i>
         </div>
         <!--Top Sidebar Header-->
         <header class="sidebar-section sidebar-header">
           <h1 class="heading_brand-name">OpenSTL</h1>
           <p>Search for vacant houses in St. Louis</p>
+          <div class="geocoder" id="geocoder"></div>
         </header>
         <br>
         <section class="sidebar-section">
@@ -69,14 +72,6 @@
                           min="0" value="250000"
                           max="10000000" step="10000"></div>
                     </div>
-                    <!--<div class="double-slider">
-                    <input type="range" name="form-price" id="form-price"
-                      min="40" value="125"
-                      max="999" step="5">
-                    <input type="range" name="form-price2" id="form-price1"
-                      min="40" value="425"
-                      max="999" step="5">
-                  </div>-->
                   </label>
                   <label for="form-acres-min" class="form-section">
                     Sq Ft
@@ -146,7 +141,21 @@
             </div>
             <!-- Tab 2: Results ListView -->
             <div class="tab-content tab-content-results">
-              <div class="results-container" id="results-container">
+              <header class="results-header">
+                <div class="icon-key">
+                  <i class="fa fa-building"></i>
+                  Building
+                </div>
+                <div class="icon-key">
+                  <i class="fa fa-seedling"></i>
+                  Lot
+                </div>
+                <div class="icon-key">
+                  <i class="fa fa-question"></i>
+                  Possible
+                </div>
+              </header>
+              <div class="results-container noscroll" id="results-container">
                 <!-- Default message -->
                 <p>No matching results. Please try another search</p>
               </div>
