@@ -5,6 +5,10 @@ const sidebarForm = document.getElementById('sidebar-form');
 const tabRow = document.querySelector('.tab-row');
 const toggleSidebarBtn = document.querySelector('.toggle-btn');
 const toggleIcon = document.getElementById('toggle-icon');
+const resultsDOM = document.getElementById('results-container');
+
+// look for a better way
+let searchHandles = [];
 
 const API_URL = 'http://api.openstl.org:8080/filter';
 
@@ -348,6 +352,7 @@ window.onload = fillNeighborhoods();
 const handleSubmitSearchForm = (event) => {
 
   event.preventDefault();
+  searchHandles = [];
   // Get Data from Form
   const formData = new FormData(sidebarForm);
   const priceMin = formData.get('form-price-min');
@@ -379,17 +384,15 @@ const handleSubmitSearchForm = (event) => {
   // read JSON when http request has been successfully (HTTP 200) completed (State DONE)
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
+      // get json response, populate results
       const jsonResponse = JSON.parse(xhr.responseText);
-      // log JSON in web console
-      console.log(jsonResponse);
-      // also display JSON response as html
-      //const resultsJSON = JSON.stringify(jsonResponse);
       populateResults(jsonResponse);
       console.log('finished generating results');
+
       // set results tab active
       setTabActive('results');
+
       //add tiles to map
-      const searchHandles = [];
       jsonResponse.results.forEach(e => {
         searchHandles.push(e._parcel_id);
       });
@@ -399,34 +402,27 @@ const handleSubmitSearchForm = (event) => {
   }
 };
 
-const addResultsListener = () => {
-  const resultsDOM = document.getElementById('results-container');
-  resultsDOM.addEventListener('click', (e) => {
-    console.log(e.target);
-  })
-}
-const addResultsAccordian = () => {
-  const resultsItems = document.getElementsByClassName('results-item');
-  console.log(resultsItems);
-  for (let i = 0; i < resultsItems.length; i++) {
-    resultsItems[i].onclick = () => {
-      resultsItems[i].classList.toggle('result-open');
-      //const content = this.nextElementSibling;
-      /*if (resultsItems[i].style.maxHeight !== '7.9rem') {
-        resultsItems[i].style.maxHeight = '7.9rem';
-        resultsItems[i].style.overflow = 'hidden';
-      } else {
-        resultsItems[i].style.maxHeight = 'initial';
-        resultsItems[i].style.overflow = 'initial';
-      }*/
+const toggleResultsItem = (parcel_id) => {
+  // loop through result items til id matches
+
+  const resultItems = document.getElementsByClassName('results-item');
+  for (let i = 0; i < resultItems.length; i++) {
+    if (parcel_id === resultItems[i].getAttribute('data-id')) {
+      resultItems[i].classList.toggle('result-open');
+      resultsDOM.scrollTop = (resultItems[i].offsetTop - 300);
     }
   }
 }
 
+const addResultsAccordian = (resultsItem) => {
+  resultsItem.onclick = () => {
+    resultsItem.classList.toggle('result-open');
+    // add zoom to parcel
+
+  }
+}
 
 const populateResults = (json) => {
-  // get reference to results container
-  const resultsDOM = document.getElementById('results-container');
   // clear resultsDOM container of previous results
   resultsDOM.innerHTML = '';
   const resultsJSON = json.results;
@@ -441,8 +437,6 @@ const populateResults = (json) => {
     let resultsItem = createResultsTile(resultsJSON[item]);
     resultsDOM.appendChild(resultsItem);
   }
-  //addResultsListener();
-  addResultsAccordian();
 }
 
 const createResultsTile = (resultsItemJSON) => {
@@ -452,6 +446,9 @@ const createResultsTile = (resultsItemJSON) => {
   const nbhoodCode = resultsItemJSON.nbrhd_code;
   const acres = resultsItemJSON.acres;
   const buildingType = resultsItemJSON.bldg_type;
+  const wallMaterial = resultsItemJSON.wall_material;
+  const basementType = resultsItemJSON.basement_type;
+  const centralHeat = resultsItemJSON.central_heat;
   // top right info items
   const price = resultsItemJSON.price_residential;
   const sqFt = Math.floor(resultsItemJSON.size_sqFt);
@@ -498,17 +495,26 @@ const createResultsTile = (resultsItemJSON) => {
   // details list (can replace with something else)
   const resultsDetailsList = document.createElement('ul');
   const resultsDetailsId = document.createElement('li');
-  resultsDetailsId.textContent = `id: ${id}`;
   const resultsDetailsNbhood = document.createElement('li');
-  resultsDetailsNbhood.textContent = `nbCode: ${nbhoodCode}`;
   const resultsDetailsAcres = document.createElement('li');
-  resultsDetailsAcres.textContent = `acres: ${acres}`;
   const resultsDetailsBldgType = document.createElement('li');
+  const resultsDetailsWallMat = document.createElement('li');
+  const resultsDetailsBasementType = document.createElement('li');
+  const resultsDetailsCentralHeat = document.createElement('li');
+  resultsDetailsId.textContent = `id: ${id}`;
+  resultsDetailsNbhood.textContent = `nbCode: ${nbhoodCode}`;
+  resultsDetailsAcres.textContent = `acres: ${acres}`;
   resultsDetailsBldgType.textContent = `building: ${buildingType}`;
+  resultsDetailsWallMat.textContent = `walls: ${wallMaterial}`;
+  resultsDetailsBasementType.textContent = `basement: ${basementType}`;
+  resultsDetailsCentralHeat.textContent = `heating: ${centralHeat}`;
   resultsDetailsList.appendChild(resultsDetailsId);
   resultsDetailsList.appendChild(resultsDetailsNbhood);
   resultsDetailsList.appendChild(resultsDetailsAcres);
   resultsDetailsList.appendChild(resultsDetailsBldgType);
+  resultsDetailsList.appendChild(resultsDetailsWallMat);
+  resultsDetailsList.appendChild(resultsDetailsBasementType);
+  resultsDetailsList.appendChild(resultsDetailsCentralHeat);
   // add heading and list to details and add details to item
   resultsDetails.appendChild(resultsDetailsHeading);
   resultsDetails.appendChild(resultsDetailsList);
@@ -527,8 +533,11 @@ const createResultsTile = (resultsItemJSON) => {
   resultsStats.appendChild(sqFtStat);
   // add resultsStats to resultsItem
   resultsItem.appendChild(resultsStats);
+  addResultsAccordian(resultsItem);
 
-  // add results item to DOM
+  // add parcel id as data attribute to match with map
+  resultsItem.setAttribute('data-id', id);
+
   return resultsItem;
 }
 
