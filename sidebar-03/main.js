@@ -404,11 +404,13 @@ const handleSubmitSearchForm = (event) => {
 
 const toggleResultsItem = (parcel_id) => {
   // loop through result items til id matches
-
   const resultItems = document.getElementsByClassName('results-item');
   for (let i = 0; i < resultItems.length; i++) {
+    if(resultItems[i].classList.contains('result-open')) {
+      resultItems[i].classList.remove('result-open');
+    }
     if (parcel_id === resultItems[i].getAttribute('data-id')) {
-      resultItems[i].classList.toggle('result-open');
+      resultItems[i].classList.add('result-open');
       resultsDOM.scrollTop = (resultItems[i].offsetTop - 300);
     }
   }
