@@ -82,6 +82,7 @@ map.on('click', function(e) {
   features.forEach(function(f){
       if(f.hasOwnProperty('properties') && f.properties.hasOwnProperty('HANDLE')){
           console.log(f.properties.HANDLE);
+          toggleResultsItem(f.properties.HANDLE);
       }
   });
 

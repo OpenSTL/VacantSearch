@@ -347,10 +347,8 @@ select {
 .results-item.result-open {
   max-height: initial;
   overflow: initial;
-  box-shadow: inset 0 0 1.8rem rgba(0,0,0,.1);
-}
-.results-item.result-open h3 span {
-  border-bottom: 1px solid var(--sidebar-highlight2);
+  box-shadow: inset 0 0 1.6rem rgba(0,0,0,.08);
+  border-left: 4px solid red;
 }
 .results-item:first-of-type {
   border-top-left-radius: .3rem;
