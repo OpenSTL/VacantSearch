@@ -5,6 +5,10 @@ const sidebarForm = document.getElementById('sidebar-form');
 const tabRow = document.querySelector('.tab-row');
 const toggleSidebarBtn = document.querySelector('.toggle-btn');
 const toggleIcon = document.getElementById('toggle-icon');
+const resultsDOM = document.getElementById('results-container');
+
+// look for a better way
+let searchHandles = [];
 
 const API_URL = 'https://api.openstl.org/filter';
 
@@ -348,6 +352,7 @@ window.onload = fillNeighborhoods();
 const handleSubmitSearchForm = (event) => {
 
   event.preventDefault();
+  searchHandles = [];
   // Get Data from Form
   const formData = new FormData(sidebarForm);
   const priceMin = formData.get('form-price-min');
@@ -379,18 +384,15 @@ const handleSubmitSearchForm = (event) => {
   // read JSON when http request has been successfully (HTTP 200) completed (State DONE)
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
+      // get json response, populate results
       const jsonResponse = JSON.parse(xhr.responseText);
-      // log JSON in web console
-      console.log(jsonResponse);
-      // also display JSON response as html
-      const resultsJSON = JSON.stringify(jsonResponse);
-      console.log(resultsJSON);
       populateResults(jsonResponse);
       console.log('finished generating results');
+
       // set results tab active
       setTabActive('results');
+
       //add tiles to map
-      const searchHandles = [];
       jsonResponse.results.forEach(e => {
         searchHandles.push(e._parcel_id);
       });
@@ -398,22 +400,41 @@ const handleSubmitSearchForm = (event) => {
       highLightParcels('parcel-highlights', searchHandles);
     }
   }
-
 };
 
+const toggleResultsItem = (parcel_id) => {
+  // loop through result items til id matches
+  const resultItems = document.getElementsByClassName('results-item');
+  for (let i = 0; i < resultItems.length; i++) {
+    if(resultItems[i].classList.contains('result-open')) {
+      resultItems[i].classList.remove('result-open');
+    }
+    if (parcel_id === resultItems[i].getAttribute('data-id')) {
+      resultItems[i].classList.add('result-open');
+      resultsDOM.scrollTop = (resultItems[i].offsetTop - 300);
+    }
+  }
+}
+
+const addResultsAccordian = (resultsItem) => {
+  resultsItem.onclick = () => {
+    resultsItem.classList.toggle('result-open');
+    // add zoom to parcel
+
+  }
+}
+
 const populateResults = (json) => {
-  // get reference to results container
-  const resultsDOM = document.getElementById('results-container');
   // clear resultsDOM container of previous results
   resultsDOM.innerHTML = '';
   const resultsJSON = json.results;
   if (resultsJSON.length < 1) {
     const noResultsText = document.createElement('p');
-    noResultsText.textContent = ('No matching results, please try another search');
+    noResultsText.textContent = 'No matching results, please try another search';
     resultsDOM.appendChild(noResultsText);
     return;
-  }
-  for (let item in resultsJSON) {
+  } //else {
+  for (item in resultsJSON) {
     console.log(resultsJSON[item]);
     let resultsItem = createResultsTile(resultsJSON[item]);
     resultsDOM.appendChild(resultsItem);
@@ -421,11 +442,16 @@ const populateResults = (json) => {
 }
 
 const createResultsTile = (resultsItemJSON) => {
-  // needs: Price, Baths, SqFt, Name, ...?
+  // center description items
   const id = resultsItemJSON._parcel_id;
   const nbhoodName = resultsItemJSON.nbrhd_name;
   const nbhoodCode = resultsItemJSON.nbrhd_code;
-  const acres = resultsItemJSON.acres
+  const acres = resultsItemJSON.acres;
+  const buildingType = resultsItemJSON.bldg_type;
+  const wallMaterial = resultsItemJSON.wall_material;
+  const basementType = resultsItemJSON.basement_type;
+  const centralHeat = resultsItemJSON.central_heat;
+  // top right info items
   const price = resultsItemJSON.price_residential;
   const sqFt = Math.floor(resultsItemJSON.size_sqFt);
   const baths = resultsItemJSON.bath_total;
@@ -433,26 +459,64 @@ const createResultsTile = (resultsItemJSON) => {
   // create resultsItem HTML component
   const resultsItem = document.createElement('div');
   resultsItem.classList = 'results-item';
+  // results icon(s) container
+  const resultsItemIconContainer = document.createElement('div');
+  resultsItemIconContainer.classList = 'results-item-icon-container';
   // icon (house or bldg) <-- add logic later
   const resultsItemIcon = document.createElement('i');
-  resultsItemIcon.classList = 'fa fa-home results-item-icon';
-  resultsItem.appendChild(resultsItemIcon);
+  resultsItemIcon.classList = 'fa results-item-icon';
+  resultsItemIconContainer.appendChild(resultsItemIcon); // append before appending question icon
+  // add 2nd icon question mark and append it if first word in lot_type is 'Possible'
+  if (resultsItemJSON.lot_type.split(' ')[0] === "Possible") {
+    // remove 'Possible' from lot_type so that switch statement will work
+    const realLotType = resultsItemJSON.lot_type.split(' ').slice(1).join(' ');
+    resultsItemJSON.lot_type = realLotType;
+    const resultsItemIcon2 = document.createElement('i');
+    resultsItemIcon2.classList = 'fa fa-question results-item-icon';
+    resultsItemIconContainer.appendChild(resultsItemIcon2);
+  }
+  // if building, add building, if lot, add lot
+  switch (resultsItemJSON.lot_type) {
+    case 'Vacant Building':
+      resultsItemIcon.classList.add('fa-building');
+      break;
+    case 'Vacant Lot':
+      resultsItemIcon.classList.add('fa-seedling');
+      break;
+    default:
+      resultsItemIcon.classList.add('fa-question');
+  }
+  resultsItem.appendChild(resultsItemIconContainer);
   // results details
   const resultsDetails = document.createElement('div');
   resultsDetails.classList = 'results-item-details';
   const resultsDetailsHeading = document.createElement('h3');
-  resultsDetailsHeading.textContent = nbhoodName; //change later
+  const resultsDetailsHeadingSpan = document.createElement('span');
+  resultsDetailsHeadingSpan.textContent = nbhoodName; //change later
+  resultsDetailsHeading.appendChild(resultsDetailsHeadingSpan);
   // details list (can replace with something else)
   const resultsDetailsList = document.createElement('ul');
   const resultsDetailsId = document.createElement('li');
-  resultsDetailsId.textContent = `id: ${id}`;
   const resultsDetailsNbhood = document.createElement('li');
-  resultsDetailsNbhood.textContent = `nbCode: ${nbhoodCode}`;
   const resultsDetailsAcres = document.createElement('li');
+  const resultsDetailsBldgType = document.createElement('li');
+  const resultsDetailsWallMat = document.createElement('li');
+  const resultsDetailsBasementType = document.createElement('li');
+  const resultsDetailsCentralHeat = document.createElement('li');
+  resultsDetailsId.textContent = `id: ${id}`;
+  resultsDetailsNbhood.textContent = `nbCode: ${nbhoodCode}`;
   resultsDetailsAcres.textContent = `acres: ${acres}`;
+  resultsDetailsBldgType.textContent = `building: ${buildingType}`;
+  resultsDetailsWallMat.textContent = `walls: ${wallMaterial}`;
+  resultsDetailsBasementType.textContent = `basement: ${basementType}`;
+  resultsDetailsCentralHeat.textContent = `heating: ${centralHeat}`;
   resultsDetailsList.appendChild(resultsDetailsId);
   resultsDetailsList.appendChild(resultsDetailsNbhood);
   resultsDetailsList.appendChild(resultsDetailsAcres);
+  resultsDetailsList.appendChild(resultsDetailsBldgType);
+  resultsDetailsList.appendChild(resultsDetailsWallMat);
+  resultsDetailsList.appendChild(resultsDetailsBasementType);
+  resultsDetailsList.appendChild(resultsDetailsCentralHeat);
   // add heading and list to details and add details to item
   resultsDetails.appendChild(resultsDetailsHeading);
   resultsDetails.appendChild(resultsDetailsList);
@@ -471,8 +535,11 @@ const createResultsTile = (resultsItemJSON) => {
   resultsStats.appendChild(sqFtStat);
   // add resultsStats to resultsItem
   resultsItem.appendChild(resultsStats);
+  addResultsAccordian(resultsItem);
 
-  // add results item to DOM
+  // add parcel id as data attribute to match with map
+  resultsItem.setAttribute('data-id', id);
+
   return resultsItem;
 }
 
@@ -482,8 +549,8 @@ const createResultsTile = (resultsItemJSON) => {
 toggleSidebarBtn.addEventListener('click', () => {
   sidebarDOM.classList.toggle('active');
   toggleSidebarBtn.classList.toggle('active');
-  toggleIcon.classList.toggle('fa-angle-left');
-  toggleIcon.classList.toggle('fa-angle-right');
+  toggleIcon.classList.toggle('fa-chevron-left');
+  toggleIcon.classList.toggle('fa-chevron-right');
 });
 // toggle sidebar tabs
 tabRow.addEventListener('click', (e) => {
