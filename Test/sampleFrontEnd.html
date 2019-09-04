@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>API Tester</title>
+</head>
+
+<body>
+  <h1 id="header">This is a sample front end to test API calls (not for deployment)</h1>
+  <p style="font-family:verdana;" id="display"></p>
+
+  <!-- sample javascript to send POST request to backend -->
+  <script>
+    var xhr = new XMLHttpRequest();
+    // !! Replace "127.0.0.1:5000" below with depolyment server hostname
+    var url = "http://127.0.0.1:5000/filter";
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    // !! sample POST request JSON payload
+    var data = JSON.stringify({
+    	"Neighborhoods" : [34,13],
+    	"LotType" : 2,
+    	"IncludePossible" : true,
+    	"NumBathsMin" : 0,
+    	"NumBathsMax" : 1000,
+    	"SqFtMin" : 0,
+    	"SqFtMax" : 10000,
+    	"PriceMin" : 0,
+    	"PriceMax" : 10000
+    });
+    // send post request
+    xhr.send(data);
+    // read JSON when http request has been successfully (HTTP 200) completed (State DONE)
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var jsonResponse = JSON.parse(xhr.responseText);
+            // log JSON in web console
+            console.log(jsonResponse);
+            // also display JSON response as html
+            var myJSON = JSON.stringify(jsonResponse);
+            document.getElementById('display').innerHTML = myJSON
+        }
+    };
+  </script>
+</body>
+</html>
