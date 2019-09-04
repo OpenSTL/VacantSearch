@@ -1,4 +1,5 @@
 # VacantSearch 🏠
+The project is live at https://opendatastl.github.io/VacantSearch/ Go check it out!
 ## Backend
 ### Prerequisites
  - **Python** :snake:
