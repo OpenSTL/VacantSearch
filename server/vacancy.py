@@ -34,19 +34,29 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://'+credentials["username
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
+class Parcel(db.Model):
+    """
+    Model for parcel geojson records
+    """
+    __tablename__ = 'parcels_geojson'
+    # Handle for parcel (unique ID for joining with other datasets) - text
+    _parcel_id = db.Column('Handle',db.Unicode, primary_key=True)
+    # MultiPolygon coordinates
+    coordinates = db.Column('coordinates',db.Unicode)
+
 class Vacancy(db.Model):
     """
     Model for Vacancy records
     """
     __tablename__ = 'vacant'
     # Handle for parcel (unique ID for joining with other datasets) - text
-    _parcel_id = db.Column('Handle',db.Unicode, primary_key=True)
+    _parcel_id = db.Column('Handle',db.Unicode, db.ForeignKey("parcels_geojson.Handle"), primary_key=True)
     # neighborhood number (codes)
     nbrhd_code = db.Column('Nbrhd',db.Integer)
     # neighborhood name (text)
     nbrhd_name = db.Column('NHD_NAME',db.Unicode)
     # full address
-    street_addr = db.Column('SITEADDR',db.Integer)
+    street_addr = db.Column('SITEADDR',db.Unicode)
     # zip code
     zip = db.Column('ZIP',db.Integer)
     # text description of vacancy category (Vacant Lot, Possible Vacant Lot, Vacant Building, or Possible Vacant Building)
@@ -91,6 +101,8 @@ class Vacancy(db.Model):
     price_sidelot = db.Column('SL_decimal',db.Float)
     # Last known and documented residential sale price
     price_residential = db.Column('ResSalePri',db.Integer)
+    # Get parcel geojson coordinates from Parcel table
+    parcel_geojson = db.relationship("Parcel", backref="Vacancy",primaryjoin=(_parcel_id == Parcel._parcel_id))
 
 
     def __repr__(self):
@@ -108,7 +120,10 @@ class VacancySchema(ma.ModelSchema):
     Marshmallow model schema to help serialize complex Python class to JSON
     """
     class Meta:
+        include_fk = True
         model = Vacancy
+    # function to dump only the coordinates column of the Parcel table
+    parcel_geojson = ma.Function(lambda obj: obj.parcel_geojson.coordinates)
 
 # initialize Marshmallow schema to serialize JSON
 vacancies_schema = VacancySchema(many=True)
@@ -230,8 +245,8 @@ def query():
    # Vacancy.price_residential <= PriceMax
 
     # Query DB
+    # qryresult = Vacancy.query.join(Parcel,Vacancy._parcel_id == Parcel._parcel_id).filter(and_(*filter_group)).all()
     qryresult = Vacancy.query.filter(and_(*filter_group)).all()
-
     # Uncomment below to print query results to console
     # for x in qryresult:
     #     print(repr(x))
