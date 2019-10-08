@@ -420,6 +420,8 @@ const addResultsAccordian = (resultsItem) => {
   resultsItem.onclick = () => {
     resultsItem.classList.toggle('result-open');
     console.log(resultsItem)
+    // temporary fix: calculate coords on frontend
+    // const polygon = resultsItem.
     // call flyTo() function located in mapbox.js
     handleFlyToCoordinates(0, 0)  // change (0, 0) with (resultsItem.x, resultsItem.y)
   }
