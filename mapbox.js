@@ -56,50 +56,57 @@ map.on('load', function () {
       "circle-color": "#007cbf"
     }
   });
-  
 
-  
+
+
   geocoder.on('result', function (ev) {
     map.getSource('single-point').setData(ev.result.geometry);
   });
 
 });
 
-map.on('click', function(e) {
+map.on('click', function (e) {
 
   console.log(e);
 
   var features = map.queryRenderedFeatures(e.point, {
-      layers: ['parcel-highlights']
+    layers: ['parcel-highlights']
   });
 
   console.log(features);
 
   if (!features.length) {
-      return;
+    return;
   }
 
-  features.forEach(function(f){
-      if(f.hasOwnProperty('properties') && f.properties.hasOwnProperty('HANDLE')){
-          console.log(f.properties.HANDLE);
-          toggleResultsItem(f.properties.HANDLE);
-      }
+  features.forEach(function (f) {
+    if (f.hasOwnProperty('properties') && f.properties.hasOwnProperty('HANDLE')) {
+      console.log(f.properties.HANDLE);
+      toggleResultsItem(f.properties.HANDLE);
+    }
   });
 
 });
 
-function highLightParcels(layer, handles)
-    {
-        if(!Array.isArray(handles)){
-            handles = [];
-        }
+// add flyTo() on listItem click. Called from 'main.js'
+function handleFlyToCoordinates(xCoord, yCoord) {
+  map.flyTo({
+    center: [xCoord, yCoord],
+    zoom: 9 // or 12
+  })
+}
 
-        if(!handles.length){
-            map.setFilter(layer, ['all', ['match', ['get', 'HANDLE'], ['x'], true, true]]);
-            map.setLayoutProperty('parcel-highlights', 'visibility', 'none');
-        } else {
-            map.setFilter(layer, ['all', ['match', ['get', 'HANDLE'], handles, true, false]]);
+function highLightParcels(layer, handles) {
+  if (!Array.isArray(handles)) {
+    handles = [];
+  }
 
-            map.setLayoutProperty('parcel-highlights', 'visibility', 'visible');
-        }
-    }
+  if (!handles.length) {
+    map.setFilter(layer, ['all', ['match', ['get', 'HANDLE'], ['x'], true, true]]);
+    map.setLayoutProperty('parcel-highlights', 'visibility', 'none');
+  } else {
+    map.setFilter(layer, ['all', ['match', ['get', 'HANDLE'], handles, true, false]]);
+
+    map.setLayoutProperty('parcel-highlights', 'visibility', 'visible');
+  }
+}

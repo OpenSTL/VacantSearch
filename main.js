@@ -406,7 +406,7 @@ const toggleResultsItem = (parcel_id) => {
   // loop through result items til id matches
   const resultItems = document.getElementsByClassName('results-item');
   for (let i = 0; i < resultItems.length; i++) {
-    if(resultItems[i].classList.contains('result-open')) {
+    if (resultItems[i].classList.contains('result-open')) {
       resultItems[i].classList.remove('result-open');
     }
     if (parcel_id === resultItems[i].getAttribute('data-id')) {
@@ -419,8 +419,9 @@ const toggleResultsItem = (parcel_id) => {
 const addResultsAccordian = (resultsItem) => {
   resultsItem.onclick = () => {
     resultsItem.classList.toggle('result-open');
-    // add zoom to parcel
-
+    console.log(resultsItem)
+    // call flyTo() function located in mapbox.js
+    handleFlyToCoordinates(0, 0)  // change (0, 0) with (resultsItem.x, resultsItem.y)
   }
 }
 
