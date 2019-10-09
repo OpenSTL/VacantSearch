@@ -1,4 +1,4 @@
-mapboxgl.accessToken = 'sk.eyJ1IjoibXJhbzIiLCJhIjoiY2sxaWduZzgwMGkwYTNkcGsxdDhiaXpycSJ9.UFRr_9bGWjlNrFqc0rV6lQ';
+mapboxgl.accessToken = 'pk.eyJ1IjoibXJhbzIiLCJhIjoiY2ppZmFoazE5MGZiMjNwcXBtb3gyenk4cyJ9.nmFZofR-kOqj8yYfaJc2XQ';
 var map = new mapboxgl.Map({
   container: 'map', // container id
   style: 'mapbox://styles/mrao2/cjzuiuexr09mn1crs8tz35s3k', // stylesheet location
