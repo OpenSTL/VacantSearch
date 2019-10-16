@@ -246,7 +246,7 @@ def query():
 
     # Query DB
     # qryresult = Vacancy.query.join(Parcel,Vacancy._parcel_id == Parcel._parcel_id).filter(and_(*filter_group)).all()
-    qryresult = Vacancy.query.filter(and_(*filter_group)).all()
+    qryresult = Vacancy.query.filter(and_(*filter_group)).limit(20).all()
     # Uncomment below to print query results to console
     # for x in qryresult:
     #     print(repr(x))
