@@ -458,6 +458,7 @@ const createResultsTile = (resultsItemJSON) => {
   const price = resultsItemJSON.price_residential;
   const sqFt = Math.floor(resultsItemJSON.size_sqFt);
   const baths = resultsItemJSON.bath_total;
+  const points = resultsItemJSON.parcel_geojson;
 
   // create resultsItem HTML component
   const resultsItem = document.createElement('div');
@@ -542,6 +543,7 @@ const createResultsTile = (resultsItemJSON) => {
 
   // add parcel id as data attribute to match with map
   resultsItem.setAttribute('data-id', id);
+  resultsItem.setAttribute('data-center',points);
 
   return resultsItem;
 }
