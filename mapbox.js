@@ -92,7 +92,7 @@ map.on('click', function (e) {
 function handleFlyToCoordinates(xCoord, yCoord) {
   map.flyTo({
     center: [xCoord, yCoord],
-    zoom: 9 // or 12
+    zoom: 20 // or 12
   })
 }
 

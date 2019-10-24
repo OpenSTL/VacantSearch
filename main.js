@@ -421,8 +421,7 @@ const addResultsAccordian = (resultsItem) => {
     resultsItem.classList.toggle('result-open');
     console.log(resultsItem)
     // temporary fix: calculate coords on frontend
-    console.log("points = ",resultsItem.dataset.center)
-    handleFlyToCoordinates( resultsItem.dataset.center) // change (0, 0) with (resultsItem.x, resultsItem.y)
+    handleFlyToCoordinates( resultsItem.dataset.lat,resultsItem.dataset.lon)
   }
 }
 
@@ -457,8 +456,10 @@ const createResultsTile = (resultsItemJSON) => {
   const price = resultsItemJSON.price_residential;
   const sqFt = Math.floor(resultsItemJSON.size_sqFt);
   const baths = resultsItemJSON.bath_total;
-  const points = resultsItemJSON.parcel_geojson[0]; // 1
-  const point = points[0] //2 
+  const points = JSON.parse(resultsItemJSON.parcel_geojson)[0]; // 1
+  const point = points[0]
+  const corner = point[0] //got it! 
+  console.log(JSON.parse(JSON.stringify(corner)))
 
   // create resultsItem HTML component
   const resultsItem = document.createElement('div');
@@ -543,7 +544,8 @@ const createResultsTile = (resultsItemJSON) => {
 
   // add parcel id as data attribute to match with map
   resultsItem.setAttribute('data-id', id);
-  resultsItem.setAttribute('data-center',points[[0]]);
+  resultsItem.setAttribute('data-lat',corner[0]);
+  resultsItem.setAttribute('data-lon',corner[1]);
 
   return resultsItem;
 }
