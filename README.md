@@ -46,6 +46,12 @@ The project is live at https://opendatastl.github.io/VacantSearch/ Go check it o
  ```
  git update-index --assume-unchanged settings.txt
  ```
+
+ ###### Build docker image for backend
+ ```
+ docker build -t openstl/vacantsearch --build-arg OPENSTL_USERNAME=[yourUsername] --build-arg OPENSTL_PASSWORD=[yourPassword] .
+ ```
+ 
 ### Example
 1. Open terminal, navigate to `server` sub-directory.
 ```
@@ -119,11 +125,32 @@ The JSON response is printed on the page. Alternatively, you can also use your f
 2. Navigate to the `Test/` directory in this repository.
 3. Open `sampleFrontEnd.html` in text editor. Navigate to the script section and modify the url to the OpenSTL server API url.
 ```
-// !! Replace "127.0.0.1:5000" below with depolyment server hostname
+// !! Replace "127.0.0.1:5000" below with deployment server hostname
 var url = "http://some-api-url/filter";
 ```
 4. (Optional) In `sampleFrontEnd.html`, modify the POST request JSON payload if you'd wish to filter on certain fields.
 
 5. Double-click on `sampleFrontEnd.html`. You should see the following webpage:
+![HTML Example](./documentation/html-example.png)
+The JSON response is printed on the page. Alternatively, you can also use your favorite web console to examine the response.
+
+ ##### Use dockerized backend 
+1. Run docker image
+```
+docker run --name vacantsearch -d openstl/vacantsearch
+```
+2. Get IP address of docker container
+```
+docker inspect vacantsearch | grep Address
+```
+3. Navigate to the `Test/` directory in this repository.
+4. Open `sampleFrontEnd.html` in text editor. Navigate to the script section and modify the url to the OpenSTL server API url.
+```
+// !! Replace "127.0.0.1:5000" below with IP address of docker container
+var url = "http://[Container_IP]:5000]/filter";
+```
+5. (Optional) In `sampleFrontEnd.html`, modify the POST request JSON payload if you'd wish to filter on certain fields.
+
+6. Double-click on `sampleFrontEnd.html`. You should see the following webpage:
 ![HTML Example](./documentation/html-example.png)
 The JSON response is printed on the page. Alternatively, you can also use your favorite web console to examine the response.
