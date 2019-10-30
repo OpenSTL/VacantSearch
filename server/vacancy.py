@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_cors import CORS
 from sqlalchemy.sql.expression import and_
+from sqlalchemy.dialects import mysql
+
 import os, sys
 import logging
 
@@ -14,6 +16,7 @@ logging.getLogger('flask_cors').level = logging.DEBUG
 app = Flask(__name__)
 cors = CORS(app, resources={r"/filter": {"origins": "*"},r"/get_one": {"origins": "*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
+app.config['SQLALCHEMY_ECHO'] = True
 
 # get Remote DB credentials from settings file
 credentials = {}
@@ -246,6 +249,7 @@ def query():
 
     # Query DB
     # qryresult = Vacancy.query.join(Parcel,Vacancy._parcel_id == Parcel._parcel_id).filter(and_(*filter_group)).all()
+    print(Vacancy.query.statement.compile(dialect = mysql.dialect()) )
     qryresult = Vacancy.query.filter(and_(*filter_group)).limit(20).all()
     # Uncomment below to print query results to console
     # for x in qryresult:
