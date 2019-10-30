@@ -349,10 +349,21 @@ const fillNeighborhoods = () => {
 window.onload = fillNeighborhoods();
 //const btnReset = document.querySelector('.btn-reset');
 
+const hideSearchInProgress = () => {
+  document.querySelector("#sidebar-form").classList.remove('invisible');
+  document.querySelector("#sidebar-form-search-in-progress").classList.add('invisible');
+}
+const showSearchInProgress = () => {
+  document.querySelector("#sidebar-form").classList.add('invisible')
+  document.querySelector("#sidebar-form-search-in-progress").classList.remove('invisible');
+}
+
 const handleSubmitSearchForm = (event) => {
 
   event.preventDefault();
   searchHandles = [];
+  showSearchInProgress();
+
   // Get Data from Form
   const formData = new FormData(sidebarForm);
   const priceMin = formData.get('form-price-min');
@@ -398,6 +409,7 @@ const handleSubmitSearchForm = (event) => {
       });
       //console.log(searchHandles);
       highLightParcels('parcel-highlights', searchHandles);
+      hideSearchInProgress();
     }
   }
 };

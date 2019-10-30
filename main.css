@@ -196,6 +196,9 @@ i#toggle-icon {
   /*#endregion TABS SECTION */
 
   /*#region FORM SECTION */
+#sidebar-form.invisible {
+  display: none;
+}
 .form-fieldset {
   margin-top: 1.2rem;
   margin-left: var(--spacing);
@@ -308,6 +311,65 @@ select {
 }
 .subtext {
   font-size: 1.4rem;
+}
+/* searching... container */
+#sidebar-form-search-in-progress {
+  margin-bottom: 20px;
+  text-align: center;
+}
+#sidebar-form-search-in-progress.invisible {
+  display: none;
+}
+/* searching... progress indicator */
+.linear-progress-container {
+  background-color: rgba(255, 0, 0, 0.48);
+  height: 4px;
+  margin: 20px auto;
+  overflow: hidden;
+  width: 50%;
+}
+.linear-progress-container > .indeterminate-progress {
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.linear-progress-container > .indeterminate-progress:before {
+  animation: indeterminate_first 1.5s infinite ease-out;
+  background-color: rgba(255, 0, 0, 0.64);
+  content: '';
+  height: 100%;
+  position: absolute;
+}
+
+.linear-progress-container > .indeterminate-progress:after {
+  animation: indeterminate_second 1.5s infinite ease-in;
+  background-color: rgba(255, 0, 0, 0.82);
+  content: '';
+  height: 100%;
+  position: absolute;
+}
+
+@keyframes indeterminate_first {
+  0% {
+      left: -100%;
+      width: 100%;
+  }
+  100% {
+      left: 100%;
+      width: 10%;
+  }
+}
+
+@keyframes indeterminate_second {
+  0% {
+      left: -150%;
+      width: 100%;
+  }
+  100% {
+      left: 100%;
+      width: 10%;
+  }
 }
 
   /*#endregion FORM SECTION */
