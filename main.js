@@ -359,7 +359,7 @@ const handleSubmitSearchForm = (event) => {
   const priceMax = formData.get('form-price-max');
   const sqFtMin = formData.get('form-acres-min');
   const sqFtMax = formData.get('form-acres-max');
-  const neighborhood = formData.get('form-neighborhood');
+  var neighborhood = formData.get('form-neighborhood');
   const minBaths = formData.get('form-baths-min');
   const maxBaths = formData.get('form-baths-max');
 
@@ -369,7 +369,7 @@ const handleSubmitSearchForm = (event) => {
   // !! sample POST request JSON payload
   const data = JSON.stringify({
     //"Neighborhoods": [34, 13],
-    "Neighborhoods": neighborhood,  // 1 nbhood value (for now)
+    "Neighborhoods": [neighborhood],  // 1 nbhood value (for now)
     "LotType": 3,  // 1 vacant lot, 2 vacant building, 3 both
     "IncludePossible": true,
     "NumBathsMin": minBaths,
@@ -458,7 +458,7 @@ const createResultsTile = (resultsItemJSON) => {
   const baths = resultsItemJSON.bath_total;
   const points = JSON.parse(resultsItemJSON.parcel_geojson)[0]; // 1
   const point = points[0]
-  const corner = point[0] //got it! 
+  const corner = point[0] //got it!
   console.log(JSON.parse(JSON.stringify(corner)))
 
   // create resultsItem HTML component
