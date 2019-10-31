@@ -13,22 +13,6 @@ let searchHandles = [];
 const API_URL = 'https://api.openstl.org/filter';
 
 // FUNCTIONS
-// for switching tabs in sidebar
-const setTabActive = (tabName) => {
-  let searchTab = document.querySelector('.tab-search');
-  let resultsTab = document.querySelector('.tab-results');
-  if (tabName === 'search' && !searchTab.classList.contains('tab-active')) {
-    resultsTab.classList.remove('tab-active');
-    searchTab.classList.add('tab-active');
-    document.querySelector('.tab-content-results').classList.remove('tab-active');
-    document.querySelector('.tab-content-search').classList.add('tab-active');
-  } else if (tabName === 'results' && !resultsTab.classList.contains('tab-active')) {
-    searchTab.classList.remove('tab-active');
-    resultsTab.classList.add('tab-active');
-    document.querySelector('.tab-content-search').classList.remove('tab-active');
-    document.querySelector('.tab-content-results').classList.add('tab-active');
-  }
-}
 
 const hideSearchInProgress = () => {
   document.querySelector("#sidebar-form").classList.remove('invisible');
@@ -245,20 +229,5 @@ const createResultsTile = (resultsItemJSON) => {
 
 // ATTACH EVENTS LISTENERS TO DOM:
 
-// toggle entire sidebar
-toggleSidebarBtn.addEventListener('click', () => {
-  sidebarDOM.classList.toggle('active');
-  toggleSidebarBtn.classList.toggle('active');
-  toggleIcon.classList.toggle('fa-chevron-left');
-  toggleIcon.classList.toggle('fa-chevron-right');
-});
-// toggle sidebar tabs
-tabRow.addEventListener('click', (e) => {
-  if (e.target.classList.contains('tab-search')) {
-    setTabActive('search');
-  } else if (e.target.classList.contains('tab-results')) {
-    setTabActive('results');
-  }
-});
 // handle submit for sidebar search form
 sidebarForm.addEventListener('submit', (event) => handleSubmitSearchForm(event));
