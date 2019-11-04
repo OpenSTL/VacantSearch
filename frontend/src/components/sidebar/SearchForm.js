@@ -1,9 +1,8 @@
 import axios from 'axios';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import mockSearchJson from '../mock-filter-response.json';
 import NeighborhoodSelect from './NeighborhoodSelect';
-import { setFilteredLots } from '../actions';
+import { setFilteredLots } from '../../actions';
 
 function mapDispatchToProps(dispatch) {
   return {
