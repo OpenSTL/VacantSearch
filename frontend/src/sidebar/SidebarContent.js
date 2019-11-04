@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import React, { Component } from 'react';
+import ResultsTab from './ResultsTab';
 import SearchForm from './SearchForm';
 
 class SidebarContent extends Component {
@@ -41,24 +42,7 @@ class SidebarContent extends Component {
               </div>
               {/* Tab 2: Results ListView */}
               <div className={classNames('tab-content', 'tab-content-results', { 'tab-active': this.state.activeTab === 'results'})}>
-                <header className="results-header">
-                  <div className="icon-key">
-                    <i className="fa fa-building"></i>
-                    Building
-                  </div>
-                  <div className="icon-key">
-                    <i className="fa fa-seedling"></i>
-                    Lot
-                  </div>
-                  <div className="icon-key">
-                    <i className="fa fa-question"></i>
-                    Possible
-                  </div>
-                </header>
-                <div className="results-container noscroll" id="results-container">
-                  {/* Default message */}
-                  <p>No matching results. Please try another search</p>
-                </div>
+                <ResultsTab />
               </div>
             </div>
           </section>

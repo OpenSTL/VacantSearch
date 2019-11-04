@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import React, { Component } from 'react';
-import SidebarContent from './SidebarContent';
 
 class Sidebar extends Component {
     constructor() {
@@ -38,7 +37,7 @@ class Sidebar extends Component {
                   <div className="geocoder" id="geocoder"></div>
                 </header>
                 <br />
-                <SidebarContent />
+                {this.props.children}
               </div>
             </div>
         );
