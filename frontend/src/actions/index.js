@@ -12,8 +12,8 @@ export const fetchFilteredLots = params => ({
 
 // [x, y]
 export function setFlyToCoordinates(coords) {
-    return {
+  return {
     type: SET_FLY_TO_COORDINATES,
     payload: coords,
-    };
+  };
 }
