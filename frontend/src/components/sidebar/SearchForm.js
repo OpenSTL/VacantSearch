@@ -2,24 +2,14 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import NeighborhoodSelect from './NeighborhoodSelect';
-import { setFilteredLots } from '../../actions';
+import { fetchFilteredLots } from '../../actions';
+import { getSearching } from '../../selectors';
 
-function mapDispatchToProps(dispatch) {
-  return {
-    setFilteredLots: lots => dispatch(setFilteredLots(lots))
-  };
-}
-
-class ConnectedSearchForm extends Component {
-  constructor() {
-    super();
-    this.state = {
-      searching: false,
-    };
-  }
+class SearchForm extends Component {
   async onFormSubmit(event) {
     event.preventDefault();
-    this.setState({ searching: true });
+
+    const { fetchFilteredLots } = this.props
 
     // Get Data from Form
     const sidebarForm = document.getElementById('sidebar-form');
@@ -46,14 +36,13 @@ class ConnectedSearchForm extends Component {
     };
 
     // Make the request
-    const response = await axios.post(process.env.REACT_APP_API_URL, requestData);
-    this.props.setFilteredLots(response.data.results);
-    
-    this.setState({ searching: false });
-
+    fetchFilteredLots(requestData)
   }
+
   render() {
-    if (!this.state.searching) {
+    let { searching } = this.props
+
+    if (!searching) {
       return (
         <form action="post" id="sidebar-form" onSubmit={(e) => this.onFormSubmit(e)}>
         <fieldset className="form-fieldset">
@@ -148,9 +137,18 @@ class ConnectedSearchForm extends Component {
           <div className="indeterminate-progress"></div>
         </div>
         <p>Searching...</p>
-      </div>  
+      </div>
     );
   }
 }
-const SearchForm = connect(null, mapDispatchToProps)(ConnectedSearchForm);
-export default SearchForm;
+
+const mapStateToProps = state => ({
+  searching: getSearching(state)
+})
+
+const ConnectedSearchForm = connect(
+  mapStateToProps,
+  { fetchFilteredLots }
+)(SearchForm);
+
+export default ConnectedSearchForm;
