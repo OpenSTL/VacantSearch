@@ -1,4 +1,4 @@
-import { SET_FILTERED_LOTS } from "../constants/action-types";
+import { SET_FLY_TO_COORDINATES, SET_FILTERED_LOTS } from "../constants/action-types";
 
 export function setFilteredLots(payload) {
   return {
@@ -6,3 +6,11 @@ export function setFilteredLots(payload) {
     payload,
   };
 };
+
+// [x, y]
+export function setFlyToCoordinates(coords) {
+  return {
+    type: SET_FLY_TO_COORDINATES,
+    payload: coords,
+  };
+}

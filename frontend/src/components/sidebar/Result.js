@@ -1,5 +1,7 @@
+import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import ResultItemIconSet from './ResultItemIconSet';
+import { setFlyToCoordinates } from '../../actions';
 
 // prop: resultItem
 class Result extends Component {
@@ -28,6 +30,7 @@ class Result extends Component {
         data-id={id}
         data-lat={corner[0]}
         data-lon={corner[1]}
+        onClick={() => this.props.setFlyToCoordinates(corner)}
       >
         <div className="results-item-icon-container">
           <ResultItemIconSet resultItem={resultItem} />
@@ -55,4 +58,4 @@ class Result extends Component {
     );
   }
 }
-export default Result;
+export default connect(null, { setFlyToCoordinates })(Result);

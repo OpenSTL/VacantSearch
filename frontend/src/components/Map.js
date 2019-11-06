@@ -1,8 +1,13 @@
+import { connect } from 'react-redux';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import React, { Component } from 'react';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY;
+
+const mapStateToProps = state => {
+  return { flyToCoordinates: state.flyToCoordinates };
+};
 
 class Map extends Component {
   componentDidMount() {
@@ -93,10 +98,19 @@ class Map extends Component {
   componentWillUnmount() {
     this.map.remove();
   }
+  componentDidUpdate(prevProps) {
+    const lastFlyToCoordinates = prevProps.flyToCoordinates;
+    if (lastFlyToCoordinates !== this.props.flyToCoordinates) {
+      this.map.flyTo({
+        center: this.props.flyToCoordinates,
+        zoom: 20,
+      });
+    }
+  }
   render() {
     return (
       <div id='map'></div>
     );
   }
 }
-export default Map;
+export default connect(mapStateToProps)(Map)
