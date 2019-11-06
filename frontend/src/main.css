@@ -196,9 +196,6 @@ i#toggle-icon {
   /*#endregion TABS SECTION */
 
   /*#region FORM SECTION */
-#sidebar-form.invisible {
-  display: none;
-}
 .form-fieldset {
   margin-top: 1.2rem;
   margin-left: var(--spacing);
@@ -306,7 +303,7 @@ select {
 .input-container {
   display: flex;
   flex-direction: column;
-  align-items: end;
+  align-items: flex-end;
   justify-content: baseline;
 }
 .subtext {
@@ -316,9 +313,6 @@ select {
 #sidebar-form-search-in-progress {
   margin-bottom: 20px;
   text-align: center;
-}
-#sidebar-form-search-in-progress.invisible {
-  display: none;
 }
 /* searching... progress indicator */
 .linear-progress-container {
@@ -523,4 +517,4 @@ select {
 
 /*#endregion SIDEBAR SECTIONS */
 
-/*#region 
+/*#region */
