@@ -1,8 +1,10 @@
-import { SET_FILTERED_LOTS } from "../constants/action-types";
+import axios from 'axios'
 
-export function setFilteredLots(payload) {
-  return {
-    type: SET_FILTERED_LOTS,
-    payload,
-  };
-};
+import {
+  FETCH_FILTERED_LOTS,
+} from "../constants/action-types";
+
+export const fetchFilteredLots = params => ({
+  type: FETCH_FILTERED_LOTS,
+  payload: axios.post(process.env.REACT_APP_API_URL, params),
+});
