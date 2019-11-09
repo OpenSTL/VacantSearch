@@ -1,23 +1,24 @@
+import * as tabs from '../../constants/tabs';
 import classNames from 'classnames';
+import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import ResultsTab from './ResultsTab';
 import SearchForm from './SearchForm';
+import { setSelectedTab } from '../../actions';
+
+const mapStateToProps = state => {
+  return { selectedTab: state.selectedTab };
+};
 
 class SidebarContent extends Component {
-    constructor() {
-      super();
-      this.state = {
-        activeTab: 'search',
-      };
-    }
     render() {
         return (
             <section className="sidebar-section">
             {/* Tab Headers */}
             <div className="tab-row">
               <div
-                className={classNames('tab', 'tab-search', { 'tab-active': this.state.activeTab === 'search'})}
-                onClick={() => this.setTabActive('search')}
+                className={classNames('tab', 'tab-search', { 'tab-active': this.props.selectedTab === tabs.SEARCH})}
+                onClick={() => this.props.setSelectedTab(tabs.SEARCH)}
               >
                 <span className="tab-search">
                   <i className="fa fa-search"></i>
@@ -25,8 +26,8 @@ class SidebarContent extends Component {
                 </span>
               </div>
               <div
-                className={classNames('tab', 'tab-results', { 'tab-active': this.state.activeTab === 'results'})}
-                onClick={() => this.setTabActive('results')}
+                className={classNames('tab', 'tab-results', { 'tab-active': this.props.selectedTab === tabs.RESULTS})}
+                onClick={() => this.props.setSelectedTab(tabs.RESULTS)}
               >
                 <span className="tab-results">
                   <i className="fa fa-list"></i>
@@ -37,22 +38,16 @@ class SidebarContent extends Component {
             {/* Tabbed Sections */}
             <div className="sidebar-tab-content">
               {/* Tab 1: Search Form */}
-              <div className={classNames('tab-content', 'tab-content-search', { 'tab-active': this.state.activeTab === 'search'})}>
+              <div className={classNames('tab-content', 'tab-content-search', { 'tab-active': this.props.selectedTab === tabs.SEARCH})}>
                 <SearchForm />
               </div>
               {/* Tab 2: Results ListView */}
-              <div className={classNames('tab-content', 'tab-content-results', { 'tab-active': this.state.activeTab === 'results'})}>
+              <div className={classNames('tab-content', 'tab-content-results', { 'tab-active': this.props.selectedTab === tabs.RESULTS})}>
                 <ResultsTab />
               </div>
             </div>
           </section>
         );
     }
-    setTabActive(tab) {
-      if (!['results', 'search'].includes(tab)) throw new Error(`unknown tab ${tab}`);
-      this.setState({
-        activeTab: tab,
-      });
-    }
 }
-export default SidebarContent;
+export default connect(mapStateToProps, { setSelectedTab })(SidebarContent);
