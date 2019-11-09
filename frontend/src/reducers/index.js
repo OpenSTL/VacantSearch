@@ -1,6 +1,7 @@
 import {
     FETCH_FILTERED_LOTS,
-    SET_FLY_TO_COORDINATES
+    SET_FLY_TO_COORDINATES,
+    SET_LOT_EXPANDED,
 } from "../constants/action-types";
 
 const initialState = {
@@ -34,6 +35,16 @@ function rootReducer (state = initialState, action) {
         coordinates: action.payload,
         timestamp: Date.now(),
       },
+    });
+  }
+
+  if (action.type === SET_LOT_EXPANDED) {
+    const { expanded, lotId } = action.payload;
+    return Object.assign({}, state, {
+      filteredLots: state.filteredLots.map(lot => ({
+        ...lot,
+        expanded: (lotId === lot._parcel_id) ? expanded : lot.expanded,
+      })),
     });
   }
   

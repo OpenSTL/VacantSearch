@@ -1,13 +1,31 @@
+import classNames from 'classnames';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import ResultItemIconSet from './ResultItemIconSet';
-import { setFlyToCoordinates } from '../../actions';
+import {
+  setFlyToCoordinates,
+  setLotExpanded,
+} from '../../actions';
+
+function getFlyToPointForLot(lot) {
+  const points = JSON.parse(lot.parcel_geojson)[0];
+  const point = points[0];
+  const corner = point[0];
+  return corner;
+}
 
 // prop: resultItem
 class Result extends Component {
+  onClick() {
+    const { resultItem } = this.props;
+    if (!resultItem.expanded) {
+      this.props.setFlyToCoordinates(getFlyToPointForLot(resultItem));
+    }
+    this.props.setLotExpanded(resultItem._parcel_id, !resultItem.expanded);
+  }
   render() {
     // details
-    const resultItem = this.props.resultItem;
+    const { resultItem } = this.props;
     const acres = resultItem.acres;
     const basementType = resultItem.basement_type;
     const buildingType = resultItem.bldg_type;
@@ -20,17 +38,19 @@ class Result extends Component {
     const price = resultItem.price_residential;
     const sqFt = Math.floor(resultItem.size_sqFt);
     const baths = resultItem.bath_total;
-    const points = JSON.parse(resultItem.parcel_geojson)[0];
-    const point = points[0];
-    const corner = point[0];
+    const corner = getFlyToPointForLot(resultItem);
+
+    const resultsItemCx = classNames('results-item', {
+      'result-open': resultItem.expanded,
+    });
 
     return (
       <div 
-        className="results-item"
+        className={resultsItemCx}
         data-id={id}
         data-lat={corner[0]}
         data-lon={corner[1]}
-        onClick={() => this.props.setFlyToCoordinates(corner)}
+        onClick={() => this.onClick()}
       >
         <div className="results-item-icon-container">
           <ResultItemIconSet resultItem={resultItem} />
@@ -58,4 +78,4 @@ class Result extends Component {
     );
   }
 }
-export default connect(null, { setFlyToCoordinates })(Result);
+export default connect(null, { setFlyToCoordinates, setLotExpanded })(Result);

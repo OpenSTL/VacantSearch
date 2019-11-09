@@ -3,6 +3,7 @@ import axios from 'axios'
 import {
     FETCH_FILTERED_LOTS,
     SET_FLY_TO_COORDINATES,
+    SET_LOT_EXPANDED,
 } from "../constants/action-types";
 
 export const fetchFilteredLots = params => ({
@@ -18,5 +19,17 @@ export function setFlyToCoordinates(coords) {
   return {
     type: SET_FLY_TO_COORDINATES,
     payload: coords,
+  };
+}
+
+/**
+ * Expand or contract an individual lot Result in the Results tab
+ * @param {string} lotId _parcel_id
+ * @param {boolean} expanded 
+ */
+export function setLotExpanded(lotId, expanded) {
+  return {
+    type: SET_LOT_EXPANDED,
+    payload: { expanded, lotId },
   };
 };
