@@ -100,9 +100,9 @@ class Map extends Component {
   }
   componentDidUpdate(prevProps) {
     const lastFlyToCoordinates = prevProps.flyToCoordinates;
-    if (lastFlyToCoordinates !== this.props.flyToCoordinates) {
+    if (this.props.flyToCoordinates.timestamp > lastFlyToCoordinates.timestamp) {
       this.map.flyTo({
-        center: this.props.flyToCoordinates,
+        center: this.props.flyToCoordinates.coordinates,
         zoom: 20,
       });
     }

@@ -10,10 +10,13 @@ export const fetchFilteredLots = params => ({
   payload: axios.post(process.env.REACT_APP_API_URL, params),
 });
 
-// [x, y]
+/**
+ * Tell map to fly to these coordinates
+ * @param {Array<Number>} coords Format: [x, y]
+ */
 export function setFlyToCoordinates(coords) {
   return {
     type: SET_FLY_TO_COORDINATES,
     payload: coords,
   };
-}
+};

@@ -5,7 +5,10 @@ import {
 
 const initialState = {
   filteredLots: [],
-  flyToCoordinates: [0, 0],
+  flyToCoordinates: {
+    coordinates: [0, 0],
+    timestamp: 0,
+  },
   searching: false,
 };
 
@@ -27,7 +30,10 @@ function rootReducer (state = initialState, action) {
   
   if (action.type === SET_FLY_TO_COORDINATES) {
     return Object.assign({}, state, {
-      flyToCoordinates: action.payload,
+      flyToCoordinates: {
+        coordinates: action.payload,
+        timestamp: Date.now(),
+      },
     });
   }
   
