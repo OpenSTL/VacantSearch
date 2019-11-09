@@ -38,7 +38,6 @@ class Result extends Component {
     const price = resultItem.price_residential;
     const sqFt = Math.floor(resultItem.size_sqFt);
     const baths = resultItem.bath_total;
-    const corner = getFlyToPointForLot(resultItem);
 
     const resultsItemCx = classNames('results-item', {
       'result-open': resultItem.expanded,
@@ -47,9 +46,6 @@ class Result extends Component {
     return (
       <div 
         className={resultsItemCx}
-        data-id={id}
-        data-lat={corner[0]}
-        data-lon={corner[1]}
         onClick={() => this.onClick()}
       >
         <div className="results-item-icon-container">

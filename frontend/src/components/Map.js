@@ -6,7 +6,10 @@ import React, { Component } from 'react';
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY;
 
 const mapStateToProps = state => {
-  return { flyToCoordinates: state.flyToCoordinates };
+  return {
+    flyToCoordinates: state.flyToCoordinates,
+    lots: state.filteredLots,
+  };
 };
 
 class Map extends Component {
@@ -105,6 +108,16 @@ class Map extends Component {
         center: this.props.flyToCoordinates.coordinates,
         zoom: 20,
       });
+    }
+    const { lots } = this.props;
+    const map = this.map;
+    const layer = 'parcel-highlights';
+    if (!lots.length) {
+      map.setFilter(layer, ['all', ['match', ['get', 'HANDLE'], ['x'], true, true]]);
+      map.setLayoutProperty('parcel-highlights', 'visibility', 'none');
+    } else {
+      map.setFilter(layer, ['all', ['match', ['get', 'HANDLE'], lots.map(lot => lot._parcel_id), true, false]]);
+      map.setLayoutProperty('parcel-highlights', 'visibility', 'visible');
     }
   }
   render() {
