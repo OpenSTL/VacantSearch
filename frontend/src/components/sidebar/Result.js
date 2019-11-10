@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import ResultItemIconSet from './ResultItemIconSet';
 import {
-  setFlyToCoordinates,
   setLotExpanded,
 } from '../../actions';
 
@@ -14,12 +13,21 @@ function getFlyToPointForLot(lot) {
   return corner;
 }
 
+const mapStateToProps = state => {
+  return {
+    map: state.map,
+  };
+};
+
 // prop: resultItem
 class Result extends Component {
   onClick() {
     const { resultItem } = this.props;
     if (!resultItem.expanded) {
-      this.props.setFlyToCoordinates(getFlyToPointForLot(resultItem));
+      this.props.map.flyTo({
+        center: getFlyToPointForLot(resultItem),
+        zoom: 20,
+      });
     }
     this.props.setLotExpanded(resultItem._parcel_id, !resultItem.expanded);
   }
@@ -74,4 +82,4 @@ class Result extends Component {
     );
   }
 }
-export default connect(null, { setFlyToCoordinates, setLotExpanded })(Result);
+export default connect(mapStateToProps, { setLotExpanded })(Result);

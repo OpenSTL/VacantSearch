@@ -3,8 +3,8 @@ import * as tabs from '../constants/tabs';
 
 import {
     FETCH_FILTERED_LOTS,
-    SET_FLY_TO_COORDINATES,
     SET_LOT_EXPANDED,
+    SET_MAP,
     SET_SELECTED_TAB,
 } from "../constants/action-types";
 
@@ -15,15 +15,6 @@ export const fetchFilteredLots = params => ({
 });
 
 /**
- * Tell map to fly to these coordinates
- * @param {Array<Number>} coords Format: [x, y]
- */
-export const setFlyToCoordinates = coords => ({
-  type: SET_FLY_TO_COORDINATES,
-  payload: coords,
-});
-
-/**
  * Expand or contract an individual lot Result in the Results tab
  * @param {string} lotId _parcel_id
  * @param {boolean} expanded 
@@ -31,6 +22,18 @@ export const setFlyToCoordinates = coords => ({
 export const setLotExpanded = (lotId, expanded) => ({
   type: SET_LOT_EXPANDED,
   payload: { expanded, lotId },
+});
+
+/**
+ * Store ref to central Mapbox for access by other components.
+ * TODO: there are probably better ways to expose map access , but I can't think of a good way
+ * to allow other components to run repeated, identical calls to the map (flyTo with same parameters)
+ * through state alone. I think some components use redux middleware traps to do this.
+ * @param {mapboxgl.Map} map
+ */
+export const setMap = map => ({
+  type: SET_MAP,
+  payload: map,
 });
 
 /**

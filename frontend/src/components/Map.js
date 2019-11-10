@@ -2,12 +2,12 @@ import { connect } from 'react-redux';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import React, { Component } from 'react';
+import { setMap } from '../actions';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY;
 
 const mapStateToProps = state => {
   return {
-    flyToCoordinates: state.flyToCoordinates,
     lots: state.filteredLots,
   };
 };
@@ -96,19 +96,13 @@ class Map extends Component {
       });
     
     });
-        
+    this.props.setMap(map);
   }
   componentWillUnmount() {
     this.map.remove();
+    this.props.setMap(null);
   }
   componentDidUpdate(prevProps) {
-    const lastFlyToCoordinates = prevProps.flyToCoordinates;
-    if (this.props.flyToCoordinates.timestamp > lastFlyToCoordinates.timestamp) {
-      this.map.flyTo({
-        center: this.props.flyToCoordinates.coordinates,
-        zoom: 20,
-      });
-    }
     const { lots } = this.props;
     const map = this.map;
     const layer = 'parcel-highlights';
@@ -126,4 +120,4 @@ class Map extends Component {
     );
   }
 }
-export default connect(mapStateToProps)(Map)
+export default connect(mapStateToProps, { setMap })(Map)
