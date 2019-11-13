@@ -91,6 +91,9 @@ a:hover {
   box-shadow: 0 0 2rem rgba(0,0,0,.075);
   margin: var(--spacing);
 }
+.sidebar i.fa {
+  padding-right: .4rem;
+}
 /*#region TOGGLE BTN */
 .toggle-btn {
   position: absolute;
@@ -268,10 +271,13 @@ input[type="search"] {
   margin: 0;
   padding: 0;
 }
-
 select {
   margin-bottom: .2rem;
   padding: .3rem; /* .5rem 1rem */
+}
+.form-baths {
+  margin-left: .2rem;
+  margin-right: .2rem;
 }
 .form-submit-btn {
   display: block;
@@ -303,7 +309,7 @@ select {
 .input-container {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: baseline;
 }
 .subtext {
