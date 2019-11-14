@@ -33,6 +33,10 @@ const setTabActive = (tabName) => {
 // no item exists for id's 20, 35, 36, 62, 64
 const nbhoodsData = [ // quick workaround til we get the JSON figured out
   {
+    "id": 0,
+    "name": "All Neighborhoods"
+  },
+  {
     "id": 1,
     "name": "Carondelet"
   },
@@ -330,13 +334,7 @@ const fillNeighborhoods = () => {
   const selectNbhood = document.getElementById('form-neighborhood');
   selectNbhood.innerHTML = '';
 
-  // create first option to 'select all' neighborhoods
-  let nbhoodOptionAll = document.createElement('option');
-  nbhoodOptionAll.setAttribute('value', ''); // sets to all
-  nbhoodOptionAll.textContent = 'All Neighborhoods';
-  selectNbhood.appendChild(nbhoodOptionAll);
-
-  // add the rest of the options
+  // add all neighborhood options
   for (nbhoodItem in nbhoodsData) {
     // create nbhoodItem
     let nbhoodOption = document.createElement('option');
@@ -370,7 +368,7 @@ const handleSubmitSearchForm = (event) => {
   const priceMax = formData.get('form-price-max');
   const sqFtMin = formData.get('form-acres-min');
   const sqFtMax = formData.get('form-acres-max');
-  var neighborhood = formData.get('form-neighborhood');
+  var neighborhood = parseInt(formData.get('form-neighborhood'));
   const minBaths = formData.get('form-baths-min');
   const maxBaths = formData.get('form-baths-max');
 
