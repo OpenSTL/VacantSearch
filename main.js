@@ -10,8 +10,7 @@ const resultsDOM = document.getElementById('results-container');
 // look for a better way
 let searchHandles = [];
 
-// const API_URL = 'https://api.openstl.org/filter';
-const API_URL = 'http://127.0.0.1:5000/filter';
+const API_URL = 'https://api.openstl.org/filter';
 
 // FUNCTIONS
 // for switching tabs in sidebar

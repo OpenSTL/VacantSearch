@@ -200,6 +200,11 @@ def query():
     # parse json attributes
     if "Neighborhoods" in req_data:
         Neighborhoods = req_data['Neighborhoods']
+        # If Neighborhoods list contains 0 (code for ALL neighborhoods)
+        # revert Neighborhoods back to empty list
+        # TODO: Modify front end to send empty string
+        if 0 in Neighborhoods:
+            Neighborhoods = []
     if "LotType" in req_data:
         LotType = req_data['LotType']
     if "IncludePossible" in req_data:
