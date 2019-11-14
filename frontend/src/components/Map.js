@@ -1,8 +1,16 @@
+import { connect } from 'react-redux';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import React, { Component } from 'react';
+import { setMap } from '../actions';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY;
+
+const mapStateToProps = state => {
+  return {
+    lots: state.filteredLots,
+  };
+};
 
 class Map extends Component {
   componentDidMount() {
@@ -88,10 +96,23 @@ class Map extends Component {
       });
     
     });
-        
+    this.props.setMap(map);
   }
   componentWillUnmount() {
     this.map.remove();
+    this.props.setMap(null);
+  }
+  componentDidUpdate(prevProps) {
+    const { lots } = this.props;
+    const map = this.map;
+    const layer = 'parcel-highlights';
+    if (!lots.length) {
+      map.setFilter(layer, ['all', ['match', ['get', 'HANDLE'], ['x'], true, true]]);
+      map.setLayoutProperty('parcel-highlights', 'visibility', 'none');
+    } else {
+      map.setFilter(layer, ['all', ['match', ['get', 'HANDLE'], lots.map(lot => lot._parcel_id), true, false]]);
+      map.setLayoutProperty('parcel-highlights', 'visibility', 'visible');
+    }
   }
   render() {
     return (
@@ -99,4 +120,4 @@ class Map extends Component {
     );
   }
 }
-export default Map;
+export default connect(mapStateToProps, { setMap })(Map)

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import NeighborhoodSelect from './NeighborhoodSelect';
@@ -6,7 +5,7 @@ import { fetchFilteredLots } from '../../actions';
 import { getSearching } from '../../selectors';
 
 class SearchForm extends Component {
-  async onFormSubmit(event) {
+  onFormSubmit(event) {
     event.preventDefault();
 
     const { fetchFilteredLots } = this.props
