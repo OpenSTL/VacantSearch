@@ -312,6 +312,10 @@ select {
 .subtext {
   font-size: 1.4rem;
 }
+/* disabled input style */
+input[type="number"]:disabled {
+  background: #dddddd;
+}
 /* searching... container */
 #sidebar-form-search-in-progress {
   margin-bottom: 20px;
@@ -373,7 +377,7 @@ select {
 }
 
   /*#endregion FORM SECTION */
-  
+
   /*#region RESULTS LISTVIEW */
 .results-container {
   max-height: calc(100vh - 31rem);
@@ -448,7 +452,7 @@ select {
   text-align: right;
 }
 .results-item .tag-name {
-  
+
 }
 /*#endregion RESULTS LISTVIEW */
 
@@ -523,4 +527,4 @@ select {
 
 /*#endregion SIDEBAR SECTIONS */
 
-/*#region 
+/*#region
