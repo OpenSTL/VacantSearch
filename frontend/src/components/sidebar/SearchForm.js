@@ -8,7 +8,7 @@ class SearchForm extends Component {
   onFormSubmit(event) {
     event.preventDefault();
 
-    const { fetchFilteredLots } = this.props
+    const { fetchFilteredLots } = this.props;
 
     // Get Data from Form
     const sidebarForm = document.getElementById('sidebar-form');
@@ -35,11 +35,11 @@ class SearchForm extends Component {
     };
 
     // Make the request
-    fetchFilteredLots(requestData)
+    fetchFilteredLots(requestData);
   }
 
   render() {
-    let { searching } = this.props
+    let { searching } = this.props;
 
     if (!searching) {
       return (

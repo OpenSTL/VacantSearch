@@ -4,6 +4,7 @@ import * as tabs from '../constants/tabs';
 import {
   COLLAPSE_ALL_LOTS,
   FETCH_FILTERED_LOTS,
+  SCROLL_TO_LOT,
   SET_LOT_EXPANDED,
   SET_MAP,
   SET_SELECTED_TAB,
@@ -20,6 +21,15 @@ export const fetchFilteredLots = params => ({
   type: FETCH_FILTERED_LOTS,
   payload: axios.post(process.env.REACT_APP_API_URL, params)
     .then(response => response.data.results),
+});
+
+/**
+ * scroll to a lot in the result list
+ * @param {string} id 
+ */
+export const scrollToLot = lotId => ({
+  type: SCROLL_TO_LOT,
+  payload: lotId,
 });
 
 /**

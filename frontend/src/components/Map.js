@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import React, { Component } from 'react';
-import { collapseAllLots, setMap, setLotExpanded } from '../actions';
+import { collapseAllLots, scrollToLot, setMap, setLotExpanded } from '../actions';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY;
 
@@ -88,12 +88,12 @@ class Map extends Component {
         return;
       }
     
-      features.forEach(function (f) {
+      features.forEach((f) => {
         if (f.hasOwnProperty('properties') && f.properties.hasOwnProperty('HANDLE')) {
           this.props.collapseAllLots();
           const lotId = f.properties.HANDLE;
           this.props.setLotExpanded(lotId, true);
-          // TODO: scroll Results sidebar to the selected lot
+          this.props.scrollToLot(lotId);
         }
       });
     
@@ -125,6 +125,7 @@ class Map extends Component {
 }
 export default connect(mapStateToProps, {
   collapseAllLots,
+  scrollToLot,
   setMap,
   setLotExpanded,
 })(Map)
