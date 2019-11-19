@@ -17,15 +17,18 @@ class SearchForm extends Component {
     const priceMax = formData.get('form-price-max');
     const sqFtMin = formData.get('form-acres-min');
     const sqFtMax = formData.get('form-acres-max');
-    const neighborhood = formData.get('form-neighborhood');
+    const neighborhoods = [
+      parseInt(formData.get('form-neighborhood')),
+    ];
     const minBaths = formData.get('form-baths-min');
     const maxBaths = formData.get('form-baths-max');
+
 
     // Format api request
     const requestData = {
       "IncludePossible": true,
       "LotType": 3,  // 1 vacant lot, 2 vacant building, 3 both
-      "Neighborhoods": neighborhood,  // 1 nbhood value (for now)
+      "Neighborhoods": neighborhoods,
       "NumBathsMax": maxBaths,
       "NumBathsMin": minBaths,
       "PriceMax": priceMax,
@@ -50,12 +53,16 @@ class SearchForm extends Component {
             <div className="input-container">
               <div><span className="subtext">min </span><input type="number"
                   name="form-price-min" id="form-price-min"
-                  min="0" defaultValue="80000"
-                  max="10000000" step="10000" /></div>
+                  min="0" defaultValue="0"
+                  max="10000000" step="10000" 
+                  disabled />
+              </div>
               <div><span className="subtext">max </span><input type="number"
                   name="form-price-max" id="form-price-max"
-                  min="0" defaultValue="250000"
-                  max="10000000" step="10000" /></div>
+                  min="0" defaultValue="40000"
+                  max="10000000" step="10000" 
+                  disabled />
+              </div>
             </div>
           </label>
           <label htmlFor="form-acres-min" className="form-section">
@@ -64,13 +71,13 @@ class SearchForm extends Component {
               <div><span className="subtext">min </span><input type="number"
                   name="form-acres-min"
                   id="form-acres-min"
-                  min="200" defaultValue="1200"
-                  max="20000" step="100" /></div>
+                  min="10" defaultValue="1200"
+                  max="20000" step="1" /></div>
               <div><span className="subtext">max </span><input type="number"
                   name="form-acres-max"
                   id="form-acres-max"
-                  min="200" defaultValue="2300"
-                  max="20000" step="100" /></div>
+                  min="10" defaultValue="2300"
+                  max="2000000" step="1" /></div>
             </div>
           </label>
           <label htmlFor="form-neighborhood" className="form-section
