@@ -199,6 +199,9 @@ i#toggle-icon {
   /*#endregion TABS SECTION */
 
   /*#region FORM SECTION */
+#sidebar-form.invisible {
+  display: none;
+}
 .form-fieldset {
   margin-top: 1.2rem;
   margin-left: var(--spacing);
@@ -323,6 +326,9 @@ input[type="number"]:disabled {
 #sidebar-form-search-in-progress {
   margin-bottom: 20px;
   text-align: center;
+}
+#sidebar-form-search-in-progress.invisible {
+  display: none;
 }
 /* searching... progress indicator */
 .linear-progress-container {
