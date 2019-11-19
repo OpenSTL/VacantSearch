@@ -1,9 +1,9 @@
 import * as tabs from '../constants/tabs';
 import {
-    FETCH_FILTERED_LOTS,
-    SET_LOT_EXPANDED,
-    SET_MAP,
-    SET_SELECTED_TAB,
+  FETCH_FILTERED_LOTS,
+  SET_LOT_EXPANDED,
+  SET_MAP,
+  SET_SELECTED_TAB,
 } from "../constants/action-types";
 
 const initialState = {
@@ -14,6 +14,16 @@ const initialState = {
 };
 
 function rootReducer (state = initialState, action) {
+  if (action.type === 'COLLAPSE_ALL_LOTS') {
+    return {
+      ...state,
+      filteredLots: state.filteredLots.map(lot => ({
+        ...lot,
+        expanded: false,
+      })),
+    };
+  }
+
   if (action.type === `${FETCH_FILTERED_LOTS}_FULFILLED`) {
     return {
       ...state,

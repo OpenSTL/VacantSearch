@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import React, { Component } from 'react';
-import { setMap } from '../actions';
+import { collapseAllLots, setMap, setLotExpanded } from '../actions';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY;
 
@@ -78,7 +78,7 @@ class Map extends Component {
     
     });
     
-    map.on('click', function (e) {
+    map.on('click', (e) => {
     
       const features = map.queryRenderedFeatures(e.point, {
         layers: ['parcel-highlights']
@@ -90,8 +90,10 @@ class Map extends Component {
     
       features.forEach(function (f) {
         if (f.hasOwnProperty('properties') && f.properties.hasOwnProperty('HANDLE')) {
-          // TODO: expand this map item in the Results sidebar
-          // toggleResultsItem(f.properties.HANDLE);
+          this.props.collapseAllLots();
+          const lotId = f.properties.HANDLE;
+          this.props.setLotExpanded(lotId, true);
+          // TODO: scroll Results sidebar to the selected lot
         }
       });
     
@@ -103,6 +105,7 @@ class Map extends Component {
     this.props.setMap(null);
   }
   componentDidUpdate(prevProps) {
+    // TODO: check for lots array to have changed contents before executing the setFilter and related commands
     const { lots } = this.props;
     const map = this.map;
     const layer = 'parcel-highlights';
@@ -120,4 +123,8 @@ class Map extends Component {
     );
   }
 }
-export default connect(mapStateToProps, { setMap })(Map)
+export default connect(mapStateToProps, {
+  collapseAllLots,
+  setMap,
+  setLotExpanded,
+})(Map)

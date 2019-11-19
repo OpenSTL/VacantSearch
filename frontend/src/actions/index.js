@@ -2,11 +2,19 @@ import axios from 'axios'
 import * as tabs from '../constants/tabs';
 
 import {
-    FETCH_FILTERED_LOTS,
-    SET_LOT_EXPANDED,
-    SET_MAP,
-    SET_SELECTED_TAB,
+  COLLAPSE_ALL_LOTS,
+  FETCH_FILTERED_LOTS,
+  SET_LOT_EXPANDED,
+  SET_MAP,
+  SET_SELECTED_TAB,
 } from "../constants/action-types";
+
+/**
+ * collapse all lot results in Results tab
+ */
+export const collapseAllLots = () => ({
+  type: COLLAPSE_ALL_LOTS,
+});
 
 export const fetchFilteredLots = params => ({
   type: FETCH_FILTERED_LOTS,
