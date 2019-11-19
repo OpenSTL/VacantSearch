@@ -5,13 +5,19 @@ import promiseMiddleware from 'redux-promise-middleware';
 
 import rootReducer from '../reducers';
 
+const devMode = process.env.NODE_ENV !== 'production';
+
 const getMiddleware = () => {
-  const scrollMiddleware = createScrollMiddleware();
-  return [
-    logger,
+  const scrollMiddleware = createScrollMiddleware();  
+  const common = [
     promiseMiddleware,
     scrollMiddleware,
   ];
+  const dev = [
+    logger,
+  ];
+  const prod = [];
+  return [...common, ...(devMode ? dev : prod)];
 }
 
 const store = createStore(

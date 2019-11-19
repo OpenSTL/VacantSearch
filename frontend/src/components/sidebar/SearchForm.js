@@ -11,7 +11,7 @@ class SearchForm extends Component {
 
     const { fetchFilteredLots } = this.props;
 
-    // Get Data from Form
+    // Get data from form
     const sidebarForm = document.getElementById('sidebar-form');
     const formData = new FormData(sidebarForm);
     const priceMin = formData.get('form-price-min');
@@ -23,7 +23,6 @@ class SearchForm extends Component {
     ];
     const minBaths = formData.get('form-baths-min');
     const maxBaths = formData.get('form-baths-max');
-
 
     // Format api request
     const requestData = {
@@ -106,7 +105,6 @@ class SearchForm extends Component {
                   min="0" max="6" step="0.5"
                   defaultValue={'1'}
                 >
-                  {/* autofill? */}
                   <option>.5</option>
                   <option>1</option>
                   <option>1.5</option>
@@ -126,7 +124,6 @@ class SearchForm extends Component {
                   min="0" max="6" step="0.5"
                   defaultValue={'2.5'}
                 >
-                  {/* autofill? */}
                   <option>.5</option>
                   <option>1</option>
                   <option>1.5</option>

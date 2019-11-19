@@ -1,3 +1,10 @@
+# Vacancy Map
+> Search for vacant lots in the Saint Louis, MO area.
+
+This is the frontend portion of the Vacancy project. The frontend is a basic React app. If you need help setting up the toolchain to develop a React app, read [the toolchain guide](./toolchain.md).
+
+By default, the frontend will communicate with the hosted demo backend. You do not need to run your own local backend to run the frontend.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

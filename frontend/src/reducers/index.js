@@ -1,5 +1,6 @@
 import * as tabs from '../constants/tabs';
 import {
+  COLLAPSE_ALL_LOTS,
   FETCH_FILTERED_LOTS,
   SET_LOT_EXPANDED,
   SET_MAP,
@@ -14,7 +15,7 @@ const initialState = {
 };
 
 function rootReducer (state = initialState, action) {
-  if (action.type === 'COLLAPSE_ALL_LOTS') {
+  if (action.type === COLLAPSE_ALL_LOTS) {
     return {
       ...state,
       filteredLots: state.filteredLots.map(lot => ({
