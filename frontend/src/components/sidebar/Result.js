@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import ResultItemIconSet from './ResultItemIconSet';
+import { getMap } from '../../selectors';
 import {
   setLotExpanded,
 } from '../../actions';
@@ -15,7 +16,7 @@ function getFlyToPointForLot(lot) {
 
 const mapStateToProps = state => {
   return {
-    map: state.map,
+    map: getMap(state),
   };
 };
 
@@ -52,7 +53,7 @@ class Result extends Component {
     });
 
     return (
-      <div 
+      <div
         className={resultsItemCx}
         onClick={() => this.onClick()}
       >

@@ -3,12 +3,13 @@ import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import React, { Component } from 'react';
 import { setMap } from '../actions';
+import { getFilteredLots } from '../selectors';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY;
 
 const mapStateToProps = state => {
   return {
-    lots: state.filteredLots,
+    lots: getFilteredLots(state),
   };
 };
 
@@ -16,7 +17,7 @@ class Map extends Component {
   componentDidMount() {
     const map = new mapboxgl.Map({
       // container id
-      container: 'map', 
+      container: 'map',
       // stylesheet location
       style: 'mapbox://styles/mrao2/cjzuiuexr09mn1crs8tz35s3k',
       // starting position [lng, lat]
@@ -26,22 +27,22 @@ class Map extends Component {
     });
     this.map = map;
     const geocoder = new MapboxGeocoder({
-      accessToken: mapboxgl.accessToken,    
+      accessToken: mapboxgl.accessToken,
       // further limit results to the geographic bounds representing the region of
       bbox: [-90.55234, 38.383975, -90.13074, 39.046325],
       country: 'us',
     });
-    
+
     map.addControl(geocoder);
-    
+
     map.on('load', function () {
-    
+
       //added all parcels layer
       map.addSource('parcels', {
         "type": "vector",
         "url": "mapbox://mrao2.1h90kw7u"
       });
-    
+
       map.addLayer({
         "id": "parcel-highlights",
         "type": "fill",
@@ -53,7 +54,7 @@ class Map extends Component {
         }
       });
       map.setLayoutProperty('parcel-highlights', 'visibility', 'none')
-    
+
       // For marking geocoded results
       map.addSource('single-point', {
         "type": "geojson",
@@ -71,30 +72,30 @@ class Map extends Component {
           "circle-color": "#007cbf"
         }
       });
-    
+
       geocoder.on('result', function (ev) {
         map.getSource('single-point').setData(ev.result.geometry);
       });
-    
+
     });
-    
+
     map.on('click', function (e) {
-    
+
       const features = map.queryRenderedFeatures(e.point, {
         layers: ['parcel-highlights']
       });
-    
+
       if (!features.length) {
         return;
       }
-    
+
       features.forEach(function (f) {
         if (f.hasOwnProperty('properties') && f.properties.hasOwnProperty('HANDLE')) {
           // TODO: expand this map item in the Results sidebar
           // toggleResultsItem(f.properties.HANDLE);
         }
       });
-    
+
     });
     this.props.setMap(map);
   }

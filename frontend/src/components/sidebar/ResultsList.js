@@ -1,9 +1,11 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
+
+import { getFilteredLots } from '../../selectors'
 import Result from './Result';
 
 const mapStateToProps = state => {
-  return { results: state.filteredLots };
+  return { results: getFilteredLots(state) };
 };
 
 class ConnectedResultsList extends Component {
@@ -13,7 +15,7 @@ class ConnectedResultsList extends Component {
         {this.props.results.map((result, index) => (
           <Result key={index} resultItem={result} />
         ))}
-        {this.props.results.length === 0 && <p>No matching results. Please try another search</p>}      
+        {this.props.results.length === 0 && <p>No matching results. Please try another search</p>}
       </>
     );
   }

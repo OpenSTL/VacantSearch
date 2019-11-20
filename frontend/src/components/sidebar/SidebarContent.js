@@ -5,9 +5,10 @@ import React, { Component } from 'react';
 import ResultsTab from './ResultsTab';
 import SearchForm from './SearchForm';
 import { setSelectedTab } from '../../actions';
+import { getSelectedTab } from '../../selectors';
 
 const mapStateToProps = state => {
-  return { selectedTab: state.selectedTab };
+  return { selectedTab: getSelectedTab(state) };
 };
 
 class SidebarContent extends Component {
