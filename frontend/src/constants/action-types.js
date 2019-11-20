@@ -1,4 +1,6 @@
+export const COLLAPSE_ALL_LOTS = 'COLLAPSE_ALL_LOTS';
 export const FETCH_FILTERED_LOTS = 'FETCH_FILTERED_LOTS';
+export const SCROLL_TO_LOT = 'SCROLL_TO_LOT';
 export const SET_LOT_EXPANDED = 'SET_LOT_EXPANDED';
 export const SET_MAP = 'SET_MAP';
 export const SET_SELECTED_TAB = 'SET_SELECTED_TAB';

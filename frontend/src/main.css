@@ -91,6 +91,9 @@ a:hover {
   box-shadow: 0 0 2rem rgba(0,0,0,.075);
   margin: var(--spacing);
 }
+.sidebar i.fa {
+  padding-right: .4rem;
+}
 /*#region TOGGLE BTN */
 .toggle-btn {
   position: absolute;
@@ -196,6 +199,9 @@ i#toggle-icon {
   /*#endregion TABS SECTION */
 
   /*#region FORM SECTION */
+#sidebar-form.invisible {
+  display: none;
+}
 .form-fieldset {
   margin-top: 1.2rem;
   margin-left: var(--spacing);
@@ -268,10 +274,13 @@ input[type="search"] {
   margin: 0;
   padding: 0;
 }
-
 select {
   margin-bottom: .2rem;
   padding: .3rem; /* .5rem 1rem */
+}
+.form-baths {
+  margin-left: .2rem;
+  margin-right: .2rem;
 }
 .form-submit-btn {
   display: block;
@@ -303,16 +312,23 @@ select {
 .input-container {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: baseline;
 }
 .subtext {
   font-size: 1.4rem;
 }
+/* disabled input style */
+input[type="number"]:disabled {
+  background: #dddddd;
+}
 /* searching... container */
 #sidebar-form-search-in-progress {
   margin-bottom: 20px;
   text-align: center;
+}
+#sidebar-form-search-in-progress.invisible {
+  display: none;
 }
 /* searching... progress indicator */
 .linear-progress-container {

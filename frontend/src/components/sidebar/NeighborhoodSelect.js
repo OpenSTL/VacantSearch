@@ -1,10 +1,10 @@
 import React from 'react';
-import neighborhoods from '../../neighborhoodsData';
+import neighborhoods from '../../assets/data/neighborhoods.json';
 
 function NeighborhoodSelect() {
     return (
         <select id="form-neighborhood" name="form-neighborhood">
-            <option value=''>All Neighborhoods</option>
+            <option value='0'>All Neighborhoods</option>
             {neighborhoods.map((neighborhood, index) => (
                 <option key={index} value={neighborhood.id}>
                     {neighborhood.name}
