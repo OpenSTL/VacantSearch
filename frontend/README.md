@@ -7,6 +7,10 @@ By default, the frontend will communicate with the hosted demo backend. You do n
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Development options
+### Bypass server
+You can bypass the server and use mock API response data by setting `REACT_APP_USE_MOCK_API_DATA='yes'` in your `.env.local` file. **Do not add this variable to .env** - it will break the app. Create your own `.env.local` file in the same directory as `.env`. You will need to restart your development server for the new variable to take effect.
+
 ## Available Scripts
 
 In the project directory, you can run:
