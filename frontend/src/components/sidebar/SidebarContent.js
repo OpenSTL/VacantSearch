@@ -13,7 +13,7 @@ const mapStateToProps = state => {
 class SidebarContent extends Component {
     render() {
         return (
-            <section className="sidebar-section">
+          <section className="sidebar-section">
             {/* Tab Headers */}
             <div className="tab-row">
               <div

@@ -19,9 +19,7 @@ class ResultsTab extends Component {
             Possible
           </div>
         </header>
-        <div className="results-container noscroll" id="results-container">
-          <ResultsList />  
-        </div>
+        <ResultsList />  
       </>
     );
   }

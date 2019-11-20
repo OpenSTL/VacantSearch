@@ -1,5 +1,5 @@
 // no item exists for id's 20, 35, 36, 62, 64
-export default [ // quick workaround til we get the JSON figured out
+export default [
     {
       "id": 1,
       "name": "Carondelet"
