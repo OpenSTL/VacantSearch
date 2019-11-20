@@ -1,5 +1,4 @@
-// no item exists for id's 20, 35, 36, 62, 64
-export default [
+[
     {
       "id": 1,
       "name": "Carondelet"
@@ -292,4 +291,4 @@ export default [
       "id": 78,
       "name": "Hamilton Heights"
     }
-];
+]
