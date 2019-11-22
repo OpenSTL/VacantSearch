@@ -1,5 +1,5 @@
 import React from 'react';
-import neighborhoods from '../../neighborhoodsData';
+import neighborhoods from '../../assets/data/neighborhoods.json';
 
 function NeighborhoodSelect() {
     return (

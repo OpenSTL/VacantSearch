@@ -1,5 +1,7 @@
 import axios from 'axios'
 import * as tabs from '../constants/tabs';
+import mockApiFilterResponse from '../assets/data/mock-api-filter-response.json';
+import { mockApiData } from '../utils';
 
 import {
   COLLAPSE_ALL_LOTS,
@@ -17,11 +19,16 @@ export const collapseAllLots = () => ({
   type: COLLAPSE_ALL_LOTS,
 });
 
-export const fetchFilteredLots = params => ({
-  type: FETCH_FILTERED_LOTS,
-  payload: axios.post(process.env.REACT_APP_API_URL, params)
-    .then(response => response.data.results),
-});
+export const fetchFilteredLots = (params) => {
+  const payload = mockApiData() ? 
+    Promise.resolve(mockApiFilterResponse.results) : 
+    axios.post(process.env.REACT_APP_API_URL, params)
+      .then(response => response.data.results);
+  return {
+    type: FETCH_FILTERED_LOTS,
+    payload,
+  };
+};
 
 /**
  * scroll to a lot in the result list
