@@ -36,16 +36,16 @@ class Result extends Component {
     // details
     const { resultItem } = this.props;
     // const acres = resultItem.acres;
-    const hasAttic = resultItem.attic;
-    const finishedBasement = resultItem.basement_finished;
+    const hasAttic = resultItem.attic ? 'Yes':'No';
+    const hasFinishedBasement = resultItem.basement_finished ? 'Yes':'No';
     const basementType = resultItem.basement_type;
     // const numFullBath = resultItem.bath_full;
     // const numHalfBath = resultItem.bath_half;
     const buildingType = resultItem.bldg_type;
-    const centralHeat = resultItem.central_heat;
+    const hasCentralHeat = resultItem.central_heat ? 'Yes':'No';
     // const gndFlrSqFt = resultItem.com_grd_flr;
-    const construction = resultItem.construction;
-    const hasGarage = resultItem.garage;
+    // const construction = resultItem.construction;
+    const hasGarage = resultItem.garage ? 'Yes':'No';
     // const id = resultItem._parcel_id;
     // const neighborhoodCode = resultItem.nbrhd_code;
     const neighborhoodName = resultItem.nbrhd_name;
@@ -81,10 +81,9 @@ class Result extends Component {
             <li> {buildingType} | {numStories} </li>
             <li>Walls: {wallMaterial}</li>
             <li>Basement: {basementType}</li>
-            <li>Construction: {construction}</li>
-            <li>Finished Basement: {finishedBasement}</li>
-            <li>Heating: {centralHeat}</li>
-            <li>Garage: {hasGarage}</li>
+            <li>Finished Basement: {hasFinishedBasement}</li>
+            <li>Heating: {hasCentralHeat}</li>
+            <li>Garage: {hasGarage} </li>
             <li>Attic: {hasAttic}</li>
           </ul>
         </div>
