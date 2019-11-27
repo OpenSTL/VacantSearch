@@ -35,18 +35,28 @@ class Result extends Component {
   render() {
     // details
     const { resultItem } = this.props;
-    const acres = resultItem.acres;
+    // const acres = resultItem.acres;
+    const hasAttic = resultItem.attic;
+    const finishedBasement = resultItem.basement_finished;
     const basementType = resultItem.basement_type;
+    // const numFullBath = resultItem.bath_full;
+    // const numHalfBath = resultItem.bath_half;
     const buildingType = resultItem.bldg_type;
     const centralHeat = resultItem.central_heat;
-    const id = resultItem._parcel_id;
-    const neighborhoodCode = resultItem.nbrhd_code;
+    // const gndFlrSqFt = resultItem.com_grd_flr;
+    const construction = resultItem.construction;
+    const hasGarage = resultItem.garage;
+    // const id = resultItem._parcel_id;
+    // const neighborhoodCode = resultItem.nbrhd_code;
     const neighborhoodName = resultItem.nbrhd_name;
+    const numStories = resultItem.num_stories;
     const wallMaterial = resultItem.wall_material;
     // top right info items
     const price = resultItem.price_residential;
     const sqFt = Math.floor(resultItem.size_sqFt);
     const baths = resultItem.bath_total;
+    const streetAddr = resultItem.street_addr;
+    const zip = resultItem.zip;
 
     const resultsItemCx = classNames('results-item', {
       'result-open': resultItem.expanded,
@@ -64,20 +74,24 @@ class Result extends Component {
           <h3>
             <span>{neighborhoodName}</span>
           </h3>
+          <h4>
+            <span>{streetAddr}, ST.LOUIS, {zip}</span>
+          </h4>
           <ul>
-            <li>id: {id}</li>
-            <li>nbCode: {neighborhoodCode}</li>
-            <li>acres: {acres}</li>
-            <li>building: {buildingType}</li>
-            <li>walls: {wallMaterial}</li>
-            <li>basement: {basementType}</li>
-            <li>heating: {centralHeat}</li>
+            <li> {buildingType} | {numStories} </li>
+            <li>Walls: {wallMaterial}</li>
+            <li>Basement: {basementType}</li>
+            <li>Construction: {construction}</li>
+            <li>Finished Basement: {finishedBasement}</li>
+            <li>Heating: {centralHeat}</li>
+            <li>Garage: {hasGarage}</li>
+            <li>Attic: {hasAttic}</li>
           </ul>
         </div>
         <div className="results-item-stats">
           <span>{'$' + price}</span>
           <span>{baths + ' Bath'}</span>
-          <span>{sqFt + 'SF'}</span>
+          <span>{sqFt + ' sqFt'}</span>
         </div>
       </div>
     );
