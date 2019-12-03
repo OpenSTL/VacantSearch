@@ -1,11 +1,12 @@
 {
   "name": "frontend",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@mapbox/mapbox-gl-geocoder": "~2.2.0",
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
+    "gh-pages": "^2.1.1",
     "mapbox-gl": "~1.1.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
@@ -18,6 +19,8 @@
     "redux-promise-middleware": "^6.1.2"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -44,5 +47,5 @@
     "jest-enzyme": "^7.1.2",
     "react-test-renderer": "^16.11.0"
   },
-  "homepage": "."
+  "homepage": "https://openstl.github.io/VacantSearch"
 }
