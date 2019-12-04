@@ -4,12 +4,14 @@ import {
   FETCH_FILTERED_LOTS,
   SET_LOT_EXPANDED,
   SET_MAP,
+  SET_MAP_STYLE,
   SET_SELECTED_TAB,
 } from "../constants/action-types";
 
 const initialState = {
   filteredLots: [],
   map: null,
+  mapStyle: 'satellite',
   searching: false,
   selectedTab: tabs.SEARCH,
 };
@@ -58,6 +60,13 @@ function rootReducer (state = initialState, action) {
       ...state,
       map: action.payload,
     };
+  }
+
+  if (action.type === SET_MAP_STYLE) {
+    return {
+      ...state,
+      mapStyle: action.payload,
+    }
   }
 
   if (action.type === SET_SELECTED_TAB) {
