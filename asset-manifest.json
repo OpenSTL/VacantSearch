@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/VacantSearch/static/css/main.38170318.chunk.css",
-    "main.js": "/VacantSearch/static/js/main.a8accba1.chunk.js",
-    "main.js.map": "/VacantSearch/static/js/main.a8accba1.chunk.js.map",
+    "main.js": "/VacantSearch/static/js/main.4f7f8719.chunk.js",
+    "main.js.map": "/VacantSearch/static/js/main.4f7f8719.chunk.js.map",
     "runtime-main.js": "/VacantSearch/static/js/runtime-main.71ee0369.js",
     "runtime-main.js.map": "/VacantSearch/static/js/runtime-main.71ee0369.js.map",
     "static/js/2.dc955721.chunk.js": "/VacantSearch/static/js/2.dc955721.chunk.js",
     "static/js/2.dc955721.chunk.js.map": "/VacantSearch/static/js/2.dc955721.chunk.js.map",
     "index.html": "/VacantSearch/index.html",
-    "precache-manifest.e9f829e7e10273959d20d0589cd2d249.js": "/VacantSearch/precache-manifest.e9f829e7e10273959d20d0589cd2d249.js",
+    "precache-manifest.93109cc6ad874fd6b3b6bb8cd046799e.js": "/VacantSearch/precache-manifest.93109cc6ad874fd6b3b6bb8cd046799e.js",
     "service-worker.js": "/VacantSearch/service-worker.js",
     "static/css/main.38170318.chunk.css.map": "/VacantSearch/static/css/main.38170318.chunk.css.map"
   },
@@ -16,6 +16,6 @@
     "static/js/runtime-main.71ee0369.js",
     "static/js/2.dc955721.chunk.js",
     "static/css/main.38170318.chunk.css",
-    "static/js/main.a8accba1.chunk.js"
+    "static/js/main.4f7f8719.chunk.js"
   ]
 }
