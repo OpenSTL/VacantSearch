@@ -21,4 +21,4 @@ jobs:
       with:
         ACCESS_TOKEN: ${{ secrets.SERVICE_USER_PAT }}
         BRANCH: gh-pages
-        FOLDER: build
+        FOLDER: frontend/build
