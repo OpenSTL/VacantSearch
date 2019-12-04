@@ -383,7 +383,7 @@ input[type="number"]:disabled {
 }
 
   /*#endregion FORM SECTION */
-  
+
   /*#region RESULTS LISTVIEW */
 .results-container {
   max-height: calc(100vh - 31rem);
@@ -458,7 +458,7 @@ input[type="number"]:disabled {
   text-align: right;
 }
 .results-item .tag-name {
-  
+
 }
 /*#endregion RESULTS LISTVIEW */
 
