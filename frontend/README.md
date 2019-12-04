@@ -11,6 +11,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ### Bypass server
 You can bypass the server and use mock API response data by setting `REACT_APP_USE_MOCK_API_DATA='yes'` in your `.env.local` file. **Do not add this variable to .env** - it will break the app. Create your own `.env.local` file in the same directory as `.env`. You will need to restart your development server for the new variable to take effect.
 
+## CI
+https://openstl.github.io/VacantSearch/ reflects the latest frontend code on `master`. The automatic Github Pages deployment is handled by a Github action. If you are a privileged user, you can run `npm run deploy` to manually deploy code to Github Pages.
+
 ## Available Scripts
 
 In the project directory, you can run:
