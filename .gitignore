@@ -128,3 +128,8 @@ dmypy.json
 
 # MacOS custom attributes
 .DS_Store
+
+# frontend dotenv config
+!frontend/.env
+!frontend/.env.development
+!frontend/.env.production
