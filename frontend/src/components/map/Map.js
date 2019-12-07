@@ -1,8 +1,10 @@
 import { connect } from 'react-redux';
 import mapboxgl from 'mapbox-gl';
 import React, { Component } from 'react';
+
 import { collapseAllLots, scrollToLot, setMap, setLotExpanded } from '../../actions';
 import { getFilteredLots, getMapStyle } from '../../selectors';
+import * as mapStyles from '../../constants/map-styles';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY;
 
@@ -98,7 +100,7 @@ class Map extends Component {
     );
   }
   updateSatelliteVisibility() {
-    const satelliteLayerVisibility = this.props.mapStyle === 'satellite' ?
+    const satelliteLayerVisibility = this.props.mapStyle === mapStyles.SATELLITE ?
       'visible' : 
       'none';
     this.map.setLayoutProperty('mapbox-satellite', 'visibility', satelliteLayerVisibility);

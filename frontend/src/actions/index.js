@@ -62,6 +62,11 @@ export const setMap = map => ({
   payload: map,
 });
 
+export const setMapStyle = (style) => ({
+  type: SET_MAP_STYLE,
+  payload: style,
+});
+
 /**
  * Set active sidebar tab
  * @param {string} tab See constants/tabs.js
@@ -73,8 +78,3 @@ export function setSelectedTab(tab) {
     payload: tab,  
   };
 }
-
-export const setMapStyle = (style) => ({
-  type: SET_MAP_STYLE,
-  payload: style,
-});
