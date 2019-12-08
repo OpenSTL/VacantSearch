@@ -1,12 +1,15 @@
 import React from 'react';
 import Map from './Map';
-import SwitchStreetToSatellite from './SwitchStreetToSatellite';
+import MapTopToolbar from './MapTopToolbar';
+import SatelliteOrStreetSwitch from './SatelliteOrStreetSwitch';
 
 function MapContainer() {
   return (
     <div className='map-container'>
       <Map />
-      <SwitchStreetToSatellite />
+      <MapTopToolbar>
+        <SatelliteOrStreetSwitch />
+      </MapTopToolbar>
     </div>
   )
 }

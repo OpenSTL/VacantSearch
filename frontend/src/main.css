@@ -470,7 +470,7 @@ input[type="number"]:disabled {
   right: 0;
   top: 0;
 }
-.switch-street-to-satellite-container {
+.map-top-toolbar {
   position: absolute;
   right: 12px;
   top: 12px;
