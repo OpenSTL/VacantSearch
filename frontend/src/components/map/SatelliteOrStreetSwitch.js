@@ -12,20 +12,20 @@ const mapStateToProps = state => {
 };
 
 class SatelliteOrStreetSwitch extends Component {
-    onChange(e) {
-        const mapStyle = e.target.value;
-        this.props.setMapStyle(mapStyle);
-    }
-    render() {
-        return (
-            <select
-              onChange={(e) => this.onChange(e)}
-              value={this.props.mapStyle}
-            >
-                <option value={mapStyles.STREET}>Streets</option>
-                <option value={mapStyles.SATELLITE}>Satellite</option>
-            </select>
-        );
-    }
+  onChange(e) {
+    const mapStyle = e.target.value;
+    this.props.setMapStyle(mapStyle);
+  }
+  render() {
+    return (
+      <select
+        onChange={(e) => this.onChange(e)}
+        value={this.props.mapStyle}
+      >
+        <option value={mapStyles.STREET}>Streets</option>
+        <option value={mapStyles.SATELLITE}>Satellite</option>
+      </select>
+    );
+  }
 }
 export default connect(mapStateToProps, { setMapStyle })(SatelliteOrStreetSwitch);
