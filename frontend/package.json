@@ -8,6 +8,7 @@
     "classnames": "^2.2.6",
     "gh-pages": "^2.1.1",
     "mapbox-gl": "~1.1.1",
+    "node-sass": "^4.13.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-redux": "^7.1.1",

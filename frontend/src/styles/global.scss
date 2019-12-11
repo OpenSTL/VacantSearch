@@ -1,0 +1,7 @@
+.noscroll {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+.noscroll::-webkit-scrollbar {
+  width: 0px; /* Chrome, Safari, Opera */
+}

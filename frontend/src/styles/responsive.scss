@@ -1,0 +1,21 @@
+@media (max-width: 480px) {
+  /* move toggle button to top center */
+  /* move "sidebar" to top, come down on toggle */
+  .sidebar {
+    width: 100%;
+    height: 65rem;
+    left: 0;
+    right: 0;
+    top: 0;
+    transition: top .25s ease-in-out;
+    --sidebar-width: 100%;
+  }
+  .sidebar.active {
+    top: -100%;
+  }
+  .toggle-btn {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+  }
+}
