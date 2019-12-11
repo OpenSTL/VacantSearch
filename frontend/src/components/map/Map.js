@@ -91,7 +91,7 @@ class Map extends Component {
     }
 
     if (prevProps.mapStyle !== this.props.mapStyle) {
-      this.updateSatelliteVisibility();
+      this.updateSatelliteLayerVisibility();
     }
   }
   render() {
@@ -99,16 +99,22 @@ class Map extends Component {
       <div id='map'></div>
     );
   }
-  updateSatelliteVisibility() {
-    const satelliteLayerVisibility = this.props.mapStyle === mapStyles.SATELLITE ?
-      'visible' : 
-      'none';
-    this.map.setLayoutProperty('mapbox-satellite', 'visibility', satelliteLayerVisibility);
+  updateSatelliteLayerVisibility() {
+    const satelliteLayerName = 'mapbox-satellite';
+    const satelliteLayerOpacity = this.props.mapStyle === mapStyles.SATELLITE ?
+      1 : 
+      0;
+    this.map.setPaintProperty(
+      satelliteLayerName,
+      'raster-opacity',
+      satelliteLayerOpacity,
+    );      
   }
 }
+
 export default connect(mapStateToProps, {
   collapseAllLots,
   scrollToLot,
-  setMap,
   setLotExpanded,
+  setMap,
 })(Map)

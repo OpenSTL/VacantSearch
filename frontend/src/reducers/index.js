@@ -13,7 +13,7 @@ const initialState = {
   filteredLots: [],
   map: null,
   // if you change the initial mapStyle here, you must also change it in the MapBox config which is not in this repo.
-  mapStyle: mapStyles.SATELLITE,
+  mapStyle: mapStyles.STREET,
   searching: false,
   selectedTab: tabs.SEARCH,
 };
