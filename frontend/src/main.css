@@ -462,6 +462,21 @@ input[type="number"]:disabled {
 }
 /*#endregion RESULTS LISTVIEW */
 
+/*#region MAP CONTAINER */
+.map-container {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.map-top-toolbar {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+}
+/*#endregion MAP CONTAINER */
+
 /*#region RESPONSIVE */
 
 @media (max-width: 480px) {

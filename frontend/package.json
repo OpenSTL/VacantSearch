@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@mapbox/mapbox-gl-geocoder": "~2.2.0",
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "gh-pages": "^2.1.1",

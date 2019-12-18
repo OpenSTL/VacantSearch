@@ -1,15 +1,19 @@
+import * as mapStyles from '../constants/map-styles';
 import * as tabs from '../constants/tabs';
 import {
   COLLAPSE_ALL_LOTS,
   FETCH_FILTERED_LOTS,
   SET_LOT_EXPANDED,
   SET_MAP,
+  SET_MAP_STYLE,
   SET_SELECTED_TAB,
 } from "../constants/action-types";
 
 const initialState = {
   filteredLots: [],
   map: null,
+  // if you change the initial mapStyle here, you must also change it in the MapBox config which is not in this repo.
+  mapStyle: mapStyles.STREET,
   searching: false,
   selectedTab: tabs.SEARCH,
 };
@@ -58,6 +62,13 @@ function rootReducer (state = initialState, action) {
       ...state,
       map: action.payload,
     };
+  }
+
+  if (action.type === SET_MAP_STYLE) {
+    return {
+      ...state,
+      mapStyle: action.payload,
+    }
   }
 
   if (action.type === SET_SELECTED_TAB) {
