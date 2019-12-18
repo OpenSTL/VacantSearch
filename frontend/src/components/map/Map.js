@@ -1,15 +1,17 @@
 import { connect } from 'react-redux';
 import mapboxgl from 'mapbox-gl';
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import React, { Component } from 'react';
-import { collapseAllLots, scrollToLot, setMap, setLotExpanded } from '../actions';
-import { getFilteredLots } from '../selectors';
+
+import { collapseAllLots, scrollToLot, setMap, setLotExpanded } from '../../actions';
+import { getFilteredLots, getMapStyle } from '../../selectors';
+import * as mapStyles from '../../constants/map-styles';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY;
 
 const mapStateToProps = state => {
   return {
     lots: getFilteredLots(state),
+    mapStyle: getMapStyle(state),
   };
 };
 
@@ -26,14 +28,6 @@ class Map extends Component {
       zoom: 12,
     });
     this.map = map;
-    const geocoder = new MapboxGeocoder({
-      accessToken: mapboxgl.accessToken,
-      // further limit results to the geographic bounds representing the region of
-      bbox: [-90.55234, 38.383975, -90.13074, 39.046325],
-      country: 'us',
-    });
-
-    map.addControl(geocoder);
 
     map.on('load', function () {
 
@@ -54,28 +48,6 @@ class Map extends Component {
         }
       });
       map.setLayoutProperty('parcel-highlights', 'visibility', 'none')
-
-      // For marking geocoded results
-      map.addSource('single-point', {
-        "type": "geojson",
-        "data": {
-          "type": "FeatureCollection",
-          "features": []
-        }
-      });
-      map.addLayer({
-        "id": "point",
-        "source": "single-point",
-        "type": "circle",
-        "paint": {
-          "circle-radius": 10,
-          "circle-color": "#007cbf"
-        }
-      });
-
-      geocoder.on('result', function (ev) {
-        map.getSource('single-point').setData(ev.result.geometry);
-      });
 
     });
 
@@ -117,16 +89,32 @@ class Map extends Component {
       map.setFilter(layer, ['all', ['match', ['get', 'HANDLE'], lots.map(lot => lot._parcel_id), true, false]]);
       map.setLayoutProperty('parcel-highlights', 'visibility', 'visible');
     }
+
+    if (prevProps.mapStyle !== this.props.mapStyle) {
+      this.updateSatelliteLayerVisibility();
+    }
   }
   render() {
     return (
       <div id='map'></div>
     );
   }
+  updateSatelliteLayerVisibility() {
+    const satelliteLayerName = 'mapbox-satellite';
+    const satelliteLayerOpacity = this.props.mapStyle === mapStyles.SATELLITE ?
+      1 : 
+      0;
+    this.map.setPaintProperty(
+      satelliteLayerName,
+      'raster-opacity',
+      satelliteLayerOpacity,
+    );      
+  }
 }
+
 export default connect(mapStateToProps, {
   collapseAllLots,
   scrollToLot,
-  setMap,
   setLotExpanded,
+  setMap,
 })(Map)

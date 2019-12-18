@@ -9,6 +9,7 @@ import {
   SCROLL_TO_LOT,
   SET_LOT_EXPANDED,
   SET_MAP,
+  SET_MAP_STYLE,
   SET_SELECTED_TAB,
 } from "../constants/action-types";
 
@@ -59,6 +60,11 @@ export const setLotExpanded = (lotId, expanded) => ({
 export const setMap = map => ({
   type: SET_MAP,
   payload: map,
+});
+
+export const setMapStyle = (style) => ({
+  type: SET_MAP_STYLE,
+  payload: style,
 });
 
 /**

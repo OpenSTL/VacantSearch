@@ -1,13 +1,16 @@
 #map {
-  position:absolute;
-  top:0;
-  bottom:0;
+  height:100%;
   width:100%;
 }
-.geocoder {
-  margin-top: 1rem;
+.map-container {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
-.geocoder div {
-  margin: 0 auto;
+.map-top-toolbar {
+  position: absolute;
+  right: 12px;
+  top: 12px;
 }
-    
