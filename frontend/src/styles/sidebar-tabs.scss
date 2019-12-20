@@ -1,4 +1,4 @@
-.tab-row {  /* contains tabs */
+.tab-row {
   display: flex;
   text-align: center;
   border: 1px solid rgba(0, 0, 0, 0.12);
@@ -6,8 +6,8 @@
   border-radius: .3rem .3rem 0 0;
   background: var(--sidebar-active-color);
 }
-.sidebar-tab-content {
-  padding-top: 1.8rem;
+.tab-contents {
+  padding-top: 3rem;
   border-radius: 0;
   border-top: none;
 }
@@ -39,11 +39,12 @@
 
 /* tab content section */
 .tab-content {
-  display: none;
   background: var(--sidebar-active-color);
+  display: none;
+  margin-bottom: var(--spacing);
+  margin-left: var(--spacing);
+  margin-right: var(--spacing);
 }
 .tab-content.tab-active {
-  display: initial;
-  margin-top: 1rem;
-  background: var(--sidebar-active-color);
+  display: block;
 }

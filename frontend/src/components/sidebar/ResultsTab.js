@@ -5,7 +5,8 @@ class ResultsTab extends Component {
   render() {
     return (
       <>
-        <header className="results-header">
+        <ResultsList />
+        <div className="results-legend">
           <div className="icon-key">
             <i className="fa fa-building"></i>
             Building
@@ -18,8 +19,7 @@ class ResultsTab extends Component {
             <i className="fa fa-question"></i>
             Possible
           </div>
-        </header>
-        <ResultsList />  
+        </div>
       </>
     );
   }

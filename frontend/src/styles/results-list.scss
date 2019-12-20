@@ -3,13 +3,10 @@
   box-shadow: 0 0 2rem rgba(0,0,0,.075);
   border: var(--item-border);
   overflow-y: scroll;
-  margin-top: 1.2rem;
-  margin-bottom: var(--spacing);
-  margin-left: var(--spacing);
-  margin-right: var(--spacing);
   border-radius: .3rem;
+  margin-bottom: 1.2rem;
 }
-.results-header {
+.results-legend {
   display: flex;
   justify-content: space-evenly;
 }
