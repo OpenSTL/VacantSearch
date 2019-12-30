@@ -33,7 +33,7 @@ class Sidebar extends Component {
           {/*Top Sidebar Header*/}
           <header className="sidebar-section sidebar-header">
             <h1 className="heading_brand-name">OpenSTL</h1>
-            <p>Search for vacant houses in St. Louis</p>
+            <p>Search for vacant properties in St. Louis</p>
             <div className="geocoder" id="geocoder"></div>
           </header>
           <br />
