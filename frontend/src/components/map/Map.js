@@ -44,7 +44,7 @@ class Map extends Component {
         "source-layer": "parcels-3swwt3",
         "paint": {
           "fill-outline-color": "rgba(238, 66, 244,1)",
-          "fill-color": "rgba(238, 66, 244,1)"
+          "fill-color": "rgba(238, 66, 244,0.5)",
         }
       });
       map.setLayoutProperty('parcel-highlights', 'visibility', 'none')
