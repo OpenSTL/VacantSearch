@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/VacantSearch/static/css/main.3b21ca59.chunk.css",
-    "main.js": "/VacantSearch/static/js/main.11ed08b5.chunk.js",
-    "main.js.map": "/VacantSearch/static/js/main.11ed08b5.chunk.js.map",
+    "main.css": "/VacantSearch/static/css/main.af6cbf8d.chunk.css",
+    "main.js": "/VacantSearch/static/js/main.86001310.chunk.js",
+    "main.js.map": "/VacantSearch/static/js/main.86001310.chunk.js.map",
     "runtime-main.js": "/VacantSearch/static/js/runtime-main.71ee0369.js",
     "runtime-main.js.map": "/VacantSearch/static/js/runtime-main.71ee0369.js.map",
     "static/js/2.37230947.chunk.js": "/VacantSearch/static/js/2.37230947.chunk.js",
     "static/js/2.37230947.chunk.js.map": "/VacantSearch/static/js/2.37230947.chunk.js.map",
     "index.html": "/VacantSearch/index.html",
-    "precache-manifest.3fe70f15d60252c209c8a099d5de5bb5.js": "/VacantSearch/precache-manifest.3fe70f15d60252c209c8a099d5de5bb5.js",
+    "precache-manifest.0048b2ac97501788aca583c7186fa1f7.js": "/VacantSearch/precache-manifest.0048b2ac97501788aca583c7186fa1f7.js",
     "service-worker.js": "/VacantSearch/service-worker.js",
-    "static/css/main.3b21ca59.chunk.css.map": "/VacantSearch/static/css/main.3b21ca59.chunk.css.map"
+    "static/css/main.af6cbf8d.chunk.css.map": "/VacantSearch/static/css/main.af6cbf8d.chunk.css.map"
   },
   "entrypoints": [
     "static/js/runtime-main.71ee0369.js",
     "static/js/2.37230947.chunk.js",
-    "static/css/main.3b21ca59.chunk.css",
-    "static/js/main.11ed08b5.chunk.js"
+    "static/css/main.af6cbf8d.chunk.css",
+    "static/js/main.86001310.chunk.js"
   ]
 }
