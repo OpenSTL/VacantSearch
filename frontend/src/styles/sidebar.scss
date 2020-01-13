@@ -1,0 +1,57 @@
+.sidebar {
+  position: absolute;
+  top: 0;
+  left: calc(var(--sidebar-width) * -1);
+  bottom: 0;
+  width: var(--sidebar-width);
+  background-color: var(--sidebar-bg-color); /*transparent is kind of cool*/
+  border-right: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.3); /* blue shadow (42, 43, 116, 0.438) */
+  transition: left .25s ease-in-out;
+}
+.sidebar.active {
+  left: 0;
+}
+.sidebar-container {
+  width: 100%;
+  height: 100%;
+}
+.sidebar-section {
+  background: var(--sidebar-active-color);
+  border: var(--item-border);
+  border-top: 0;
+  border-radius: .3rem;
+  box-shadow: 0 0 2rem rgba(0,0,0,.075);
+  margin: var(--spacing);
+}
+.sidebar i.fa {
+  padding-right: .4rem;
+}
+
+// sidebar expand/collapse toggle button
+.toggle-btn {
+  position: absolute;
+  top: 1rem;
+  right: -5rem;
+  width: 5rem;
+  height: 5rem;
+  background: white;  /* opacity: .9; (optional) */
+  box-shadow: .6rem 0 2rem rgba(0,0,0,.25);
+  z-index: 50;
+  cursor: pointer;
+}
+i#toggle-icon {
+  font-size: 3.2rem;
+  color: black;
+}
+.fa-chevron-left,
+.fa-chevron-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 5rem;
+  height: 5rem;
+  padding-bottom: .2rem;
+  font-size: 2.4rem !important;
+  border: 1px solid rgba(0,0,0,.3);
+}

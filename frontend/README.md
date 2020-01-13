@@ -12,7 +12,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 You can bypass the server and use mock API response data by setting `REACT_APP_USE_MOCK_API_DATA='yes'` in your `.env.local` file. **Do not add this variable to .env** - it will break the app. Create your own `.env.local` file in the same directory as `.env`. You will need to restart your development server for the new variable to take effect.
 
 ## CI
-https://openstl.github.io/VacantSearch/ reflects the latest frontend code on `master`. The automatic Github Pages deployment is handled by a Github action. If you are a privileged user, you can run `npm run deploy` to manually deploy code to Github Pages.
+The [project Github Pages site](https://openstl.github.io/VacantSearch/) runs the latest frontend code from the `master` branch. Any push to the master branch will trigger a rebuild and push to Github pages. This workflow is handled by a Github action - see `.github/workflows/frontend-to-github-pages.yml`. The actual push to Github pages uses a Personal Access Token from the project service user. The addition of a service user is [awkward but necessary for a Github Pages deploy](https://github.com/JamesIves/github-pages-deploy-action/issues/5). Project admins have the credentials for this user.
 
 ## Available Scripts
 

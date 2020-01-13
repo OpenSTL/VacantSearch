@@ -1,0 +1,14 @@
+.sidebar-header {
+  margin: var(--spacing);
+  padding: 1rem 1.2rem;
+  text-align: center;
+  border-left: 3px solid var(--sidebar-highlight);
+}
+.sidebar-header .heading_brand-name {
+  padding-bottom: 1rem;
+  font-size: 3rem;
+  font-weight: 400;
+}
+.sidebar-header p {
+  padding: var(--spacing) 0;
+}
