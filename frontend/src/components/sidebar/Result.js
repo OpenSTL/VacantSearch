@@ -20,6 +20,15 @@ const mapStateToProps = state => {
   };
 };
 
+/**
+ * Function to convert int or bool to 'Yes' or 'No' string
+ * @param {bool/int} value to be converted
+ * @return {string} 'Yes' or 'No'
+ */
+function makeYesOrNo(value){
+  return (value ? 'Yes':'No');
+}
+
 // prop: resultItem
 class Result extends Component {
   onClick() {
@@ -33,25 +42,18 @@ class Result extends Component {
     this.props.setLotExpanded(resultItem._parcel_id, !resultItem.expanded);
   }
   render() {
-    // details
+    // details:
     const { resultItem } = this.props;
-    // const acres = resultItem.acres;
-    const hasAttic = resultItem.attic ? 'Yes':'No';
-    const hasFinishedBasement = resultItem.basement_finished ? 'Yes':'No';
+    const hasAttic = makeYesOrNo(resultItem.attic);
+    const hasFinishedBasement = makeYesOrNo(resultItem.basement_finished);
     const basementType = resultItem.basement_type;
-    // const numFullBath = resultItem.bath_full;
-    // const numHalfBath = resultItem.bath_half;
     const buildingType = resultItem.bldg_type;
-    const hasCentralHeat = resultItem.central_heat ? 'Yes':'No';
-    // const gndFlrSqFt = resultItem.com_grd_flr;
-    // const construction = resultItem.construction;
-    const hasGarage = resultItem.garage ? 'Yes':'No';
-    // const id = resultItem._parcel_id;
-    // const neighborhoodCode = resultItem.nbrhd_code;
+    const hasCentralHeat = makeYesOrNo(resultItem.central_heat);
+    const hasGarage = makeYesOrNo(resultItem.garage);
     const neighborhoodName = resultItem.nbrhd_name;
     const numStories = resultItem.num_stories;
     const wallMaterial = resultItem.wall_material;
-    // top right info items
+    // top right info items:
     const price = resultItem.price_residential;
     const sqFt = Math.floor(resultItem.size_sqFt);
     const baths = resultItem.bath_total;
