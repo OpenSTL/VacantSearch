@@ -154,3 +154,7 @@ var url = "http://[Container_IP]:5000]/filter";
 6. Double-click on `sampleFrontEnd.html`. You should see the following webpage:
 ![HTML Example](./documentation/html-example.png)
 The JSON response is printed on the page. Alternatively, you can also use your favorite web console to examine the response.
+
+### Setting up the Frontend
+
+For more instructions on how to set up the frontend, see [the frontend README](./frontend/README.md).
