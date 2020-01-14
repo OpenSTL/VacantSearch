@@ -20,6 +20,15 @@ const mapStateToProps = state => {
   };
 };
 
+/**
+ * Function to convert int or bool to 'Yes' or 'No' string
+ * @param {bool/int} value to be converted
+ * @return {string} 'Yes' or 'No'
+ */
+function makeYesOrNo(value){
+  return (value ? 'Yes':'No');
+}
+
 // prop: resultItem
 class Result extends Component {
   onClick() {
@@ -33,20 +42,23 @@ class Result extends Component {
     this.props.setLotExpanded(resultItem._parcel_id, !resultItem.expanded);
   }
   render() {
-    // details
+    // details:
     const { resultItem } = this.props;
-    const acres = resultItem.acres;
+    const hasAttic = makeYesOrNo(resultItem.attic);
+    const hasFinishedBasement = makeYesOrNo(resultItem.basement_finished);
     const basementType = resultItem.basement_type;
     const buildingType = resultItem.bldg_type;
-    const centralHeat = resultItem.central_heat;
-    const id = resultItem._parcel_id;
-    const neighborhoodCode = resultItem.nbrhd_code;
+    const hasCentralHeat = makeYesOrNo(resultItem.central_heat);
+    const hasGarage = makeYesOrNo(resultItem.garage);
     const neighborhoodName = resultItem.nbrhd_name;
+    const numStories = resultItem.num_stories;
     const wallMaterial = resultItem.wall_material;
-    // top right info items
+    // top right info items:
     const price = resultItem.price_residential;
     const sqFt = Math.floor(resultItem.size_sqFt);
     const baths = resultItem.bath_total;
+    const streetAddr = resultItem.street_addr;
+    const zip = resultItem.zip;
 
     const resultsItemCx = classNames('results-item', {
       'result-open': resultItem.expanded,
@@ -64,20 +76,23 @@ class Result extends Component {
           <h3>
             <span>{neighborhoodName}</span>
           </h3>
+          <h4>
+            <span>{streetAddr}, ST.LOUIS, {zip}</span>
+          </h4>
           <ul>
-            <li>id: {id}</li>
-            <li>nbCode: {neighborhoodCode}</li>
-            <li>acres: {acres}</li>
-            <li>building: {buildingType}</li>
-            <li>walls: {wallMaterial}</li>
-            <li>basement: {basementType}</li>
-            <li>heating: {centralHeat}</li>
+            <li> {buildingType} | {numStories} </li>
+            <li>Walls: {wallMaterial}</li>
+            <li>Basement: {basementType}</li>
+            <li>Finished Basement: {hasFinishedBasement}</li>
+            <li>Heating: {hasCentralHeat}</li>
+            <li>Garage: {hasGarage} </li>
+            <li>Attic: {hasAttic}</li>
           </ul>
         </div>
         <div className="results-item-stats">
           <span>{'$' + price}</span>
           <span>{baths + ' Bath'}</span>
-          <span>{sqFt + 'SF'}</span>
+          <span>{sqFt + ' sqFt'}</span>
         </div>
       </div>
     );
