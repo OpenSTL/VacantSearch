@@ -40,12 +40,7 @@
   z-index: 50;
   cursor: pointer;
 }
-i#toggle-icon {
-  font-size: 3.2rem;
-  color: black;
-}
-.fa-chevron-left,
-.fa-chevron-right {
+.toggle-btn > .fa {
   display: flex;
   justify-content: center;
   align-items: center;

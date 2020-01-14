@@ -17,7 +17,7 @@ class Sidebar extends Component {
     const sidebarClassNames = classNames('sidebar', { active: this.state.active });
     const toggleButtonClassNames = classNames('toggle-btn', { active: this.state.active });
     const toggleIconClassNames = classNames('fa', {
-      'fa-chevron-right': !this.state.active,
+      'fa-bars': !this.state.active,
       'fa-chevron-left': this.state.active,
     });
     return (
@@ -28,7 +28,7 @@ class Sidebar extends Component {
             className={toggleButtonClassNames}
             onClick={() => this.onClickToggleButton()}
           >
-            <i className={toggleIconClassNames} id="toggle-icon"></i>
+            <i className={toggleIconClassNames}></i>
           </div>
           {/*Top Sidebar Header*/}
           <header className="sidebar-section sidebar-header">

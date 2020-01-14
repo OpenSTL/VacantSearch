@@ -6,6 +6,7 @@ import ResultsTab from './ResultsTab';
 import SearchForm from './SearchForm';
 import { setSelectedTab } from '../../actions';
 import { getSelectedTab } from '../../selectors';
+import TabContent from './TabContent';
 
 const mapStateToProps = state => {
   return { selectedTab: getSelectedTab(state) };
@@ -36,16 +37,19 @@ class SidebarContent extends Component {
             </span>
           </div>
         </div>
-        {/* Tabbed Sections */}
-        <div className="sidebar-tab-content">
-          {/* Tab 1: Search Form */}
-          <div className={classNames('tab-content', 'tab-content-search', { 'tab-active': this.props.selectedTab === tabs.SEARCH})}>
+        <div className="tab-contents">
+          <TabContent
+            className='tab-content-search'
+            tabActive={this.props.selectedTab === tabs.SEARCH}
+          >
             <SearchForm />
-          </div>
-          {/* Tab 2: Results ListView */}
-          <div className={classNames('tab-content', 'tab-content-results', { 'tab-active': this.props.selectedTab === tabs.RESULTS})}>
+          </TabContent>
+          <TabContent
+            className='tab-content-results'
+            tabActive={this.props.selectedTab === tabs.RESULTS}
+          >
             <ResultsTab />
-          </div>
+          </TabContent>
         </div>
       </section>
     );
