@@ -45,7 +45,7 @@ class Result extends Component {
     // details:
     const { resultItem } = this.props;
     const hasAttic = makeYesOrNo(resultItem.attic);
-    const hasFinishedBasement = makeYesOrNo(resultItem.basement_finished);
+    const hasFinishedBasement = resultItem.basement_finished === 'finished';
     const basementType = resultItem.basement_type;
     const buildingType = resultItem.bldg_type;
     const hasCentralHeat = makeYesOrNo(resultItem.central_heat);
