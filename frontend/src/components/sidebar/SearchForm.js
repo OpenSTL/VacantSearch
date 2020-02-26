@@ -75,6 +75,10 @@ class SearchForm extends Component {
                     max="10000000" step="10000" 
                     disabled />
                 </div>
+                <div class="price-extras">
+                  <input type="checkbox" checked />&nbsp;Include un-priced properties <br />
+                  <input type="checkbox" checked />&nbsp;Include "Call LRA" properties
+              </div>
               </div>
             </label>
             <label htmlFor="form-acres-min" className="form-section">
