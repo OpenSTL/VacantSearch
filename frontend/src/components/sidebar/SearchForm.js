@@ -53,7 +53,7 @@ class SearchForm extends Component {
 
     return (
       <>
-        <form 
+        <form
           action="post"
           className={sidebarFormCx}
           id="sidebar-form"
@@ -62,18 +62,22 @@ class SearchForm extends Component {
           <fieldset className="form-fieldset">
             <label htmlFor="form-price-min" className="form-section">
               Price
-              <div className="input-container">
-                <div><span className="subtext">min </span><input type="number"
+              <div className="input-container price-container">
+                <div>
+                  <span className="subtext">min </span>
+                  <input type="number"
                     name="form-price-min" id="form-price-min"
                     min="0" defaultValue="0"
-                    max="10000000" step="10000" 
-                    disabled />
+                    max="10000000" step="1"
+                  />
                 </div>
-                <div><span className="subtext">max </span><input type="number"
+                <div>
+                  <span className="subtext">max </span>
+                  <input type="number"
                     name="form-price-max" id="form-price-max"
                     min="0" defaultValue="40000"
-                    max="10000000" step="10000" 
-                    disabled />
+                    max="10000000" step="1"
+                  />
                 </div>
               </div>
             </label>

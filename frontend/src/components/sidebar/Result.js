@@ -1,8 +1,10 @@
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import ResultItemIconSet from './ResultItemIconSet';
+
 import { getMap } from '../../selectors';
+import ResultItemIconSet from './ResultItemIconSet';
+import ResultPrice from './ResultPrice';
 import {
   setLotExpanded,
 } from '../../actions';
@@ -19,6 +21,21 @@ const mapStateToProps = state => {
     map: getMap(state),
   };
 };
+
+// multiple price fields can be filled out; we take the largest
+function getPriceFromResultItem(resultItem) {
+  const priceProperties = [
+    'price_bldg',
+    'price_lot',
+    'price_residential',
+    'price_sidelot',
+  ];
+  const prices = priceProperties.map(priceProp => {
+    if (!resultItem[priceProp]) return 0;
+    return resultItem[priceProp];
+  });
+  return Math.max.apply(Math, prices);
+}
 
 /**
  * Function to convert int or bool to 'Yes' or 'No' string
@@ -54,7 +71,7 @@ class Result extends Component {
     const numStories = resultItem.num_stories;
     const wallMaterial = resultItem.wall_material;
     // top right info items:
-    const price = resultItem.price_residential;
+    const price = getPriceFromResultItem(resultItem);
     const sqFt = Math.floor(resultItem.size_sqFt);
     const baths = resultItem.bath_total;
     const streetAddr = resultItem.street_addr;
@@ -90,7 +107,7 @@ class Result extends Component {
           </ul>
         </div>
         <div className="results-item-stats">
-          <span>{'$' + price}</span>
+          <ResultPrice price={price}/>
           <span>{baths + ' Bath'}</span>
           <span>{sqFt + ' sqFt'}</span>
         </div>
