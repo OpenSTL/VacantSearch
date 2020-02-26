@@ -97,12 +97,31 @@ The Postman page should look like the following:
 
 
 ### Deployment
-🚧 Work in Progress 🚧
-
 Once you got the application to run locally, it is ready to be deployed on a real back-end server!
 
-1. Move `vacancy.service` file into systemd directory.
+#### Frontend
+If your changes are for the frontend React application...
+1. Open a `Merge Request` with your changes.
+2. Your changes will be updated once your changes are merged to `master`.
 
+#### Backend
+If your changes are for the backend Python application...
+1. Remote login to production server. If you do not have login information, please contact repo owner.
+```
+ssh x.x.x.x
+```
+2. Navigate to local repository.
+```
+cd /srv/VacantSearch/
+```
+3. Pull latest code.
+```
+git fetch & git pull
+```
+4. Restart `uwsgi` service.
+```
+systemctl restart uwsgi
+```
 
 ### Front-End Integration 🔧
 This project includes a stripped-down front-end that makes Ajax calls to the filter API described above.  
@@ -120,23 +139,6 @@ python vacancy.py
 ![HTML Example](./documentation/html-example.png)
 The JSON response is printed on the page. Alternatively, you can also use your favorite web console to examine the response.
 
-##### Use Production Backend Server
-1. Remote login to production server. If you do not have login information, please contact repo owner.
-```
-ssh x.x.x.x
-```
-2. Navigate to local repository.
-```
-cd /srv/VacantSearch/
-```
-3. Pull latest code.
-```
-git fetch & git pull
-```
-4. Restart `uwsgi` service.
-```
-systemctl restart uwsgi
-```
 
 ##### Use dockerized backend
 1. Run docker image
