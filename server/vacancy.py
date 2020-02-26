@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_cors import CORS
 from sqlalchemy.sql.expression import and_
+from sqlalchemy.sql.expression import or_
 from sqlalchemy.dialects import mysql
 
 import os, sys
@@ -197,6 +198,10 @@ def query():
     Neighborhoods = []
     IncludePossible = False
     filter_group = []
+    res_price_filter = []
+    lot_price_filter = []
+    sl_price_filter = []
+    bldg_price_filter = []
     # parse json attributes
     if "Neighborhoods" in req_data:
         Neighborhoods = req_data['Neighborhoods']
@@ -244,17 +249,29 @@ def query():
     if SqFtMax:
         filter_group.append(Vacancy.size_sqFt <= SqFtMax)
 
-   # Vacancy.price_bldg >= PriceMin,\
-   # Vacancy.price_bldg <= PriceMax,\
-   # Vacancy.price_lot >= PriceMin,\
-   # Vacancy.price_sidelot >= PriceMin,\
-   # Vacancy.price_sidelot <= PriceMax,\
-   # Vacancy.price_residential >= PriceMin,\
-   # Vacancy.price_residential <= PriceMax
+    # If PriceMin or PriceMax is defined, don't return entries with all null values
+    if PriceMin or PriceMax:
+        bldg_price_filter.append(Vacancy.price_bldg != None)
+        lot_price_filter.append(Vacancy.price_lot != None)
+        sl_price_filter.append(Vacancy.price_sidelot != None)
+        res_price_filter.append(Vacancy.price_residential != None)
+
+    # If PriceMin is defined, then add price min filter to all price fields
+    if PriceMin:
+        bldg_price_filter.append(Vacancy.price_bldg >= PriceMin)
+        lot_price_filter.append(Vacancy.price_lot >= PriceMin)
+        sl_price_filter.append(Vacancy.price_sidelot >= PriceMin)
+        res_price_filter.append(Vacancy.price_residential >= PriceMin)
+
+    # If PriceMax is defined, then add price max filter to all price fields
+    if PriceMax:
+        bldg_price_filter.append(Vacancy.price_bldg <= PriceMax)
+        lot_price_filter.append(Vacancy.price_lot <= PriceMax)
+        sl_price_filter.append(Vacancy.price_sidelot <= PriceMax)
+        res_price_filter.append(Vacancy.price_residential <= PriceMax)
 
     # Query DB
-    # qryresult = Vacancy.query.join(Parcel,Vacancy._parcel_id == Parcel._parcel_id).filter(and_(*filter_group)).all()
-    print(Vacancy.query.statement.compile(dialect = mysql.dialect()) )
+    filter_group.append(or_(and_(*bldg_price_filter),and_(*lot_price_filter),and_(*sl_price_filter),and_(*res_price_filter)))
     qryresult = Vacancy.query.filter(and_(*filter_group)).limit(20).all()
     # Uncomment below to print query results to console
     # for x in qryresult:
