@@ -22,6 +22,15 @@ const mapStateToProps = state => {
   };
 };
 
+function getPriceFromResultItem(resultItem) {
+  return (
+    resultItem.price_bldg || 
+    resultItem.price_lot || 
+    resultItem.price_residential || 
+    resultItem.price_sidelot
+  );
+}
+
 /**
  * Function to convert int or bool to 'Yes' or 'No' string
  * @param {bool/int} value to be converted
@@ -56,7 +65,7 @@ class Result extends Component {
     const numStories = resultItem.num_stories;
     const wallMaterial = resultItem.wall_material;
     // top right info items:
-    const price = resultItem.price_residential;
+    const price = getPriceFromResultItem(resultItem);
     const sqFt = Math.floor(resultItem.size_sqFt);
     const baths = resultItem.bath_total;
     const streetAddr = resultItem.street_addr;
