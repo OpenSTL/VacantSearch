@@ -55,7 +55,7 @@ class SearchForm extends Component {
 
     return (
       <>
-        <form 
+        <form
           action="post"
           className={sidebarFormCx}
           id="sidebar-form"
