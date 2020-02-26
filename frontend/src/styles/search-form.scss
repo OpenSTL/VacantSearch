@@ -111,9 +111,6 @@ select {
   align-items: flex-start;
   justify-content: baseline;
 }
-.input-container.price-container {
-  align-items: flex-end;
-}
 .subtext {
   font-size: 1.4rem;
 }
@@ -179,8 +176,4 @@ input[type="number"]:disabled {
       left: 100%;
       width: 10%;
   }
-}
-.price-extras > label {
-  font-size: 12px;
-  margin-left: var(--spacing);
 }

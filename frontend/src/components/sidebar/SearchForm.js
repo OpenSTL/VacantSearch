@@ -14,7 +14,6 @@ class SearchForm extends Component {
     // Get data from form
     const sidebarForm = document.getElementById('sidebar-form');
     const formData = new FormData(sidebarForm);
-    const includeUnpriced = !!formData.get('include-unpriced');
     const priceMin = formData.get('form-price-min');
     const priceMax = formData.get('form-price-max');
     const sqFtMin = formData.get('form-acres-min');
@@ -28,7 +27,6 @@ class SearchForm extends Component {
     // Format api request
     const requestData = {
       "IncludePossible": true,
-      "IncludeUnpriced": includeUnpriced,
       "LotType": 3,  // 1 vacant lot, 2 vacant building, 3 both
       "Neighborhoods": neighborhoods,
       "NumBathsMax": maxBaths,
@@ -80,15 +78,6 @@ class SearchForm extends Component {
                     min="0" defaultValue="40000"
                     max="10000000" step="10000" 
                   />
-                </div>
-                <div className="price-extras">
-                  <input
-                    id="include-unpriced"
-                    name="include-unpriced"
-                    type="checkbox"
-                    defaultChecked={true}
-                  />
-                  <label htmlFor="include-unpriced">Include un-priced properties</label>
                 </div>
               </div>
             </label>
