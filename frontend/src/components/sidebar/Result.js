@@ -22,13 +22,19 @@ const mapStateToProps = state => {
   };
 };
 
+// multiple price fields can be filled out; we take the largest
 function getPriceFromResultItem(resultItem) {
-  return (
-    resultItem.price_bldg || 
-    resultItem.price_lot || 
-    resultItem.price_residential || 
-    resultItem.price_sidelot
-  );
+  const priceProperties = [
+    'price_bldg',
+    'price_lot',
+    'price_residential',
+    'price_sidelot',
+  ];
+  const prices = priceProperties.map(priceProp => {
+    if (!resultItem[priceProp]) return 0;
+    return resultItem[priceProp];
+  });
+  return Math.max.apply(Math, prices);
 }
 
 /**
