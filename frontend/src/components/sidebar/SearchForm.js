@@ -68,7 +68,7 @@ class SearchForm extends Component {
                   <input type="number"
                     name="form-price-min" id="form-price-min"
                     min="0" defaultValue="0"
-                    max="10000000" step="10000" 
+                    max="10000000" step="1"
                   />
                 </div>
                 <div>
@@ -76,7 +76,7 @@ class SearchForm extends Component {
                   <input type="number"
                     name="form-price-max" id="form-price-max"
                     min="0" defaultValue="40000"
-                    max="10000000" step="10000" 
+                    max="10000000" step="1"
                   />
                 </div>
               </div>
