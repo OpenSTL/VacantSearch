@@ -17,17 +17,17 @@ The project is live at https://openstl.github.io/VacantSearch/ Go check it out!
  virtualenv -p python3 [envname]
  ```
  Once environment is created, run:
- 
+
  For Mac or Linux,
  ```
  source [envname]/bin/activate
  ```
- 
+
  For Windows,
  ```
  source [envname]/Scripts/activate
  ```
- 
+
  2. In repo directory, run the following command:
  ```
  pip install -r requirements.txt
@@ -51,7 +51,7 @@ The project is live at https://openstl.github.io/VacantSearch/ Go check it out!
  ```
  docker build -t openstl/vacantsearch --build-arg OPENSTL_USERNAME=[yourUsername] --build-arg OPENSTL_PASSWORD=[yourPassword] .
  ```
- 
+
 ### Example
 1. Open terminal, navigate to `server` sub-directory.
 ```
@@ -120,21 +120,25 @@ python vacancy.py
 ![HTML Example](./documentation/html-example.png)
 The JSON response is printed on the page. Alternatively, you can also use your favorite web console to examine the response.
 
-##### Use Deployment Back-end Server
-1. If you don't know the OpenSTL server filter API url, contact repo-owner to obtain it.
-2. Navigate to the `Test/` directory in this repository.
-3. Open `sampleFrontEnd.html` in text editor. Navigate to the script section and modify the url to the OpenSTL server API url.
+##### Use Production Backend Server
+1. Remote login to production server. If you do not have login information, please contact repo owner.
 ```
-// !! Replace "127.0.0.1:5000" below with deployment server hostname
-var url = "http://some-api-url/filter";
+ssh x.x.x.x
 ```
-4. (Optional) In `sampleFrontEnd.html`, modify the POST request JSON payload if you'd wish to filter on certain fields.
+2. Navigate to local repository.
+```
+cd /srv/VacantSearch/
+```
+3. Pull latest code.
+```
+git fetch & git pull
+```
+4. Restart `uwsgi` service.
+```
+systemctl restart uwsgi
+```
 
-5. Double-click on `sampleFrontEnd.html`. You should see the following webpage:
-![HTML Example](./documentation/html-example.png)
-The JSON response is printed on the page. Alternatively, you can also use your favorite web console to examine the response.
-
- ##### Use dockerized backend 
+##### Use dockerized backend
 1. Run docker image
 ```
 docker run --name vacantsearch -d openstl/vacantsearch
