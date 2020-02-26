@@ -1,8 +1,10 @@
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import ResultItemIconSet from './ResultItemIconSet';
+
 import { getMap } from '../../selectors';
+import ResultItemIconSet from './ResultItemIconSet';
+import ResultPrice from './ResultPrice';
 import {
   setLotExpanded,
 } from '../../actions';
@@ -90,7 +92,7 @@ class Result extends Component {
           </ul>
         </div>
         <div className="results-item-stats">
-          <span>{'$' + price}</span>
+          <ResultPrice price={price}/>
           <span>{baths + ' Bath'}</span>
           <span>{sqFt + ' sqFt'}</span>
         </div>

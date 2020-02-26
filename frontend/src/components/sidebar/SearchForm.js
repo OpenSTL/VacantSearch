@@ -14,6 +14,7 @@ class SearchForm extends Component {
     // Get data from form
     const sidebarForm = document.getElementById('sidebar-form');
     const formData = new FormData(sidebarForm);
+    const includeUnpriced = !!formData.get('include-unpriced');
     const priceMin = formData.get('form-price-min');
     const priceMax = formData.get('form-price-max');
     const sqFtMin = formData.get('form-acres-min');
@@ -27,6 +28,7 @@ class SearchForm extends Component {
     // Format api request
     const requestData = {
       "IncludePossible": true,
+      "IncludeUnpriced": includeUnpriced,
       "LotType": 3,  // 1 vacant lot, 2 vacant building, 3 both
       "Neighborhoods": neighborhoods,
       "NumBathsMax": maxBaths,
@@ -62,23 +64,32 @@ class SearchForm extends Component {
           <fieldset className="form-fieldset">
             <label htmlFor="form-price-min" className="form-section">
               Price
-              <div className="input-container">
-                <div><span className="subtext">min </span><input type="number"
+              <div className="input-container price-container">
+                <div>
+                  <span className="subtext">min </span>
+                  <input type="number"
                     name="form-price-min" id="form-price-min"
                     min="0" defaultValue="0"
                     max="10000000" step="10000" 
-                    disabled />
+                  />
                 </div>
-                <div><span className="subtext">max </span><input type="number"
+                <div>
+                  <span className="subtext">max </span>
+                  <input type="number"
                     name="form-price-max" id="form-price-max"
                     min="0" defaultValue="40000"
                     max="10000000" step="10000" 
-                    disabled />
+                  />
                 </div>
-                <div class="price-extras">
-                  <input type="checkbox" checked />&nbsp;Include un-priced properties <br />
-                  <input type="checkbox" checked />&nbsp;Include "Call LRA" properties
-              </div>
+                <div className="price-extras">
+                  <input
+                    id="include-unpriced"
+                    name="include-unpriced"
+                    type="checkbox"
+                    defaultChecked={true}
+                  />
+                  <label htmlFor="include-unpriced">Include un-priced properties</label>
+                </div>
               </div>
             </label>
             <label htmlFor="form-acres-min" className="form-section">
