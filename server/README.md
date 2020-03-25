@@ -74,10 +74,10 @@ python vacancy.py
 }
 ```
 The Postman page should look like the following:
-![POST Example](./documentation/post-example.png)
+![POST Example](../documentation/post-example.png)
 
 4. You should get a response JSON with vacancy records that matches the criteria specified in the POST request. The response should somewhat resemble this:
-![POST Response Example](./documentation/response-example.png)
+![POST Response Example](../documentation/response-example.png)
 
 5. You can now try modifying the POST request payload. Here is a detailed explanation of each JSON key means:
 
@@ -97,28 +97,50 @@ The Postman page should look like the following:
 ### Deployment
 Once you got the application to run locally, it is ready to be deployed on a real back-end server!
 
-#### Frontend
-If your changes are for the frontend React application...
-1. Open a `Merge Request` with your changes.
-2. Your changes will be updated once your changes are merged to `master`.
-
-#### Backend
+#### Update the Backend
 If your changes are for the backend Python application...
 1. Remote login to production server. If you do not have login information, please contact repo owner.
 ```
 ssh x.x.x.x
 ```
-2. Navigate to local repository.
+2. Switch to root user
+```
+sudo su
+```
+3. Navigate to local repository.
 ```
 cd /srv/VacantSearch/
 ```
-3. Pull latest code.
+4. Pull latest code.
 ```
 git fetch & git pull
 ```
-4. Restart `uwsgi` service.
+5. Restart `uwsgi` service.
 ```
 systemctl restart uwsgi
+```
+
+#### Update HTTPS certificate
+There should be a cron job that runs monthly to renew the certificate. If for some reason, it's not working, please use the manual steps below:
+1. Remote login to production server. If you do not have login information, please contact repo owner.
+```
+ssh x.x.x.x
+```
+2. Switch to root user
+```
+sudo su
+```
+3. Stop `vacancy` and `uwsgi` services
+```
+systemctl stop vacancy uwsgi
+```
+4. Renew HTTPS certificate
+```
+certbot renew
+```
+5. Start `vacancy` and `uwsgi` services
+```
+systemctl start vacancy uwsgi
 ```
 
 ### Front-End Integration 🔧
