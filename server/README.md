@@ -142,6 +142,10 @@ certbot renew
 ```
 systemctl start vacancy uwsgi
 ```
+6. Modify/update cron job script if needed
+```
+vim /etc/cron.d/certbot
+```
 
 ### Front-End Integration 🔧
 This project includes a stripped-down front-end that makes Ajax calls to the filter API described above.  
