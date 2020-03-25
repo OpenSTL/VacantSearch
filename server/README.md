@@ -184,3 +184,18 @@ var url = "http://[Container_IP]:5000]/filter";
 6. Double-click on `sampleFrontEnd.html`. You should see the following webpage:
 ![HTML Example](./documentation/html-example.png)
 The JSON response is printed on the page. Alternatively, you can also use your favorite web console to examine the response.
+
+#### Server Admin On-boarding
+1. Add user.
+```
+useradd [username]
+```
+2. Set temporary password.
+```
+passwd [username]
+```
+3. Add user to `root` user group .
+```
+gpasswd root -a [username]
+```
+4. Ask user to login and update their temporary password.
